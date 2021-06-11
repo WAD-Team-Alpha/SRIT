@@ -3264,6 +3264,7 @@ a {
   height: var(--cd-header-height);
   margin-right: 1.25em;
   margin-right: var(--space-md);
+  margin-left: 2em;
 }
 .cd-nav-trigger span,
 .cd-nav-trigger span::before,
@@ -3440,13 +3441,13 @@ a {
 }
 .cd-side__item > a,
 .cd-nav__item > a {
-  border-bottom: 1px solid hsl(210, 10%, 22.95%);
+  /* border-bottom: 1px solid hsl(210, 10%, 22.95%);
   border-bottom: 1px solid
     hsl(
       var(--cd-color-1-h),
       var(--cd-color-1-s),
       calc(var(--cd-color-1-l) * 0.85)
-    );
+    ); */
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;

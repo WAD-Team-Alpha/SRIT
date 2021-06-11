@@ -22,8 +22,25 @@
   margin-bottom: 2em;
 }
 
+.wel-name {
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+}
+.heads {
+  color: black;
+  margin-left: 2.4em;
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+
 @media only screen and (max-width: 847px) {
   nav .cd-side__item {
     border-bottom: 0px;
   }
+  .wel-name {
+    color: black;
+  }
 }
+
+
