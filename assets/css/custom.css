@@ -12,7 +12,14 @@
 }
 
 .divider {
-  height: 3em;
+  height: 0.5em;
+}
+.cd-main-header img {
+  border-radius: 50%;
+  width: 75%;
+}
+.cd-main-header {
+  margin-bottom: 2em;
 }
 
 @media only screen and (max-width: 847px) {
