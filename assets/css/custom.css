@@ -10,14 +10,13 @@
 .cd-main-header {
   background-color: rgb(124, 4, 124);
 }
-.cd-logo img {
-  border-radius: 50%;
-  width: 75%;
-}
-.cd-main-header {
-  height: 5em;
-}
 
 .divider {
   height: 3em;
+}
+
+@media only screen and (max-width: 847px) {
+  nav .cd-side__item {
+    border-bottom: 0px;
+  }
 }
