@@ -14,27 +14,34 @@
 
 <body>
   <header class="cd-main-header js-cd-main-header">
-    <div class="heads" id="heads">SRIT</div>
-    <ul class="cd-nav__list js-cd-nav__list">
-      <li class="
-            cd-nav__item cd-nav__item--account
-            js-cd-item--has-children
-          ">
-        <h1 class="wel-name">Hi janken123</h1>
-      </li>
-    </ul>
 
-    <div class="js-cd-search"></div>
+    <div class="cd-logo-wrapper">
+      <a href="#0" class="cd-logo">
+        <img src="assets/img/cd-avatar.svg" alt="avatar" /></a>
+    </div>
+
+
+    <div class="js-cd-search">
+      <h1 class="title">SRIT</h1>
+    </div>
 
 
     <button class="reset cd-nav-trigger js-cd-nav-trigger" aria-label="Toggle menu">
       <span></span>
     </button>
 
-    <div class="cd-logo-wrapper">
-      <a href="#0" class="cd-logo">
-        <img src="assets/img/cd-avatar.svg" alt="avatar" /></a>
-    </div>
+    <ul class="cd-nav__list js-cd-nav__list">
+      <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children">
+        <a href="#0" class="acc">
+          <span>Account</span>
+        </a>
+
+        <ul class="cd-nav__sub-list">
+          <li class="cd-nav__sub-item"><a href="#0">Edit Account</a></li>
+          <li class="cd-nav__sub-item"><a href="#0">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
 
   </header>
   <!-- .cd-main-header -->
@@ -103,13 +110,6 @@
   <script src="assets/js/util.js"></script>
   <script src="assets/js/menu-aim.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>
-    var x = window.matchMedia("(max-width: 1025px)")
-    if (x.matches) {
-      var myobj = document.getElementById("heads");
-      myobj.remove();
-    }
-  </script>
 </body>
 
 </html>
