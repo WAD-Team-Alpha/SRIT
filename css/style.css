@@ -84,7 +84,7 @@ a:focus {
 
 #sidebar ul.components {
   padding: 20px 0;
-  border-bottom: 1px solid #47748b;
+  border-bottom: 1px solid rgb(255, 94, 0);
 }
 
 #sidebar ul p {
@@ -114,6 +114,7 @@ a[aria-expanded="true"] {
   text-align: center;
   width: 3em;
   padding: 0.4em 0.1em;
+  margin-top: .6em;
   border-radius: 0.5em;
 }
 
