@@ -232,3 +232,15 @@ a.article:hover {
     display: none;
   }
 }
+
+
+#tablecon{
+  margin-top: 0.5em;
+  margin-left: 2em;
+  max-width: 97%;
+}
+
+.btn{
+  margin-left: 3em;
+  margin-bottom: 1.5em;
+}
