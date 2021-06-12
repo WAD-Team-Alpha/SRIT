@@ -75,8 +75,52 @@
                     </div>
                 </div>
             </nav>
+            <button type="button" class="btn btn-danger" id="btnadd">Add a row</button>
+            <table class="table" id="tablecon">
+                <thead>
+                    <tr>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Link for test</th>
+                        <th scope="col">Grade</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyCon">
+                    <tr>
+                        <td>Maths</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>English</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>Drawing</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>Physics</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>OS</td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -89,6 +133,23 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+        $("#btnadd").click(function () {
+            // console.log("hello");
+            $("#tbodyCon").append(`
+                    <tr>
+                        <td>
+                            <select class="form-control forminp">
+                                <option>Select your subjects here</option>
+                                <option>COA</option>
+                                <option>CS</option>
+                                <option>Python</option>
+                            </select>
+                        </td>
+                        <td><a href="/">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr >
+                `)
+        })
     </script>
 </body>
 

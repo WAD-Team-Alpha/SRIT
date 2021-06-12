@@ -10,8 +10,10 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/subjectwise.css">
 </head>
 
 <body>
@@ -38,7 +40,6 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li><a href="/academics.html">Academics </a></li>
                         <!-- <li><a href="/extracurricular.html">Extra Curricular</a></li> -->
-
                     </ul>
                 </li>
                 <li class="active">
@@ -75,9 +76,38 @@
                     </div>
                 </div>
             </nav>
+            <div class="container">
+                <section class="tail">
+                    <h2 class="head">Subject Wise Analysis of Perfomance: </h2>
+                    <button class="collapsible"><b>Math</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                    <button class="collapsible"><b>OS</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                    <button class="collapsible"><b>English</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                    <button class="collapsible"><b>Drawing</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                    <button class="collapsible"><b>C</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                    <button class="collapsible"><b>Physics</b></button>
+                    <div class="content">
+                        <img src="black_hole.jpg" alt="ScoreChart" />
+                    </div>
+                </section>
+            </div>
+
         </div>
     </div>
-
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <!-- Bootstrap Js CDN -->
@@ -89,6 +119,22 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+    </script>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "em";
+                }
+            });
+        }
     </script>
 </body>
 
