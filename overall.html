@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 3</title>
+    <title>SRIT</title>
     <link rel="shortcut icon" href="./img/sritlogo.png" type="image/x-icon">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .container {
+            border-radius: 25px;
+            background-color: cadetblue;
+            padding-bottom: 20px;
+        }
+
+        .rcorners {
+            border-radius: 25px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -28,7 +40,7 @@
             <ul class="list-unstyled components">
                 <p style="font-size: 1.4em;">Welcome username</p>
                 <li>
-                    <a href="#">Home</a>
+                    <a href="./index.html">Home</a>
                 </li>
                 <li>
                     <a href="#">Marks</a>
@@ -38,7 +50,7 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li><a href="#">Academics </a></li>
                         <li><a href="#">Extra Curricular</a></li>
-                        
+
                     </ul>
                 </li>
                 <li class="active">
@@ -46,15 +58,15 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
                         <li><a href="#">Subject Wise</a></li>
                         <li><a href="overall.html">Overall</a></li>
-                        
+
                     </ul>
                 </li>
-                
+
                 <li>
-                    <a href="./report.html">Report</a>
+                    <a href="#">Report</a>
                 </li>
                 <li>
-                    <a href="./suggestions.html">Suggestions</a>
+                    <a href="#">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -66,15 +78,30 @@
                     <div class="navbar-header">
                         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                             <i class="glyphicon glyphicon-align-left"></i>
-                            <span>DASHBOARD</span>
+                            <span>OVERALL</span>
                         </button>
-                        <h1 class="title">DASHBOARD</h1>
+                        <h1 class="title">OVERALL</h1>
                     </div>
                     <div class="power" id="">
                         <a href="#"><i class="pbtn glyphicon glyphicon-off"></i>
                     </div>
                 </div>
             </nav>
+            <div style="background-color: cyan;padding-top:2em">
+                <div class="container">
+                    <h2 class="h2">Subject Wise Progress</h2>
+                    <img src="./img/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+
+                </div>
+                <br>
+                <div class="container">
+                    <h2 class="h2">Skills Analysis</h2>
+                    <img src="./img/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+
+
+                </div>
+            </div>
+
         </div>
     </div>
 
