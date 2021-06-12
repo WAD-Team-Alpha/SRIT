@@ -24,7 +24,7 @@ a, a:hover, a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
+    padding: 30px 10px;
     background: purple;
     border: none;
     border-radius: 0;
@@ -35,6 +35,7 @@ a, a:hover, a:focus {
 
 
 .navbar-btn {
+    display: none;
     box-shadow: none;
     outline: none !important;
     border: none;
@@ -179,25 +180,23 @@ a.article, a.article:hover {
     border-radius: .4em;
 }
 
-.power .pbtn {
+.power {
     color: white;
     font-size: larger;
+    float: right;
+    margin-top: 1em;
 }
 
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
-    padding: 20px;
+    width: 100%;
+    /* padding: 20px; */
     height: 100vh;
     overflow-y: auto;
     transition: all 0.3s;
-    margin-left: 2em;
-}
-
-.main {
-    background-color: aqua;
-    width: 76vw;
+    /* margin-left: 2em; */
 }
 
 /* ---------------------------------------------------
@@ -214,65 +213,20 @@ a.article, a.article:hover {
         display: none;
         float: left;
     }
-    #content {
-        margin-left: 0em;
+    .navbar-header {
+        float: left;
     }
-    .main {
-        width: 95vw;
+    .power {
+        float: right;
+        margin-top: 1em;
+    }
+    .navbar-btn {
+        display: block;
+        margin-left: .5em;
     }
     .title {
         display: none;
-    }
-    
-}
-
-@media (max-width: 586px) {
-    .main {
-        width: 93vw;
-    }
-}
-
-@media (max-width: 448px) {
-    .main {
-        width: 91vw;
-    }
-}
-
-@media (max-width: 318px) {
-    .main {
-        width: 88vw;
-    }
-}
-
-@media (min-width: 768px) {
-    .main {
-        background-color: red;
-        width: 60vw;
-    }
-    .navbar-btn {
-        display: none;
-    }
-}
-
-@media (min-width: 992px) {
-    .main {
-        background-color: blue;
-        width: 68vw;
-    }
-}
-
-@media (min-width: 1200px) {
-    .main {
-        background-color: green;
-        width: 73vw;
-    }
-}
-
-@media (min-width: 1400px) {
-    .main {
-        background-color: pink;
-        width: 76vw;
-    }
+    } 
 }
 
 
