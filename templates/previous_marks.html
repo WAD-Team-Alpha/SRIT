@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marks</title>
-
+    <title>SRIT</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/marks.css">
-    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/marks.css">
 </head>
 <body>
     <div class="wrapper">
@@ -24,7 +22,7 @@
             <ul class="list-unstyled components">
                 <p style="font-size: 1.4em;">Welcome username</p>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="../index.html">Home</a>
                 </li>
                 
                 <li class="active">
@@ -38,16 +36,16 @@
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="#">Academics </a></li>
-                        <li><a href="#">Extra Curricular</a></li>
+                        <li><a href="academics.html">Academics </a></li>
+                        <!-- <li><a href="#">Extra Curricular</a></li> -->
                         
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="#">Subject Wise</a></li>
-                        <li><a href="#">Overall</a></li>
+                        <li><a href="subjectwise.html">Subject Wise</a></li>
+                        <li><a href="overall.html">Overall</a></li>
                         
                     </ul>
                 </li>
@@ -57,7 +55,7 @@
                     <a href="report.html">Report</a>
                 </li>
                 <li>
-                    <a href="#">Suggestions</a>
+                    <a href="suggestions.html">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -80,24 +78,33 @@
             </nav>
 
             <section class="marks-container">
+                <h3>Select your Semister</h3>
+                <div class="marks-dropdown">
+                   <select name="mdd" id="mdd">
+                       <option value="s1">Semester 1</option>
+                       <option value="s2">Semester 2</option>
+                       <option value="s3">Semester 3</option>
+                       <option value="s4">Semester 4</option>
+                       <option value="s5">Semester 5</option>
+                       <option value="s6">Semester 6</option>
+                       <option value="s7">Semester 7</option>
+                       <option value="s8">Semester 8</option>
+                   </select>
+                </div>
+                <br>
                 
                 <form action="#" method="post">
-                    
                     <table id="marks_table">
                         <tr>
                             <td style="background-color: #7b43ff;color:white;">
                                 <b> SUBJECT </b>
                             </td>
                             <td style="background-color: #7b43ff;color:white;">
-                                <b>MID 1</b>
-                            </td>
-                            <td style="background-color: #7b43ff;color:white;">
-                                <b>MID 2</b>
+                                <b>INTERNAL</b>
                             </td>
                             <td style="background-color: #7b43ff;color:white;">
                                 <b>EXTERNAL</b>
                             </td>
-                            
                         </tr>
                         <tr>
                             <td>
@@ -111,9 +118,7 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
                                     name="s1m2" value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
+                            
                         </tr>
                         <tr>
                             <td>
@@ -127,9 +132,7 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;" name="s2m2"
                                     value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
+                            
                         </tr>
                         <tr>
                             <td>
@@ -143,9 +146,7 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
                                     name="s3m2" value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
+                           
                         </tr>
                         <tr>
                             <td>
@@ -159,9 +160,7 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;" name="s4m2"
                                     value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
+                           
                         </tr>
                         <tr>
                             <td>
@@ -175,9 +174,7 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
                                     name="s5m2" value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
+                           
                         </tr>
                         <tr>
                             <td>
@@ -191,12 +188,8 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;" name="s6m2"
                                     value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
-                            
                         </tr>
-                        <tr>
+                         <tr>
                             <td>
                                 Subject 7
                             </td>
@@ -208,12 +201,8 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;" name="s7m2"
                                     value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
-                            
                         </tr>
-                        <tr>
+                         <tr>
                             <td>
                                 Subject 8
                             </td>
@@ -225,22 +214,13 @@
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;" name="s8m2"
                                     value="">
                             </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
-                            
                         </tr>
                     </table>
                     <!-- <input type="submit" value="Predict" class="button"> -->
                     <input type="submit" value="Save" class="button">
-                    
-                    <
-                   
                 </form>
 
             </section>
-
-            
         </div>
 
         <!-- jQuery CDN -->
@@ -255,8 +235,5 @@
             });
         });
     </script>
-
-
-    
 </body>
 </html>
