@@ -142,7 +142,17 @@ def marks(request):
 
 
 def activities(request):
-    return render(request, 'activities.html')
+    student = Student.objects.all().filter(Username=request.user.username).get()
+
+    rollnum = student.roll_no
+    semNum = Student.sem_no
+    subjectName = Semester.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum,).get()
+    context = {
+        'student': student,
+        'names': subjectName,
+    }
+    return render(request, 'activities.html', context)
 
 
 def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
