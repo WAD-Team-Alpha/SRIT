@@ -21,15 +21,18 @@ table {
   }
 
   input.button {
-    float: right;
-    margin-right: 2.1em;
-    padding: .2em .6em;
-    font-size: 1em;
+    margin-left: 50em;
+    font-size: 1.3em;
     border: 0px;
     background-color: #5937a8;
     color: white;
+    width: 5em;
+    border-radius: 3em;
   }
 
   input.button:hover {
     background-color: #7b43ff;
   }
+
+  
+  

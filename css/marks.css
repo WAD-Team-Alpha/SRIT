@@ -47,7 +47,6 @@ input.button:hover {
 #mdd{
     width:14em;
     margin-left:1em;
-    
     cursor: pointer;
     height:2em;
     background-color: #5937a8;
@@ -67,10 +66,24 @@ h3{
 
 #content{
     background-color: bisque;
-    margin-bottom: 0em;
-    padding-bottom: 0em;
+    
 }
 
 .marks-container{
-    padding-top: 1em;
+    padding-top: 0em;
+}
+
+input.pm-button{
+    margin-left: 85em;
+    margin-top: 1em;
+    border: 0px;
+    background-color: #5937a8;
+    color: white;
+    width: 4em;
+    height: 2em;
+    
+}
+
+input.pm-button:hover {
+    background-color: #7b43ff;
 }

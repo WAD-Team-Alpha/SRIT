@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previous Semesters</title>
+    <title>SRIT</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/marks.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/marks.css">
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             <ul class="list-unstyled components">
                 <p style="font-size: 1.4em;">Welcome username</p>
                 <li>
-                    <a href="/">Home</a>
+                    <a href="../index.html">Home</a>
                 </li>
 
                 <li class="active">
@@ -38,16 +38,16 @@
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="./academics.html">Academics </a></li>
-                        <li><a href="./extracurricular.html">Extra Curricular</a></li>
+                        <li><a href="academics.html">Academics </a></li>
+                        <!-- <li><a href="#">Extra Curricular</a></li> -->
 
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="/subjectwise.html">Subject Wise</a></li>
-                        <li><a href="./overall.html">Overall</a></li>
+                        <li><a href="subjectwise.html">Subject Wise</a></li>
+                        <li><a href="overall.html">Overall</a></li>
 
                     </ul>
                 </li>
@@ -57,7 +57,7 @@
                     <a href="./report.html">Report</a>
                 </li>
                 <li>
-                    <a href="./suggestions.html">Suggestions</a>
+                    <a href="suggestions.html">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -80,7 +80,7 @@
             </nav>
 
             <section class="marks-container">
-                <h3>Select your Semister</h3>
+                <h3>Select your Semester</h3>
                 <div class="marks-dropdown">
                     <select name="mdd" id="mdd">
                         <option value="s1">Semester 1</option>
@@ -218,25 +218,26 @@
                             </td>
                         </tr>
                     </table>
-                    <!-- <input type="submit" value="Predict" class="button"> -->
-                    <input type="submit" value="Save" class="button">
+                    <input type="submit" value="Save" class="pm-button">
                 </form>
 
             </section>
         </div>
 
-        <!-- jQuery CDN -->
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <!-- Bootstrap Js CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </div>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                });
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
             });
-        </script>
+        });
+    </script>
 </body>
 
 </html>
