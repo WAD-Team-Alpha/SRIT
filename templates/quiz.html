@@ -11,8 +11,8 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/quiz.css" />
      
 </head>
 
@@ -32,31 +32,31 @@
                 <li class="active">
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
-                        <li><a href="templates/previous_marks.html">Previous Semesters </a></li>
-                        <li><a href="templates/current_marks.html">Current Semester</a></li>
+                        <li><a href="previous_marks.html">Previous Semesters </a></li>
+                        <li><a href="current_marks.html">Current Semester</a></li>
                         
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="templates/academics.html" />Academics </a></li>
+                        <li><a href="academics.html" />Academics </a></li>
                         <!-- <li><a href="templates/extracurricular.html">Extra Curricular</a></li> -->
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="templates/subjectwise.html">Subject Wise</a></li>
-                        <li><a href="templates/overall.html">Overall</a></li>
+                        <li><a href="subjectwise.html">Subject Wise</a></li>
+                        <li><a href="overall.html">Overall</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="templates/report.html">Report</a>
+                    <a href="report.html">Report</a>
                 </li>
                 <li>
-                    <a href="templates/suggestions.html">Suggestions</a>
+                    <a href="suggestions.html">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -78,47 +78,51 @@
                 </div>
             </nav>
 
-            <div class="home">
-                <div class="container">
-                    <table>
-                        <tr>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Semester Target:</b>
-                                <br />
-                                <input type="text" style="
-                      border: 0px;
-                      font-size: 4em;
-                      width: 2em;
-                      background-color: #f7f7f7;
-                    " name="sti" value="88%" />
-                            </td>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Your Percentage</b>
-                                <span style="color: #a7a4a4">(predicted):</span> <br />
-                                <span style="font-size: 4em">76%</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Overall Target:</b>
-                                <br />
-                                <input type="text" style="
-                      border: 0px;
-                      font-size: 4em;
-                      width: 2em;
-                      background-color: #f7f7f7;
-                    " name="oti" value="24%" />
-                            </td>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Overall Percentage</b>
-                                <span style="color: #a7a4a4">(predicted):</span> <br />
-                                <span style="font-size: 4em">68%</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="submit" value="Save" class="button">
-                </div>
-            </div>
+            <section class="form-container">
+                <form action="#" name="quiz" class="quiz" >
+                    <p><h3>1. Size of Integer(bytes) is(64 bit):</h3></p>
+                    <input type="radio" id="o11" name="q1" value="2">
+                    <label for="o11">2</label><br>
+                    <input type="radio" id="o12" name="q1" value="4">
+                    <label for="o12">4</label><br>
+                    <input type="radio" id="o13" name="q1" value="8">
+                    <label for="o13">8</label><br>
+                    <input type="radio" id="o14" name="q1" value="16">
+                    <label for="o14">16</label><br>
+                    <br>
+                    <p><h3>2. CSS stands for:</h3></p>
+                    <input type="radio" id="o21" name="q2" value="Cascading Style Sheets">
+                    <label for="o21">Cascading Style Sheets</label><br>
+                    <input type="radio" id="o22" name="q2" value="Cascading Sheets and Styles">
+                    <label for="o22">Cascading Sheets and Styles</label><br>
+                    <input type="radio" id="o23" name="q2" value="Computer Styled Selections">
+                    <label for="o23">Computer Styled Selections</label><br>
+                    <input type="radio" id="o24" name="q2" value="Compound Style Sheets">
+                    <label for="o24">Compound Style Sheets</label><br>
+                    <br>
+                    <p><h3>3. HTML stands for:</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br>
+                   
+                    <input type="submit" value="Submit" class="quiz-button">
+                    
+
+                    
+
+
+                </form>
+
+            </section>
+        
+           
+            
         </section>
     </div>
 
