@@ -23,9 +23,6 @@
     margin-left: 5px;
 }
 
-.active:after {
-    content: "\2212";
-}
 
 .content {
     padding: 0 0.5em;
