@@ -1,10 +1,10 @@
 from authpage.models import Student
-from .models import Home, Mid_1, Mid_2, External
+from .models import Semester, Home, Marks, Mid_1, Mid_2, External
 from django.core.files.storage import FileSystemStorage
 import numpy as np
 from matplotlib import pyplot as plt
 from django.shortcuts import render
-import random
+# import random
 import matplotlib
 matplotlib.use('Agg')
 # Create your views here.
@@ -117,12 +117,15 @@ def marks(request):
             'm2': m2,
             'e': e,
         }
-        mid1avg = (int(marks['s1m1']) + int(marks['s2m1']) + int(marks['s3m1']) + int(marks['s4m1']) + int(marks['s5m1']) + int(marks['s6m1']))/6
-        mid2avg = (int(marks['s1m2']) + int(marks['s2m2']) + int(marks['s3m2']) + int(marks['s4m2']) + int(marks['s5m2']) + int(marks['s6m2']))/6
+        mid1avg = (int(marks['s1m1']) + int(marks['s2m1']) + int(marks['s3m1']) +
+                   int(marks['s4m1']) + int(marks['s5m1']) + int(marks['s6m1']))/6
+        mid2avg = (int(marks['s1m2']) + int(marks['s2m2']) + int(marks['s3m2']) +
+                   int(marks['s4m2']) + int(marks['s5m2']) + int(marks['s6m2']))/6
         extavg = (E1 + E2 + E3 + E4 + E5 + E6)/6
         total = mid1avg+mid2avg+extavg
 
-        Home.objects.all().filter(Rollnumber=rollnum).update(YourPercentage_predicted=total, OverallPercentage_predicted=total)
+        Home.objects.all().filter(Rollnumber=rollnum).update(
+            YourPercentage_predicted=total, OverallPercentage_predicted=total)
         return render(request, 'marks.html', context)
     else:
         student = Student.objects.all().filter(Username=request.user.username).get()
@@ -139,19 +142,22 @@ def marks(request):
 
 
 def activities(request):
-    return render(request, 'activities.html')
-
-
-def subjectWise(request):
-
     student = Student.objects.all().filter(Username=request.user.username).get()
-    rollnum = student.RollNumber
-    m1 = Mid_1.objects.filter(Rollnumber=rollnum).get()
-    m2 = Mid_2.objects.filter(Rollnumber=rollnum).get()
 
-    # pie chart 1
+    rollnum = student.roll_no
+    semNum = Student.sem_no
+    subjectName = Semester.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum,).get()
+    context = {
+        'student': student,
+        'names': subjectName,
+    }
+    return render(request, 'activities.html', context)
+
+
+def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
     labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S1, m2.S1, random.randint(10, 20), random.randint(10, 20)]
+    sizes = [m1, m2,  quiz, extra_curricular]
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.1, 0.1, 0.1, 0.1)
     fig1, ax1 = plt.subplots()
@@ -159,90 +165,86 @@ def subjectWise(request):
             shadow=True, startangle=90)
     # Equal aspect ratio ensures that pie is drawn as a circle.
     ax1.axis('equal')
-    plt.title("Pie chart of Subject 1")
-    plt.savefig('media/subjectwise_peichart1.png', dpi=100)
+    plt.title("Pie chart of "+subjectName+"")
+    plt.savefig('media/'+imgName+'.png', dpi=100)
     plt.close()
-    # pie chart 2
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S2, m2.S2, random.randint(10, 20), random.randint(10, 20)]
 
-    fig2, ax2 = plt.subplots()
-    ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax2.axis('equal')
-    plt.title("Pie chart of Subject 2")
-    plt.savefig('media/subjectwise_peichart2.png', dpi=100)
-    plt.close()
-    # pie chart 3
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S3, m2.S3, random.randint(10, 20), random.randint(10, 20)]
 
-    fig3, ax3 = plt.subplots()
-    ax3.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax3.axis('equal')
-    plt.title("Pie chart of Subject 3")
-    plt.savefig('media/subjectwise_peichart3.png', dpi=100)
-    plt.close()
-    # pie chart 4
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S4, m2.S4, random.randint(10, 20), random.randint(10, 20)]
+def subjectWise(request):
 
-    fig4, ax4 = plt.subplots()
-    ax4.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax4.axis('equal')
-    plt.title("Pie chart of Subject 4")
-    plt.savefig('media/subjectwise_peichart4.png', dpi=100)
-    plt.close()
-    # pie chart 5
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S5, m2.S5, random.randint(10, 20), random.randint(10, 20)]
+    student = Student.objects.all().filter(Username=request.user.username).get()
 
-    fig5, ax5 = plt.subplots()
-    ax5.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax5.axis('equal')
-    plt.title("Pie chart of Subject 5")
-    plt.savefig('media/subjectwise_peichart5.png', dpi=100)
-    plt.close()
-    # pie chart 6
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
-    sizes = [m1.S6, m2.S6, random.randint(10, 20), random.randint(10, 20)]
+    rollnum = student.roll_no
+    semNum = Student.sem_no
+    subjectName = Semester.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum,).get()
 
-    fig6, ax6 = plt.subplots()
-    ax6.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax6.axis('equal')
-    plt.title("Pie chart of Subject 6")
-    plt.savefig('media/subjectwise_peichart6.png', dpi=100)
-    plt.close()
+    m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
+    m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
+    quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
+    extra_curricular = Marks.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum, type=5).get()
+    savePieChart(m1.s1, m2.s1, quiz.s1, extra_curricular.s1,
+                 'image1', subjectName.s1)
+    savePieChart(m1.s2, m2.s2, quiz.s2, extra_curricular.s2,
+                 'image2', subjectName.s2)
+    if semNum != 8:
+        savePieChart(m1.s3, m2.s3, quiz.s3,
+                     extra_curricular.s3, 'image3', subjectName.s3)
+        savePieChart(m1.s4, m2.s4, quiz.s4,
+                     extra_curricular.s4, 'image4', subjectName.s4)
+        savePieChart(m1.s5, m2.s5, quiz.s5,
+                     extra_curricular.s5, 'image5', subjectName.s5)
+        savePieChart(m1.s6, m2.s6, quiz.s6,
+                     extra_curricular.s6, 'image6', subjectName.s6)
+        savePieChart(m1.s7, m2.s7, quiz.s7,
+                     extra_curricular.s7, 'image7', subjectName.s7)
+        savePieChart(m1.s8, m2.s8, quiz.s8,
+                     extra_curricular.s8, 'image8', subjectName.s8)
+    else:
+        pass
 
     return render(request, 'subjectWise.html')
 
 
 def overall(request):
-    student = Student.objects.all().filter(Username=request.user.username).get()
-    rollnum = student.RollNumber
-    m1 = Mid_1.objects.filter(Rollnumber=rollnum).get()
-    m2 = Mid_2.objects.filter(Rollnumber=rollnum).get()
+    student = Student.objects.all().filter(
+        Username=request.user.username).get()
+    rollnum = student.roll_no
+    semNum = Student.sem_no
+    subjectName = Semester.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum,).get()
+    m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
+    m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
+    quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
+    extra_curricular = Marks.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum, type=5).get()
     subject1 = (m1.S1 + m2.S1)*100/60
     subject2 = (m1.S2 + m2.S2)*100/60
-    subject3 = (m1.S3 + m2.S3)*100/60
-    subject5 = (m1.S5 + m2.S5)*100/60
-    subject4 = (m1.S4 + m2.S4)*100/60
-    subject6 = (m1.S6 + m2.S6)*100/60
+    if semNum != 8:
+        subject3 = (m1.S3 + m2.S3)*100/60
+        subject5 = (m1.S5 + m2.S5)*100/60
+        subject4 = (m1.S4 + m2.S4)*100/60
+        subject6 = (m1.S6 + m2.S6)*100/60
+        subject7 = (m1.S7 + m2.S7)*100/60
+        subject8 = (m1.S8 + m2.S8)*100/60
+    else:
+        pass
 
-    data = {'subject1': subject1, 'subject2': subject2,
-            'subject3': subject3, 'subject4': subject4, 'subject5': subject5, 'subject6': subject6, }
+    if semNum != 8:
+        marks = [subject1, subject2, subject3, subject4,
+                 subject5, subject6, subject7, subject8]
+        subjectNames = [subjectName.s1, subjectName.s2, subjectName.s2,
+                        subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8, ]
+    else:
+        marks = [subject1, subject2]
+        subjectNames = [subjectName.s1, subjectName.s2]
 
-    courses = list(data.keys())
-    values = list(data.values())
+    # data = {'subject1': subject1, 'subject2': subject2,
+    #         'subject3': subject3, 'subject4': subject4, 'subject5': subject5, 'subject6': subject6, }
+
+    courses = subjectNames
+    values = marks
 
     fig = plt.figure(figsize=(10, 5))
     my_colors = ['red', 'blue', 'green', 'cyan', 'Purple', 'pink']
