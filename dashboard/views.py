@@ -1,3 +1,9 @@
+from authpage.views import createSemester, createMarks, updateMarks
+from authpage.civil import *
+from authpage.eee import *
+from authpage.mech import *
+from authpage.ece import *
+from authpage.cse import *
 from authpage.models import Student
 from .models import *
 from django.core.files.storage import FileSystemStorage
@@ -7,12 +13,6 @@ from django.shortcuts import render
 # import random
 import matplotlib
 matplotlib.use('Agg')
-from authpage.cse import *
-from authpage.ece import *
-from authpage.mech import *
-from authpage.eee import *
-from authpage.civil import *
-from authpage.views import createSemester, createMarks, updateMarks
 # Create your views here.
 
 
@@ -48,20 +48,24 @@ def dashboard(request):
 
         return render(request, 'index.html', context)
 
+
 def calculateInternal(mid1, mid2):
     internal = []
-    m1 = [int(mid1.s1),int(mid1.s2),int(mid1.s3),int(mid1.s4),int(mid1.s5),int(mid1.s6),int(mid1.s7),int(mid1.s8)]
-    m2 = [int(mid2.s1),int(mid2.s2),int(mid2.s3),int(mid2.s4),int(mid2.s5),int(mid2.s6),int(mid2.s7),int(mid2.s8)]
+    m1 = [int(mid1.s1), int(mid1.s2), int(mid1.s3), int(mid1.s4),
+          int(mid1.s5), int(mid1.s6), int(mid1.s7), int(mid1.s8)]
+    m2 = [int(mid2.s1), int(mid2.s2), int(mid2.s3), int(mid2.s4),
+          int(mid2.s5), int(mid2.s6), int(mid2.s7), int(mid2.s8)]
 
     m = zip(m1, m2)
 
-    for i,j in m:
+    for i, j in m:
         if i > j:
             x = i*0.8 + j*0.2
         else:
             x = i*0.2 + j*0.8
         internal.append(x)
     return internal
+
 
 def predictExternal(internal):
     external = []
@@ -70,15 +74,18 @@ def predictExternal(internal):
 
     return external
 
+
 def calculateCsp(marks):
-    internal = [int(marks['is1']),int(marks['is1']),int(marks['is1']),int(marks['is1']),int(marks['is1']),int(marks['is1']),int(marks['is1']),int(marks['is1'])]
-    external = [int(marks['es1']),int(marks['es1']),int(marks['es1']),int(marks['es1']),int(marks['es1']),int(marks['es1']),int(marks['es1']),int(marks['es1'])]
+    internal = [int(marks['is1']), int(marks['is1']), int(marks['is1']), int(
+        marks['is1']), int(marks['is1']), int(marks['is1']), int(marks['is1']), int(marks['is1'])]
+    external = [int(marks['es1']), int(marks['es1']), int(marks['es1']), int(
+        marks['es1']), int(marks['es1']), int(marks['es1']), int(marks['es1']), int(marks['es1'])]
 
     total = zip(internal, external)
     c = 0
     for i, j in total:
         c = c+i+j
-    
+
     c = c/8
 
     return c
@@ -93,14 +100,14 @@ def marks(request):
 
         for i in range(2):
             Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=i).update(
-                s1 = marks['s1m{j}'.format(j=i+1)],
-                s2 = marks['s2m{j}'.format(j=i+1)],
-                s3 = marks['s3m{j}'.format(j=i+1)],
-                s4 = marks['s4m{j}'.format(j=i+1)],
-                s5 = marks['s5m{j}'.format(j=i+1)],
-                s6 = marks['s6m{j}'.format(j=i+1)],
-                s7 = marks['s7m{j}'.format(j=i+1)],
-                s8 = marks['s8m{j}'.format(j=i+1)]
+                s1=marks['s1m{j}'.format(j=i+1)],
+                s2=marks['s2m{j}'.format(j=i+1)],
+                s3=marks['s3m{j}'.format(j=i+1)],
+                s4=marks['s4m{j}'.format(j=i+1)],
+                s5=marks['s5m{j}'.format(j=i+1)],
+                s6=marks['s6m{j}'.format(j=i+1)],
+                s7=marks['s7m{j}'.format(j=i+1)],
+                s8=marks['s8m{j}'.format(j=i+1)]
             )
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
@@ -108,18 +115,21 @@ def marks(request):
 
         internal = calculateInternal(mid1, mid2)
 
-        updateMarks(sem_no, rollnum, 2, internal[0],internal[1],internal[2],internal[3],internal[4],internal[5],internal[6],internal[7])
+        updateMarks(sem_no, rollnum, 2, internal[0], internal[1], internal[2],
+                    internal[3], internal[4], internal[5], internal[6], internal[7])
 
         external = predictExternal(internal)
 
-        updateMarks(sem_no, rollnum, 3, external[0],external[1],external[2],external[3],external[4],external[5],external[6],external[7])
+        updateMarks(sem_no, rollnum, 3, external[0], external[1], external[2],
+                    external[3], external[4], external[5], external[6], external[7])
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
-        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum, status=0).get()
-        
-        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+        sub = Semester.objects.all().filter(
+            sem_no=sem_no, roll_no=rollnum, status=0).get()
+
+        return render(request, 'current_marks.html', {'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
     else:
         student = Student.objects.all().filter(usr_nm=request.user.username).get()
         rollnum = student.roll_no
@@ -127,12 +137,15 @@ def marks(request):
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
-        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum, status=0).get()
-        
-        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+        sub = Semester.objects.all().filter(
+            sem_no=sem_no, roll_no=rollnum, status=0).get()
+
+        return render(request, 'current_marks.html', {'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+
 
 def prevSems():
     return []
+
 
 def previousmarks(request):
     if request.method == 'POST':
@@ -140,8 +153,10 @@ def previousmarks(request):
         rollnum = student.RollNumber
         branch = student.branch
         marks = request.POST
-        updateMarks(marks['sem_no'], rollnum, 2, marks['is1'],marks['is2'],marks['is3'],marks['is4'],marks['is5'],marks['is6'],marks['is7'],marks['is8'])
-        updateMarks(marks['sem_no'], rollnum, 3, marks['es1'],marks['es2'],marks['es3'],marks['es4'],marks['es5'],marks['es6'],marks['es7'],marks['es8'])
+        updateMarks(marks['sem_no'], rollnum, 2, marks['is1'], marks['is2'], marks['is3'],
+                    marks['is4'], marks['is5'], marks['is6'], marks['is7'], marks['is8'])
+        updateMarks(marks['sem_no'], rollnum, 3, marks['es1'], marks['es2'], marks['es3'],
+                    marks['es4'], marks['es5'], marks['es6'], marks['es7'], marks['es8'])
 
         cur_per = calculateCsp(marks)
 
@@ -158,7 +173,7 @@ def previousmarks(request):
 
         return render(request, 'previous_marks.html')
     else:
-        semList = prevSems() 
+        semList = prevSems()
         return render(request, 'previous_marks.html')
 
 
@@ -169,15 +184,49 @@ def activities(request):
     semNum = Student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
-    context = {
-        'student': student,
-        'names': subjectName,
-    }
-    return render(request, 'activities.html', context)
+    quiz = [
+        {
+            'subjectName': subjectName.s1,
+            'id': 1
+        },
+        {
+            'subjectName': subjectName.s2,
+            'id': 2
+        },
+        {
+            'subjectName': subjectName.s3,
+            'id': 3
+        },
+        {
+            'subjectName': subjectName.s4,
+            'id': 4
+        },
+        {
+            'subjectName': subjectName.s5,
+            'id': 5
+        },
+        {
+            'subjectName': subjectName.s6,
+            'id': 6
+        },
+        {
+            'subjectName': subjectName.s7,
+            'id': 7
+        },
+        {
+            'subjectName': subjectName.s8,
+            'id': 8
+        },
+    ]
+    return render(request, 'academics.html', {'quiz': quiz})
 
 
 def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
-    labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
+    if m1 == 0 and m2 == 0 and quiz == 0:
+        labels = '', '', '', ''
+    else:
+        labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
+
     sizes = [m1, m2,  quiz, extra_curricular]
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.1, 0.1, 0.1, 0.1)
@@ -193,10 +242,10 @@ def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
 
 def subjectWise(request):
 
-    student = Student.objects.all().filter(Username=request.user.username).get()
+    student = Student.objects.all().filter(usr_nm=request.user.username).get()
 
     rollnum = student.roll_no
-    semNum = Student.sem_no
+    semNum = student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
 
@@ -225,14 +274,14 @@ def subjectWise(request):
     else:
         pass
 
-    return render(request, 'subjectWise.html')
+    return render(request, 'subjectwise.html', {'subjectName': subjectName})
 
 
 def overall(request):
     student = Student.objects.all().filter(
-        Username=request.user.username).get()
+        usr_nm=request.user.username).get()
     rollnum = student.roll_no
-    semNum = Student.sem_no
+    semNum = student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
     m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
@@ -240,15 +289,15 @@ def overall(request):
     quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
     extra_curricular = Marks.objects.all().filter(
         roll_no=rollnum, sem_no=semNum, type=5).get()
-    subject1 = (m1.S1 + m2.S1)*100/60
-    subject2 = (m1.S2 + m2.S2)*100/60
+    subject1 = (m1.s1 + m2.s1)*100/60
+    subject2 = (m1.s2 + m2.s2)*100/60
     if semNum != 8:
-        subject3 = (m1.S3 + m2.S3)*100/60
-        subject5 = (m1.S5 + m2.S5)*100/60
-        subject4 = (m1.S4 + m2.S4)*100/60
-        subject6 = (m1.S6 + m2.S6)*100/60
-        subject7 = (m1.S7 + m2.S7)*100/60
-        subject8 = (m1.S8 + m2.S8)*100/60
+        subject3 = (m1.s3 + m2.s3)*100/60
+        subject5 = (m1.s5 + m2.s5)*100/60
+        subject4 = (m1.s4 + m2.s4)*100/60
+        subject6 = (m1.s6 + m2.s6)*100/60
+        subject7 = (m1.s7 + m2.s7)*100/60
+        subject8 = (m1.s8 + m2.s8)*100/60
     else:
         pass
 

@@ -13,6 +13,7 @@ from .forms import *
 
 # Create your views here.
 
+
 def login(request):
     if request.method == 'POST':
         username = request.POST['user']
@@ -20,23 +21,25 @@ def login(request):
 
         print(username)
         print(password)
-        
+
         user = auth.authenticate(request, username=username, password=password)
         print(user)
         print(request.user)
-        
+
         if user is not None:
             auth.login(request, user)
             return redirect('home')
         else:
             return render(request, 'signin.html', {"error": "wrong credentials"})
-    
+
     print(request.user)
     return render(request, 'signin.html')
+
 
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
 
 def createSemester(lis, sem_no, rollnumber, status, cp=0):
     Semester.objects.create(
@@ -57,31 +60,33 @@ def createSemester(lis, sem_no, rollnumber, status, cp=0):
         s8=lis[int(sem_no)][7],
     )
 
+
 def createMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
     Marks.objects.create(
-        sem_no=sem_no, 
-        roll_no=rollnumber, 
-        type= type, 
-        s1 = s1,
-        s2 = s2,
-        s3 = s3,
-        s4 = s4,
-        s5 = s5,
-        s6 = s6,
-        s7 = s7,
-        s8 = s8,
+        sem_no=sem_no,
+        roll_no=rollnumber,
+        type=type,
+        s1=s1,
+        s2=s2,
+        s3=s3,
+        s4=s4,
+        s5=s5,
+        s6=s6,
+        s7=s7,
+        s8=s8,
     )
 
+
 def updateMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
-    Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, type= type).update( 
-        s1 = s1,
-        s2 = s2,
-        s3 = s3,
-        s4 = s4,
-        s5 = s5,
-        s6 = s6,
-        s7 = s7,
-        s8 = s8,
+    Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, type=type).update(
+        s1=s1,
+        s2=s2,
+        s3=s3,
+        s4=s4,
+        s5=s5,
+        s6=s6,
+        s7=s7,
+        s8=s8,
     )
 
 
@@ -97,11 +102,11 @@ def signup(request):
         password = request.POST['pass']
         branch = request.POST['branch']
         sem_no = request.POST['sem_no']
-        
+
         if userform.is_valid():
-            if Student.objects.filter(email = email).exists():
+            if Student.objects.filter(email=email).exists():
                 return redirect('signup')
-            if Student.objects.filter(roll_no = rollnumber).exists():
+            if Student.objects.filter(roll_no=rollnumber).exists():
                 return redirect('signup')
 
             print(roll_no)
@@ -122,8 +127,10 @@ def signup(request):
             createMarks(sem_no, rollnumber, 2)
             createMarks(sem_no, rollnumber, 3)
             createMarks(sem_no, rollnumber, 4)
+            createMarks(sem_no, rollnumber, 5)
 
-            user = User.objects.create_user(email=email, password=password, username=username)
+            user = User.objects.create_user(
+                email=email, password=password, username=username)
             user.is_active = True
             userform.save()
             user.save()
