@@ -12,7 +12,7 @@ from authpage.ece import *
 from authpage.mech import *
 from authpage.eee import *
 from authpage.civil import *
-from authpage.views import createSemester, createMarks
+from authpage.views import createSemester, createMarks, updateMarks
 # Create your views here.
 
 
@@ -42,8 +42,8 @@ def dashboard(request):
         context = {
             'sti': details.cst,
             'oti': details.ot,
-            'stp': details.cst,
-            'otp': details.ot
+            'stp': details.csp,
+            'otp': details.op
         }
 
         return render(request, 'index.html', context)
@@ -66,7 +66,7 @@ def calculateInternal(mid1, mid2):
 def predictExternal(internal):
     external = []
     for i in internal:
-        external.append(1.5*i + 28)
+        external.append(1.406*i + 25.625)
 
     return external
 
@@ -93,14 +93,14 @@ def marks(request):
 
         for i in range(2):
             Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=i).update(
-                s1 = marks['m{j}s1'.format(j=i)],
-                s2 = marks['m{j}s2'.format(j=i)],
-                s3 = marks['m{j}s3'.format(j=i)],
-                s4 = marks['m{j}s4'.format(j=i)],
-                s5 = marks['m{j}s5'.format(j=i)],
-                s6 = marks['m{j}s6'.format(j=i)],
-                s7 = marks['m{j}s7'.format(j=i)],
-                s8 = marks['m{j}s8'.format(j=i)]
+                s1 = marks['s1m{j}'.format(j=i+1)],
+                s2 = marks['s2m{j}'.format(j=i+1)],
+                s3 = marks['s3m{j}'.format(j=i+1)],
+                s4 = marks['s4m{j}'.format(j=i+1)],
+                s5 = marks['s5m{j}'.format(j=i+1)],
+                s6 = marks['s6m{j}'.format(j=i+1)],
+                s7 = marks['s7m{j}'.format(j=i+1)],
+                s8 = marks['s8m{j}'.format(j=i+1)]
             )
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
@@ -108,26 +108,31 @@ def marks(request):
 
         internal = calculateInternal(mid1, mid2)
 
-        createMarks(sem_no, rollnum, 2, internal[0],internal[1],internal[2],internal[3],internal[4],internal[5],internal[6],internal[7])
+        updateMarks(sem_no, rollnum, 2, internal[0],internal[1],internal[2],internal[3],internal[4],internal[5],internal[6],internal[7])
 
         external = predictExternal(internal)
 
-        createMarks(sem_no, rollnum, 3, external[0],external[1],external[2],external[3],external[4],external[5],external[6],external[7])
+        updateMarks(sem_no, rollnum, 3, external[0],external[1],external[2],external[3],external[4],external[5],external[6],external[7])
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
+        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum, status=0).get()
         
-        return render(request, 'marks.html',{'m1': mid1, 'm2': mid2, 'e': ext})
+        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
     else:
-        student = Student.objects.all().filter(Username=request.user.username).get()
-        rollnum = student.RollNumber
+        student = Student.objects.all().filter(usr_nm=request.user.username).get()
+        rollnum = student.roll_no
         sem_no = student.sem_no
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
+        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum, status=0).get()
         
-        return render(request, 'marks.html',{'m1': mid1, 'm2': mid2, 'e': ext})
+        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+
+def prevSems():
+    return []
 
 def previousmarks(request):
     if request.method == 'POST':
@@ -135,8 +140,8 @@ def previousmarks(request):
         rollnum = student.RollNumber
         branch = student.branch
         marks = request.POST
-        createMarks(marks['sem_no'], rollnum, 2, marks['is1'],marks['is2'],marks['is3'],marks['is4'],marks['is5'],marks['is6'],marks['is7'],marks['is8'])
-        createMarks(marks['sem_no'], rollnum, 3, marks['es1'],marks['es2'],marks['es3'],marks['es4'],marks['es5'],marks['es6'],marks['es7'],marks['es8'])
+        updateMarks(marks['sem_no'], rollnum, 2, marks['is1'],marks['is2'],marks['is3'],marks['is4'],marks['is5'],marks['is6'],marks['is7'],marks['is8'])
+        updateMarks(marks['sem_no'], rollnum, 3, marks['es1'],marks['es2'],marks['es3'],marks['es4'],marks['es5'],marks['es6'],marks['es7'],marks['es8'])
 
         cur_per = calculateCsp(marks)
 
@@ -151,9 +156,10 @@ def previousmarks(request):
         else:
             createSemester(eee, marks['sem_no'], rollnum, 1, cur_per)
 
-        return render(request, 'previous.html')
-        
-    return render(request, 'previous_matrks.html')
+        return render(request, 'previous_marks.html')
+    else:
+        semList = prevSems() 
+        return render(request, 'previous_marks.html')
 
 
 def activities(request):

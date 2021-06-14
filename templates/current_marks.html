@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,10 +9,10 @@
     <title>SRIT</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/marks.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/marks.css' %}">
 
 </head>
 
@@ -26,13 +27,13 @@
             <ul class="list-unstyled components">
                 <p style="font-size: 1.4em;">Welcome username</p>
                 <li>
-                    <a href="../index.html">Home</a>
+                    <a href="{% url 'home' %}">Home</a>
                 </li>
 
                 <li class="active">
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
-                        <li><a href="previous_marks.html">Previous Semesters </a></li>
+                        <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
                         <li><a href="current_marks.html">Current Semester</a></li>
 
                     </ul>
@@ -76,15 +77,15 @@
                         <h1 class="title">MARKS</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i>
+                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>
 
             <section class="marks-container">
 
-                <form action="#" method="post">
-
+                <form action="{% url 'currentsem' %}" method="post">
+                    {% csrf_token %}
                     <table id="marks_table">
                         <tr>
                             <td style="background-color: #7b43ff;color:white;">
@@ -103,141 +104,137 @@
                         </tr>
                         <tr>
                             <td>
-                                Subject 1
+                                {{s.s1}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s1m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s1m1" value="{{m1.s1}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s1m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s1m2" value="{{m2.s1}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Subject 2
-                            </td>
-                            <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s2m1" value="">
-                            </td>
-                            <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s2m2" value="">
-                            </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s1}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Subject 3
+                                {{s.s2}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s3m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s2m1" value="{{m1.s2}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s3m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s2m2" value="{{m2.s2}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Subject 4
-                            </td>
-                            <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s4m1" value="">
-                            </td>
-                            <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s4m2" value="">
-                            </td>
-                            <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s2}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Subject 5
+                                {{s.s3}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s5m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s3m1" value="{{m1.s3}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s5m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s3m2" value="{{m2.s3}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s3}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Subject 6
+                                {{s.s4}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s6m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s4m1" value="{{m1.s4}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s6m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s4m2" value="{{m2.s4}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s4}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{s.s5}}
+                            </td>
+                            <td>
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s5m1" value="{{m1.s5}}">
+                            </td>
+                            <td>
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s5m2" value="{{m2.s5}}">
+                            </td>
+                            <td>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s5}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{s.s6}}
+                            </td>
+                            <td>
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s6m1" value="{{m1.s6}}">
+                            </td>
+                            <td>
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s6m2" value="{{m2.s6}}">
+                            </td>
+                            <td>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s6}}</span>
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 7
+                                {{s.s7}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s7m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s7m1" value="{{m1.s7}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s7m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s7m2" value="{{m2.s7}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s7}}</span>
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 8
+                                {{s.s8}}
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s8m1" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s8m1" value="{{m1.s8}}">
                             </td>
                             <td>
-                                <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s8m2" value="">
+                                <input type="text" style="border:0px;background-color:antiquewhite;font-size:1em;width:2em;"
+                                    name="s8m2" value="{{m2.s8}}">
                             </td>
                             <td>
-                                <span style="border:0px;font-size:1em;width:2em;"></span>
+                                <span style="border:0px;font-size:1em;width:2em;">{{e.s8}}</span>
                             </td>
 
                         </tr>
                     </table>
-                    <input type="submit" value="Predict" class="button">
                     <input type="submit" value="Save" class="button">
-
-
-
                 </form>
 
             </section>

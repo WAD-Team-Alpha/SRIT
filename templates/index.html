@@ -34,7 +34,7 @@
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
                         <li><a href="templates/previous_marks.html">Previous Semesters </a></li>
-                        <li><a href="templates/current_marks.html">Current Semester</a></li>
+                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
 
                     </ul>
                 </li>
@@ -81,43 +81,44 @@
 
             <div class="home">
                 <div class="container">
-                    <table>
-                        <tr>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Semester Target:</b>
-                                <br />
-                                <input type="text" style="
-                      border: 0px;
-                      font-size: 4em;
-                      width: 2em;
-                      background-color: #f7f7f7;
-                    " name="sti" value="{{sti}}%" />
-                            </td>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Your Percentage</b>
-                                <span style="color: #a7a4a4">(predicted):</span> <br />
-                                <span style="font-size: 4em">{{stp}}%</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Overall Target:</b>
-                                <br />
-                                <input type="text" style="
-                      border: 0px;
-                      font-size: 4em;
-                      width: 2em;
-                      background-color: #f7f7f7;
-                    " name="oti" value="{{oti}}%" />
-                            </td>
-                            <td>
-                                <b style="font-size: 1.5em; color: #a7a4a4">Overall Percentage</b>
-                                <span style="color: #a7a4a4">(predicted):</span> <br />
-                                <span style="font-size: 4em">{{otp}}%</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="submit" value="Save" class="button">
+
+                    <form action="{% url 'home' %}" method="post">
+                        {% csrf_token %}
+                        <table>
+                            <tr>
+                                <td>
+                                    <b style="font-size: 1.5em; color: #a7a4a4">Semester Target:</b>
+                                    <br />
+                                    <input type="text"
+                                        style="border: 0px;font-size: 4em;width: 1.7em;background-color: #f7f7f7;"
+                                        name="sti" value="{{sti}}" /><span style="font-size: 4em;">%</span>
+                                </td>
+                                <td>
+                                    <b style="font-size: 1.5em; color: #a7a4a4">Your Percentage</b>
+                                    <span style="color: #a7a4a4">(predicted):</span> <br />
+                                    <span style="font-size: 4em">{{stp}}%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b style="font-size: 1.5em; color: #a7a4a4">Overall Target:</b>
+                                    <br />
+                                    <input type="text" style="
+                          border: 0px;
+                          font-size: 4em;
+                          width: 1.7em;
+                          background-color: #f7f7f7;
+                        " name="oti" value="{{oti}}" maxlength="3" /> <span style="font-size: 4em;">%</span>
+                                </td>
+                                <td>
+                                    <b style="font-size: 1.5em; color: #a7a4a4">Overall Percentage</b>
+                                    <span style="color: #a7a4a4">(predicted):</span> <br />
+                                    <span style="font-size: 4em">{{otp}}%</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" value="Save" class="button">
+                    </form>
                 </div>
             </div>
         </section>
