@@ -1,0 +1,89 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 98%;
+    margin-left: 1em;
+
+}
+
+td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 1em;
+    
+}
+
+tr{
+    margin-right: 0em;
+}
+
+tr:nth-child(even) {
+    background-color: antiquewhite;
+
+}
+
+tr:nth-child(odd) {
+    background-color: antiquewhite;
+}
+input.button {
+    width: 7em;
+    float: right;
+    margin-right: 2.1em;
+    padding: .2em .6em;
+    font-size: 1em;
+    border: 0px;
+    background-color: #5937a8;
+    color: white;
+    margin-top: 2em;
+    border-radius: 2em;
+    height: 3em;
+    
+}
+
+input.button:hover {
+    background-color: #7b43ff;
+}
+
+#mdd{
+    width:14em;
+    margin-left:1em;
+    cursor: pointer;
+    height:2em;
+    background-color: #5937a8;
+    color:white;
+    padding-left: 3.3em;
+    
+    
+}
+
+h3{
+    margin-left: 0.6em;
+}
+
+.navbar {
+    margin-bottom: 0.2em;
+}
+
+#content{
+    background-color: bisque;
+    
+}
+
+.marks-container{
+    padding-top: 0em;
+}
+
+input.pm-button{
+    margin-left: 85em;
+    margin-top: 1em;
+    border: 0px;
+    background-color: #5937a8;
+    color: white;
+    width: 4em;
+    height: 2em;
+    
+}
+
+input.pm-button:hover {
+    background-color: #7b43ff;
+}
