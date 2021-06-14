@@ -75,28 +75,34 @@
                         <h1 class="title">MARKS</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i>
+                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>
 
-            <section class="marks-container">
+            <form action="{% url 'previoussemnumber' %}" method="post">
+                {% csrf_token %}
                 <h3>Select your Semester</h3>
                 <div class="marks-dropdown">
                     <select name="mdd" id="mdd">
-                        <option value="s1">Semester 1</option>
-                        <option value="s2">Semester 2</option>
-                        <option value="s3">Semester 3</option>
-                        <option value="s4">Semester 4</option>
-                        <option value="s5">Semester 5</option>
-                        <option value="s6">Semester 6</option>
-                        <option value="s7">Semester 7</option>
-                        <option value="s8">Semester 8</option>
-                    </select>
+                        {% for i in sems %}
+                            
+                            {% if i == cs %}
+                                <option value="{{i}}" selected>Semester {{i}}</option>
+                            {% else %}
+                                <option value="{{i}}">Semester {{i}}</option>
+                            {% endif %}
+                                
+                        {% endfor %}
+                    </select> 
+                    <input type="submit" value="Select" class="pm-button">
                 </div>
                 <br>
+            </form>
 
-                <form action="#" method="post">
+            <section class="marks-container">
+                <form action="{% url 'previoussem' %}" method="post" name="marks">
+                    {% csrf_token %}
                     <table id="marks_table">
                         <tr>
                             <td style="background-color: #7b43ff;color:white;">
@@ -111,111 +117,111 @@
                         </tr>
                         <tr>
                             <td>
-                                Subject 1
+                                {{sub.s1}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s1m1" value="">
+                                    name="is1" value="{{i.s1}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s1m2" value="">
+                                    name="es1" value="{{e.s1}}">
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 2
+                                {{sub.s2}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s2m1" value="">
+                                    name="is2" value="{{i.s2}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s2m2" value="">
+                                    name="es2" value="{{e.s2}}">
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 3
+                                {{sub.s3}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s3m1" value="">
+                                    name="is3" value="{{i.s3}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s3m2" value="">
+                                    name="es3" value="{{e.s3}}">
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 4
+                                {{sub.s4}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s4m1" value="">
+                                    name="is4" value="{{i.s4}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s4m2" value="">
+                                    name="es4" value="{{e.s4}}">
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 5
+                                {{sub.s5}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s5m1" value="">
+                                    name="is5" value="{{i.s5}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s5m2" value="">
+                                    name="es5" value="{{e.s5}}">
                             </td>
 
                         </tr>
                         <tr>
                             <td>
-                                Subject 6
+                                {{sub.s6}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s6m1" value="">
+                                    name="is6" value="{{i.s6}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s6m2" value="">
+                                    name="es6" value="{{e.s6}}">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Subject 7
+                                {{sub.s7}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s7m1" value="">
+                                    name="is7" value="{{i.s7}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s7m2" value="">
+                                    name="es7" value="{{e.s7}}">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Subject 8
+                                {{sub.s8}}
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s8m1" value="">
+                                    name="is8" value="{{i.s8}}">
                             </td>
                             <td>
                                 <input type="text" style="border:0px;background-color:white;font-size:1em;width:2em;"
-                                    name="s8m2" value="">
+                                    name="es8" value="{{e.s8}}">
                             </td>
                         </tr>
                     </table>

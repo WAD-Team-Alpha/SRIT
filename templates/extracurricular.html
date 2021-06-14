@@ -10,8 +10,31 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> -->
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .savebtn {
+            margin-left: 0.5em;
+            background-color: rgb(204, 120, 204);
+            color: black;
+            font-weight: 800;
+        }
+
+        .forminp {
+            border: 0px;
+            outline: 0px;
+        }
+
+        #delbtn {
+            color: black;
+            /* outline: none; */
+            border: none;
+            background-color: rgb(240, 180, 240);
+        }
+    </style>
 </head>
 
 <body>
@@ -80,8 +103,36 @@
                     </div>
                 </div>
             </nav>
+            <h2 style="padding-left: 1.5em; font-weight: 800;">Extra-Curricular Activities:</h2>
+            <span style="float: right; margin-right: 4.8em; "> <button class="btn btn-danger" id="btnadd"> Add
+                    <!-- onclick="addRow('extra-curricular')" -->
+                </button> </span>
+            <div class="container tableextra">
+                <table class="table extra-curricular" id="extra-curricular">
+                    <thead>
+                        <td style="background-color: #7b43ff; color:white;">
+                            <b> SUBJECT </b>
+                        </td>
+
+                        <td style="background-color: #7b43ff;color:white;">
+                            <b>Marks</b>
+                        </td>
+                        <td style="background-color: #7b43ff;color:white;">
+                            <b>Delete</b>
+                        </td>
+                    </thead>
+                    <tbody id="tbodyadd">
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Save" class="btn savebtn">
+            </div>
         </div>
     </div>
+
+
+
+    <!-- <button type="button" class="btn btn-danger" id="btnadd">Add a row</button> -->
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -94,6 +145,35 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+
+        function deleteRow(r, id) {
+            var i = r.parentNode.parentNode.rowIndex;
+            elm = document.getElementById(id).deleteRow(i);
+            $(elm).remove();
+            console.log("hello");
+        }
+        $("#btnadd").click(function () {
+            // console.log("hello");
+            $("#tbodyadd").append(`
+                    <tr>
+                        <td>
+                            <select class="form-control forminp">
+                                    <option>Select your subjects here</option>
+                                    <option>COA</option>
+                                    <option>CS</option>
+                                    <option>Python</option>
+                            </select>  
+                        </td>
+                        <td>
+                            <p contenteditable="true">.....</p>
+                        </td>
+                        <td>
+                            <input type="button" id="delbtn" value="Delete" onclick="deleteRow(this, 'extra-curricular')"
+                        class="button">
+                        </td>
+                    </tr>
+                `)
+        })
     </script>
 </body>
 
