@@ -12,7 +12,7 @@ class StudentForm(forms.ModelForm):
                 attrs={
                     'type': 'text',
                     'class': 'form-control',
-                    'id': 'fname',
+                    'id': 'firstname',
                     'name': 'fname',
                     'placeholder': 'First Name',
                     'required': True
@@ -22,7 +22,7 @@ class StudentForm(forms.ModelForm):
                 attrs={
                     'type': 'text',
                     'class': 'form-control',
-                    'id': 'lname',
+                    'id': 'lastName',
                     'name': 'lname',
                     'placeholder': 'Last Name',
                     'required': True
@@ -31,9 +31,9 @@ class StudentForm(forms.ModelForm):
             "usr_nm": forms.TextInput(attrs={
                 'type': 'text',
                 'class': 'form-control',
-                'id': 'usr_nm',
+                'id': 'user',
                 'name': 'usr_nm',
-                'placeholder': 'usr_nm',
+                'placeholder': 'Username',
                 'required': True
             }),
             "email": forms.EmailInput(
@@ -63,6 +63,7 @@ class StudentForm(forms.ModelForm):
                     'id': 'sem_no',
                     'name': 'sem_no',
                     'placeholder': 'Semester number',
+                    'maxlength': 1,
                     'required': True
                 }
             ),

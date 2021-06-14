@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +23,7 @@
 <body style="background-color: rgb(231, 205, 157);">
     <nav class="navbar navbar-expand-lg navbar- bg-" style="background-color: purple;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html"><img class="logosrit" src="../img/sritlogo.png" alt="Logo"></a>
+            <a class="navbar-brand" href="#"><img class="logosrit" src="{% static 'img/sritlogo.png' %}" alt="Logo"></a>
             <h3 class="text-primary">SRIT</h3>
         </div>
     </nav>
@@ -31,10 +32,11 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <form action="" method="POST">
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
                     <div class="mb-3">
-                        <label for="user" class="form-label">UserId</label>
-                        <input type="text" required class="form-control" id="user" name="user" placeholder="UserId"
+                        <label for="user" class="form-label">Username</label>
+                        <input type="text" required class="form-control" id="user" name="user" placeholder="Username"
                             aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
@@ -49,7 +51,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 <div>
-                    <h6 class="text-center my-3">If you don't have an account <a href="./signup.html">Click Here</a>
+                    <h6 class="text-center my-3">If you don't have an account <a href="{% url 'signup' %}">Click Here</a>
                     </h6>
                 </div>
             </div>

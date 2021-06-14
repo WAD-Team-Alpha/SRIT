@@ -26,14 +26,14 @@ class Semester(models.Model):
     ot = models.IntegerField(default=0)
     csp = models.IntegerField(default=0)
     op = models.IntegerField(default=0)
-    s1 = models.CharField(blank=True)
-    s2 = models.CharField(blank=True)
-    s3 = models.CharField(blank=True)
-    s4 = models.CharField(blank=True)
-    s5 = models.CharField(blank=True)
-    s6 = models.CharField(blank=True)
-    s7 = models.CharField(blank=True)
-    s8 = models.CharField(blank=True)
+    s1 = models.CharField(blank=True, max_length=100)
+    s2 = models.CharField(blank=True, max_length=100)
+    s3 = models.CharField(blank=True, max_length=100)
+    s4 = models.CharField(blank=True, max_length=100)
+    s5 = models.CharField(blank=True, max_length=100)
+    s6 = models.CharField(blank=True, max_length=100)
+    s7 = models.CharField(blank=True, max_length=100)
+    s8 = models.CharField(blank=True, max_length=100)
 
     def __str__(self):
         return self.roll_no

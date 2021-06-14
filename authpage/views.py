@@ -15,23 +15,24 @@ from .forms import *
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+        username = request.POST['user']
+        password = request.POST['pass']
 
-        print(email)
+        print(username)
         print(password)
         
-        user = auth.authenticate(request, email=email, password=password)
+        user = auth.authenticate(request, username=username, password=password)
         print(user)
         print(request.user)
         
         if user is not None:
             auth.login(request, user)
-            return redirect('index')
+            return redirect('home')
         else:
-            return render(request, 'login.html', {"error": "wrong credentials"})
+            return render(request, 'signin.html', {"error": "wrong credentials"})
     
-    return render(request, 'login.html')
+    print(request.user)
+    return render(request, 'signin.html')
 
 def logout(request):
     auth.logout(request)
@@ -78,23 +79,23 @@ def signup(request):
 
         email = request.POST['email']
         username = request.POST['usr_nm']
-        rollnumber = request.POST['rollnumber']
-        password = request.POST['psw']
+        rollnumber = request.POST['roll_no']
+        roll_no = rollnumber
+        print(roll_no)
+        password = request.POST['pass']
         branch = request.POST['branch']
         sem_no = request.POST['sem_no']
         
         if userform.is_valid():
             if Student.objects.filter(email = email).exists():
                 return redirect('signup')
-            if Student.objects.filter(RollNumber = rollnumber).exists():
+            if Student.objects.filter(roll_no = rollnumber).exists():
                 return redirect('signup')
 
-            user = User.objects.create_user(email=email, password=password, username=username)
-            user.is_active = True
-            user.save()
+            print(roll_no)
 
             if branch == 'CSE':
-                createSemester(cse, sem_no, rollnumber, 0)
+                createSemester(cse, sem_no, roll_no, 0)
             elif branch == 'ECE':
                 createSemester(ece, sem_no, rollnumber, 0)
             elif branch == 'MECH':
@@ -104,14 +105,18 @@ def signup(request):
             else:
                 createSemester(eee, sem_no, rollnumber, 0)
 
-            userform.save()
             createMarks(sem_no, rollnumber, 0)
             createMarks(sem_no, rollnumber, 1)
             createMarks(sem_no, rollnumber, 2)
             createMarks(sem_no, rollnumber, 3)
             createMarks(sem_no, rollnumber, 4)
+
+            user = User.objects.create_user(email=email, password=password, username=username)
+            user.is_active = True
+            userform.save()
+            user.save()
         else:
-            return render(request, 'isignup.html', {'form': userform})
+            return render(request, 'signup.html', {'form': userform})
 
         return redirect('login')
     else:

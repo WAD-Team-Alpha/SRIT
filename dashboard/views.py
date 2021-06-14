@@ -33,7 +33,7 @@ def dashboard(request):
             'otp': details.op
         }
 
-        return render(request, 'dashboard.html', context)
+        return render(request, 'index.html', context)
     else:
         student = Student.objects.all().filter(usr_nm=request.user.username).get()
         rollnum = student.roll_no
@@ -46,7 +46,7 @@ def dashboard(request):
             'otp': details.ot
         }
 
-        return render(request, 'dashboard.html', context)
+        return render(request, 'index.html', context)
 
 def calculateInternal(mid1, mid2):
     internal = []

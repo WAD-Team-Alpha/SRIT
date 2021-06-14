@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 
@@ -23,7 +25,7 @@
 
     <nav class="navbar navbar-expand-lg navbar- bg-" style="background-color: purple;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index.html"><img class="logosrit" src="../img/sritlogo.png" alt="Logo"></a>
+            <a class="navbar-brand" href="#"><img class="logosrit" src="{% static 'img/sritlogo.png' %}" alt="Logo"></a>
             <h3 class="text-primary">SRIT</h3>
         </div>
     </nav>
@@ -33,31 +35,37 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="container">
-                    <form action="" onsubmit="return checkPass()">
+                    <form action="{% url 'signup' %}" onsubmit="return checkPass()" method="POST">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-6">
                                 <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="First name"
-                                    required>
+                                {{form.fn}}
                             </div>
                             <div class="col-6">
                                 <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                                {{form.ln}}
                             </div>
                         </div>
                         <div class="mt-3">
-                            <label for="user" class="form-label">UserId</label>
-                            <input type="text" required class="form-control" id="user" name="user" placeholder="Userid"
-                                aria-describedby="emailHelp">
+                            <label for="user" class="form-label">Username</label>
+                            {{form.usr_nm}}
+                        </div>
+                        <div class="mt-3">
+                            <label for="user" class="form-label">Roll Number</label>
+                            {{form.roll_no}}
+                        </div>
+                        <div class="mt-3">
+                            <label for="user" class="form-label">Email</label>
+                            {{form.email}}
                         </div>
                         <div class="mt-3">
                             <label for="sem" class="form-label">Semester No.</label>
-                            <input type="number" required class="form-control" id="sem" name="sem"
-                                placeholder="Semester  (e.g. for Sem-4 write 4)" aria-describedby="emailHelp">
+                            {{form.sem_no}}
                         </div>
                         <div class="mt-3">
                             <label for="stream" class="form-label">Stream</label>
-                            <input type="text" class="form-control" id="stream" placeholder="Branch Name" required>
+                            {{form.branch}}
                         </div>
                         <div class="mt-3">
                             <label for="pass" class="form-label">Password</label>
@@ -79,7 +87,7 @@
                         <br>
                         <br>
                         <div>
-                            <h6 class="text-center mt-3">If you already have an account <a href="./signin.html">Click
+                            <h6 class="text-center mt-3">If you already have an account <a href="{% url 'login' %}">Click
                                     Here</a>
                             </h6>
                         </div>
