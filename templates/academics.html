@@ -90,36 +90,61 @@
                     </tr>
                 </thead>
                 <tbody id="tbodyCon">
-                    <tr>
-                        <td>Maths</td>
+                    {% if subject.sem_no != 8 %}
+                        <tr>
+                        <td>{{subject.s1}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
                     <tr>
-                        <td>English</td>
+                        <td>{{subject.s2}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
                     <tr>
-                        <td>C</td>
+                        <td>{{subject.s3}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
                     <tr>
-                        <td>Drawing</td>
+                        <td>{{subject.s4}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
                     <tr>
-                        <td>Physics</td>
+                        <td>{{subject.s5}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
                     <tr>
-                        <td>OS</td>
+                        <td>{{subject.s6}}</td>
                         <td><a href="quiz.html">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr>
+                    <tr>
+                        <td>{{subject.s7}}</td>
+                        <td><a href="quiz.html">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>{{subject.s8}}</td>
+                        <td><a href="quiz.html">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    
+                    {% else %}
+                         <tr>
+                        <td>{{subject.s1}}</td>
+                        <td><a href="quiz.html">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    <tr>
+                        <td>{{subject.s2}}</td>
+                        <td><a href="quiz.html">Click Here</a></td>
+                        <td>NotGraded</td>
+                    </tr>
+                    {% endif %}
+                    
                 </tbody>
             </table>
         </div>

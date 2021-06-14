@@ -349,41 +349,8 @@ def activities(request):
     semNum = Student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
-    quiz = [
-        {
-            'subjectName': subjectName.s1,
-            'id': 1
-        },
-        {
-            'subjectName': subjectName.s2,
-            'id': 2
-        },
-        {
-            'subjectName': subjectName.s3,
-            'id': 3
-        },
-        {
-            'subjectName': subjectName.s4,
-            'id': 4
-        },
-        {
-            'subjectName': subjectName.s5,
-            'id': 5
-        },
-        {
-            'subjectName': subjectName.s6,
-            'id': 6
-        },
-        {
-            'subjectName': subjectName.s7,
-            'id': 7
-        },
-        {
-            'subjectName': subjectName.s8,
-            'id': 8
-        },
-    ]
-    return render(request, 'academics.html', {'quiz': quiz})
+
+    return render(request, 'academics.html', {'subject': subjectName})
 
 
 def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
@@ -396,11 +363,12 @@ def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.1, 0.1, 0.1, 0.1)
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+    ax1.pie(sizes, explode=explode, labels=labels,
             shadow=True, startangle=90)
     # Equal aspect ratio ensures that pie is drawn as a circle.
     ax1.axis('equal')
     plt.title("Pie chart of "+subjectName+"")
+    plt.legend()
     plt.savefig('media/'+imgName+'.png', dpi=100)
     plt.close()
 
@@ -481,12 +449,13 @@ def overall(request):
     fig = plt.figure(figsize=(10, 5))
     my_colors = ['red', 'blue', 'green', 'cyan', 'Purple', 'pink']
     # creating the bar plot
-    plt.bar(courses, values, color=my_colors,
-            width=0.4)
+    plt.barh(courses, values, color=my_colors,
+             height=0.2)
 
     plt.xlabel("Subjects")
     plt.ylabel("Score in Each Subject")
     plt.title("Overall Trends")
+
     plt.savefig('media/overall_barchart.png', dpi=100)
     plt.close()
     return render(request, 'overall.html')
