@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRIT</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/marks.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/marks.css' %}">
 </head>
 
 <body>
@@ -31,7 +32,7 @@
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
                         <li><a href="previous_marks.html">Previous Semesters </a></li>
-                        <li><a href="current_marks.html">Current Semester</a></li>
+                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
 
                     </ul>
                 </li>

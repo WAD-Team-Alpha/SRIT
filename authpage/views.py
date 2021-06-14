@@ -72,6 +72,18 @@ def createMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7
         s8 = s8,
     )
 
+def updateMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
+    Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, type= type).update( 
+        s1 = s1,
+        s2 = s2,
+        s3 = s3,
+        s4 = s4,
+        s5 = s5,
+        s6 = s6,
+        s7 = s7,
+        s8 = s8,
+    )
+
 
 def signup(request):
     if request.method == 'POST':
