@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 import numpy as np
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
-# import random
+import random
 import matplotlib
 matplotlib.use('Agg')
 # Create your views here.
@@ -349,8 +349,41 @@ def activities(request):
     semNum = Student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
-
-    return render(request, 'academics.html', {'subject': subjectName})
+    quiz = [
+        {
+            'subjectName': subjectName.s1,
+            'id': 1
+        },
+        {
+            'subjectName': subjectName.s2,
+            'id': 2
+        },
+        {
+            'subjectName': subjectName.s3,
+            'id': 3
+        },
+        {
+            'subjectName': subjectName.s4,
+            'id': 4
+        },
+        {
+            'subjectName': subjectName.s5,
+            'id': 5
+        },
+        {
+            'subjectName': subjectName.s6,
+            'id': 6
+        },
+        {
+            'subjectName': subjectName.s7,
+            'id': 7
+        },
+        {
+            'subjectName': subjectName.s8,
+            'id': 8
+        },
+    ]
+    return render(request, 'academics.html', {'quiz': quiz})
 
 
 def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
