@@ -1,0 +1,32 @@
+h3{
+    margin-left: 1em;
+    font-size: 22px;
+}
+
+h4{
+    margin-left: 1.4em;
+    color: orange;
+}
+
+h5{
+    margin-left: 1.8em;
+    color:purple;
+    font-size: 15px;
+
+}
+
+.txt{
+    color: blue;
+    cursor: pointer;
+}
+
+.s-text{
+    color: red;
+}
+
+#content{
+    background-color: bisque;
+}
+
+
+
