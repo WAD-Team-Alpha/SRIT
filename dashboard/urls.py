@@ -7,4 +7,6 @@ urlpatterns = [
     path('previoussem/', views.previousmarks, name='previoussem'),
     path('subjectwise/', views.subjectWise, name='subjectwise'),
     path('overall/', views.overall, name='overall'),
+
+    path('previoussemnumber/', views.previoussemNo, name='previoussemnumber'),
 ]

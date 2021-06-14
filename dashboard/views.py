@@ -1,5 +1,4 @@
-from authpage.views import createSemester, createMarks, updateMarks
-from authpage.civil import *
+from authpage.views import *
 from authpage.eee import *
 from authpage.mech import *
 from authpage.ece import *
@@ -9,11 +8,13 @@ from .models import *
 from django.core.files.storage import FileSystemStorage
 import numpy as np
 from matplotlib import pyplot as plt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # import random
 import matplotlib
 matplotlib.use('Agg')
 # Create your views here.
+
+selectedPrevSem = ''
 
 
 def dashboard(request):
@@ -49,12 +50,16 @@ def dashboard(request):
         return render(request, 'index.html', context)
 
 
-def calculateInternal(mid1, mid2):
+def calculateInternal(mid1, mid2, sem_no):
     internal = []
-    m1 = [int(mid1.s1), int(mid1.s2), int(mid1.s3), int(mid1.s4),
-          int(mid1.s5), int(mid1.s6), int(mid1.s7), int(mid1.s8)]
-    m2 = [int(mid2.s1), int(mid2.s2), int(mid2.s3), int(mid2.s4),
-          int(mid2.s5), int(mid2.s6), int(mid2.s7), int(mid2.s8)]
+    if sem_no == 8:
+        m1 = [int(mid1.s1), int(mid1.s2)]
+        m2 = [int(mid2.s1), int(mid2.s2)]
+    else:
+        m1 = [int(mid1.s1), int(mid1.s2), int(mid1.s3), int(mid1.s4),
+              int(mid1.s5), int(mid1.s6), int(mid1.s7), int(mid1.s8)]
+        m2 = [int(mid2.s1), int(mid2.s2), int(mid2.s3), int(mid2.s4),
+              int(mid2.s5), int(mid2.s6), int(mid2.s7), int(mid2.s8)]
 
     m = zip(m1, m2)
 
@@ -75,18 +80,25 @@ def predictExternal(internal):
     return external
 
 
-def calculateCsp(marks):
-    internal = [int(marks['is1']), int(marks['is1']), int(marks['is1']), int(
-        marks['is1']), int(marks['is1']), int(marks['is1']), int(marks['is1']), int(marks['is1'])]
-    external = [int(marks['es1']), int(marks['es1']), int(marks['es1']), int(
-        marks['es1']), int(marks['es1']), int(marks['es1']), int(marks['es1']), int(marks['es1'])]
+def calculateCsp(marks, sem_no):
+    if sem_no == 8:
+        internal = [int(marks['is1']), int(marks['is2'])]
+        external = [int(marks['es1']), int(marks['es2'])]
+    else:
+        internal = [int(marks['is1']), int(marks['is2']), int(marks['is3']), int(
+            marks['is4']), int(marks['is5']), int(marks['is6']), int(marks['is7']), int(marks['is8'])]
+        external = [int(marks['es1']), int(marks['es2']), int(marks['es3']), int(
+            marks['es4']), int(marks['es5']), int(marks['es6']), int(marks['es7']), int(marks['es8'])]
 
     total = zip(internal, external)
     c = 0
     for i, j in total:
         c = c+i+j
 
-    c = c/8
+    if sem_no == 8:
+        c = c/2
+    else:
+        c = c/8
 
     return c
 
@@ -99,29 +111,37 @@ def marks(request):
         sem_no = student.sem_no
 
         for i in range(2):
-            Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=i).update(
-                s1=marks['s1m{j}'.format(j=i+1)],
-                s2=marks['s2m{j}'.format(j=i+1)],
-                s3=marks['s3m{j}'.format(j=i+1)],
-                s4=marks['s4m{j}'.format(j=i+1)],
-                s5=marks['s5m{j}'.format(j=i+1)],
-                s6=marks['s6m{j}'.format(j=i+1)],
-                s7=marks['s7m{j}'.format(j=i+1)],
-                s8=marks['s8m{j}'.format(j=i+1)]
-            )
+            if sem_no == 8:
+                Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=i).update(
+                    s1=marks['s1m{j}'.format(j=i+1)],
+                    s2=marks['s2m{j}'.format(j=i+1)],
+                )
+            else:
+                Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=i).update(
+                    s1=marks['s1m{j}'.format(j=i+1)],
+                    s2=marks['s2m{j}'.format(j=i+1)],
+                    s3=marks['s3m{j}'.format(j=i+1)],
+                    s4=marks['s4m{j}'.format(j=i+1)],
+                    s5=marks['s5m{j}'.format(j=i+1)],
+                    s6=marks['s6m{j}'.format(j=i+1)],
+                    s7=marks['s7m{j}'.format(j=i+1)],
+                    s8=marks['s8m{j}'.format(j=i+1)]
+                )
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
 
-        internal = calculateInternal(mid1, mid2)
-
-        updateMarks(sem_no, rollnum, 2, internal[0], internal[1], internal[2],
-                    internal[3], internal[4], internal[5], internal[6], internal[7])
-
+        internal = calculateInternal(mid1, mid2, sem_no)
         external = predictExternal(internal)
 
-        updateMarks(sem_no, rollnum, 3, external[0], external[1], external[2],
-                    external[3], external[4], external[5], external[6], external[7])
+        if sem_no == 8:
+            updateMarks(sem_no, rollnum, 2, internal[0], internal[1])
+            updateMarks(sem_no, rollnum, 3, external[0], external[1])
+        else:
+            updateMarks(sem_no, rollnum, 2, internal[0], internal[1], internal[2],
+                        internal[3], internal[4], internal[5], internal[6], internal[7])
+            updateMarks(sem_no, rollnum, 3, external[0], external[1], external[2],
+                        external[3], external[4], external[5], external[6], external[7])
 
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
@@ -143,38 +163,183 @@ def marks(request):
         return render(request, 'current_marks.html', {'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
 
 
-def prevSems():
-    return []
+def previoussemNo(request):
+    global selectedPrevSem
+    if request.method == 'POST':
+        student = Student.objects.all().filter(usr_nm=request.user.username).get()
+        rollnum = student.roll_no
+        branch = student.branch
+        selectedPrevSem = request.POST['mdd']
+
+        if not Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).exists():
+            if branch == 'CSE':
+                createSemester(cse, selectedPrevSem, rollnum, 1)
+            elif branch == 'ECE':
+                createSemester(ece, selectedPrevSem, rollnum, 1)
+            elif branch == 'MECH':
+                createSemester(mech, selectedPrevSem, rollnum, 1)
+            elif branch == 'CIVIL':
+                createSemester(civil, selectedPrevSem, rollnum, 1)
+            else:
+                createSemester(eee, selectedPrevSem, rollnum, 1)
+
+        if not Marks.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum, type=2).exists():
+            createMarks(selectedPrevSem, rollnum, type=2)
+        if not Marks.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum, type=3).exists():
+            createMarks(selectedPrevSem, rollnum, type=3)
+
+        sem = Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).get()
+        j = Marks.objects.all().filter(sem_no=selectedPrevSem,
+                                       roll_no=rollnum, type=2).get()
+        e = Marks.objects.all().filter(sem_no=selectedPrevSem,
+                                       roll_no=rollnum, type=3).get()
+
+        obj = ''
+        for i in range(int(student.sem_no)):
+            obj = obj + str(i+1)
+
+        return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': selectedPrevSem})
 
 
 def previousmarks(request):
+    global selectedPrevSem
     if request.method == 'POST':
-        student = Student.objects.all().filter(Username=request.user.username).get()
-        rollnum = student.RollNumber
+        print(selectedPrevSem)
+        student = Student.objects.all().filter(usr_nm=request.user.username).get()
+        rollnum = student.roll_no
         branch = student.branch
         marks = request.POST
-        updateMarks(marks['sem_no'], rollnum, 2, marks['is1'], marks['is2'], marks['is3'],
-                    marks['is4'], marks['is5'], marks['is6'], marks['is7'], marks['is8'])
-        updateMarks(marks['sem_no'], rollnum, 3, marks['es1'], marks['es2'], marks['es3'],
-                    marks['es4'], marks['es5'], marks['es6'], marks['es7'], marks['es8'])
 
-        cur_per = calculateCsp(marks)
+        isExists = False
+        if Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).exists():
+            isExists = True
 
-        if branch == 'CSE':
-            createSemester(cse, marks['sem_no'], rollnum, 1, cur_per)
-        elif branch == 'ECE':
-            createSemester(ece, marks['sem_no'], rollnum, 1, cur_per)
-        elif branch == 'MECH':
-            createSemester(mech, marks['sem_no'], rollnum, 1, cur_per)
-        elif branch == 'CIVIL':
-            createSemester(civil, marks['sem_no'], rollnum, 1, cur_per)
+        if isExists:
+            if selectedPrevSem == '8':
+                updateMarks(selectedPrevSem, rollnum, 2,
+                            marks['is1'], marks['is2'])
+                updateMarks(selectedPrevSem, rollnum, 3,
+                            marks['es1'], marks['es2'])
+            else:
+                updateMarks(selectedPrevSem, rollnum, 2, marks['is1'], marks['is2'], marks['is3'],
+                            marks['is4'], marks['is5'], marks['is6'], marks['is7'], marks['is8'])
+                updateMarks(selectedPrevSem, rollnum, 3, marks['es1'], marks['es2'], marks['es3'],
+                            marks['es4'], marks['es5'], marks['es6'], marks['es7'], marks['es8'])
         else:
-            createSemester(eee, marks['sem_no'], rollnum, 1, cur_per)
+            if selectedPrevSem == '8':
+                createMarks(selectedPrevSem, rollnum, 2,
+                            marks['is1'], marks['is2'])
+                createMarks(selectedPrevSem, rollnum, 3,
+                            marks['es1'], marks['es2'])
+            else:
+                createMarks(selectedPrevSem, rollnum, 2, marks['is1'], marks['is2'], marks['is3'],
+                            marks['is4'], marks['is5'], marks['is6'], marks['is7'], marks['is8'])
+                createMarks(selectedPrevSem, rollnum, 3, marks['es1'], marks['es2'], marks['es3'],
+                            marks['es4'], marks['es5'], marks['es6'], marks['es7'], marks['es8'])
 
-        return render(request, 'previous_marks.html')
+        cur_per = calculateCsp(marks, student.sem_no)
+
+        print(type(selectedPrevSem))
+
+        if selectedPrevSem == '8':
+            if branch == 'CSE':
+                if isExists:
+                    updateSemester8(cse, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester8(cse, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'ECE':
+                if isExists:
+                    updateSemester8(ece, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester8(ece, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'MECH':
+                if isExists:
+                    updateSemester8(mech, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester8(mech, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'CIVIL':
+                if isExists:
+                    updateSemester8(civil, selectedPrevSem,
+                                    rollnum, 1, cur_per)
+                else:
+                    createSemester8(civil, selectedPrevSem,
+                                    rollnum, 1, cur_per)
+            else:
+                if isExists:
+                    updateSemester8(eee, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester8(eee, selectedPrevSem, rollnum, 1, cur_per)
+        else:
+            if branch == 'CSE':
+                if isExists:
+                    updateSemester(cse, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester(cse, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'ECE':
+                if isExists:
+                    updateSemester(ece, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester(ece, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'MECH':
+                if isExists:
+                    updateSemester(mech, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester(mech, selectedPrevSem, rollnum, 1, cur_per)
+            elif branch == 'CIVIL':
+                if isExists:
+                    updateSemester(civil, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester(civil, selectedPrevSem, rollnum, 1, cur_per)
+            else:
+                if isExists:
+                    updateSemester(eee, selectedPrevSem, rollnum, 1, cur_per)
+                else:
+                    createSemester(eee, selectedPrevSem, rollnum, 1, cur_per)
+
+        sem = Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).get()
+        j = Marks.objects.all().filter(sem_no=selectedPrevSem,
+                                       roll_no=rollnum, type=2).get()
+        e = Marks.objects.all().filter(sem_no=selectedPrevSem,
+                                       roll_no=rollnum, type=3).get()
+
+        obj = ''
+        for i in range(int(student.sem_no)):
+            obj = obj + str(i+1)
+
+        if str(student.sem_no) == str(selectedPrevSem):
+            if selectedPrevSem == '8':
+                # messages
+                return redirect('home')
+            else:
+                Student.objects.all().filter(roll_no=rollnum).update(sem_no=student.sem_no + 1)
+                if branch == 'CSE':
+                    createSemester(cse, student.sem_no + 1, rollnum, 1)
+                elif branch == 'ECE':
+                    createSemester(ece, student.sem_no + 1, rollnum, 1)
+                elif branch == 'MECH':
+                    createSemester(mech, student.sem_no + 1, rollnum, 1)
+                elif branch == 'CIVIL':
+                    createSemester(civil, student.sem_no + 1, rollnum, 1)
+                else:
+                    createSemester(eee, student.sem_no + 1, rollnum, 1)
+
+        return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': selectedPrevSem})
+
     else:
-        semList = prevSems()
-        return render(request, 'previous_marks.html')
+        student = Student.objects.all().filter(usr_nm=request.user.username).get()
+        sem = Semester.objects.all().filter(
+            sem_no=student.sem_no, roll_no=student.roll_no).get()
+        j = Marks.objects.all().filter(sem_no=student.sem_no,
+                                       roll_no=student.roll_no, type=2).get()
+        e = Marks.objects.all().filter(sem_no=student.sem_no,
+                                       roll_no=student.roll_no, type=3).get()
+        rollnum = student.roll_no
+        sem_no = student.sem_no
+        obj = ''
+        for i in range(int(sem_no)):
+            obj = obj + str(i+1)
+
+        return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': str(sem_no)})
 
 
 def activities(request):
@@ -309,9 +474,6 @@ def overall(request):
     else:
         marks = [subject1, subject2]
         subjectNames = [subjectName.s1, subjectName.s2]
-
-    # data = {'subject1': subject1, 'subject2': subject2,
-    #         'subject3': subject3, 'subject4': subject4, 'subject5': subject5, 'subject6': subject6, }
 
     courses = subjectNames
     values = marks
