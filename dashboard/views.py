@@ -48,7 +48,8 @@ def dashboard(request):
             counter = counter + 1
             totalPer = totalPer + int(i.csp)
         if counter != 0:
-            Semester.objects.all().filter(roll_no=rollnum, sem_no=sem_no).update(op=(totalPer/counter))
+            Semester.objects.all().filter(
+                roll_no=rollnum, sem_no=sem_no).update(op=(totalPer/counter))
         details = Semester.objects.all().filter(roll_no=rollnum, sem_no=sem_no).get()
         context = {
             'sti': details.cst,
@@ -112,12 +113,13 @@ def calculateCsp(marks, sem_no):
 
     return c
 
+
 def calculateCspCurrentSem(internal, external, sem_no):
     total = zip(internal, external)
     c = 0
     for i, j in total:
         c = c+i+j
-    
+
     if sem_no == 8:
         c = c/2
     else:
@@ -184,10 +186,11 @@ def marks(request):
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
-        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum, status=0).get()
-            
-        
-        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+        sub = Semester.objects.all().filter(
+            sem_no=sem_no, roll_no=rollnum, status=0).get()
+
+        return render(request, 'current_marks.html', {'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
+
 
 def previoussemNo(request):
     global selectedPrevSem
@@ -244,15 +247,19 @@ def previousmarks(request):
             isExists = True
 
         if selectedPrevSem == '8':
-            updateMarks(selectedPrevSem, rollnum, 2, marks['is1'], marks['is2'])
-            updateMarks(selectedPrevSem, rollnum, 3, marks['es1'], marks['es2'])
+            updateMarks(selectedPrevSem, rollnum, 2,
+                        marks['is1'], marks['is2'])
+            updateMarks(selectedPrevSem, rollnum, 3,
+                        marks['es1'], marks['es2'])
         else:
-            updateMarks(selectedPrevSem, rollnum, 2, marks['is1'],marks['is2'],marks['is3'],marks['is4'],marks['is5'],marks['is6'],marks['is7'],marks['is8'])
-            updateMarks(selectedPrevSem, rollnum, 3, marks['es1'],marks['es2'],marks['es3'],marks['es4'],marks['es5'],marks['es6'],marks['es7'],marks['es8'])
+            updateMarks(selectedPrevSem, rollnum, 2, marks['is1'], marks['is2'], marks['is3'],
+                        marks['is4'], marks['is5'], marks['is6'], marks['is7'], marks['is8'])
+            updateMarks(selectedPrevSem, rollnum, 3, marks['es1'], marks['es2'], marks['es3'],
+                        marks['es4'], marks['es5'], marks['es6'], marks['es7'], marks['es8'])
 
         cur_per = calculateCsp(marks, student.sem_no)
 
-        print(cur_per) 
+        print(cur_per)
 
         if selectedPrevSem == '8':
             if branch == 'CSE':
@@ -305,7 +312,7 @@ def previousmarks(request):
                     elif branch == 'CIVIL':
                         createSemester8(civil, student.sem_no + 1, rollnum, 0)
                     else:
-                        createSemester8(eee, student.sem_no + 1, rollnum, 0) 
+                        createSemester8(eee, student.sem_no + 1, rollnum, 0)
                 else:
                     if branch == 'CSE':
                         print("i am being executed")
@@ -428,19 +435,28 @@ def academics(request):
     semNum = student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
+    id = {
+        'id1': 1,
+        'id2': 2,
+        'id3': 3,
+        'id4': 4,
+        'id5': 5,
+        'id6': 6,
+        'id7': 7,
+        'id8': 8,
+    }
+    return render(request, 'academics.html', {'subject': subjectName, 'id': id, 'quizMarks': quizMarks})
 
-    return render(request, 'academics.html', {'subject': subjectName, 'id': 1, 'quizMarks': quizMarks})
 
-
-def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
+def savePieChart(m1, m2, quiz, imgName, subjectName):
     if m1 == 0 and m2 == 0 and quiz == 0:
         labels = '', '', '', ''
     else:
-        labels = 'mid-1', 'mid-2', 'quiz', 'other activities'
+        labels = 'mid-1', 'mid-2', 'quiz'
 
-    sizes = [m1, m2,  quiz, extra_curricular]
+    sizes = [m1, m2,  quiz, ]
     # only "explode" the 2nd slice (i.e. 'Hogs')
-    explode = (0.1, 0.1, 0.1, 0.1)
+    explode = (0.1, 0.1, 0.1)
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, explode=explode, labels=labels,
             shadow=True, startangle=90)
@@ -464,25 +480,24 @@ def subjectWise(request):
     m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
     m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
     quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
-    extra_curricular = Marks.objects.all().filter(
-        roll_no=rollnum, sem_no=semNum, type=5).get()
-    savePieChart(m1.s1, m2.s1, quiz.s1, extra_curricular.s1,
+
+    savePieChart(m1.s1, m2.s1, quiz.s1,
                  'image1', subjectName.s1)
-    savePieChart(m1.s2, m2.s2, quiz.s2, extra_curricular.s2,
+    savePieChart(m1.s2, m2.s2, quiz.s2,
                  'image2', subjectName.s2)
     if semNum != 8:
         savePieChart(m1.s3, m2.s3, quiz.s3,
-                     extra_curricular.s3, 'image3', subjectName.s3)
+                     'image3', subjectName.s3)
         savePieChart(m1.s4, m2.s4, quiz.s4,
-                     extra_curricular.s4, 'image4', subjectName.s4)
+                     'image4', subjectName.s4)
         savePieChart(m1.s5, m2.s5, quiz.s5,
-                     extra_curricular.s5, 'image5', subjectName.s5)
+                     'image5', subjectName.s5)
         savePieChart(m1.s6, m2.s6, quiz.s6,
-                     extra_curricular.s6, 'image6', subjectName.s6)
+                     'image6', subjectName.s6)
         savePieChart(m1.s7, m2.s7, quiz.s7,
-                     extra_curricular.s7, 'image7', subjectName.s7)
+                     'image7', subjectName.s7)
         savePieChart(m1.s8, m2.s8, quiz.s8,
-                     extra_curricular.s8, 'image8', subjectName.s8)
+                     'image8', subjectName.s8)
     else:
         pass
 
@@ -518,9 +533,7 @@ def overall(request):
         roll_no=rollnum, sem_no=semNum,).get()
     m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
     m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
-    quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
-    extra_curricular = Marks.objects.all().filter(
-        roll_no=rollnum, sem_no=semNum, type=5).get()
+
     subject1 = (m1.s1 + m2.s1)*100/60
     subject2 = (m1.s2 + m2.s2)*100/60
     if semNum != 8:
@@ -571,42 +584,39 @@ def report(request):
     if semNum == 8:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
-        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
+        Subjects_names = [subjectName.s1, subjectName.s2, subjectName.s3,
+                          subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8]
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
-        
-        sub = [sub1,sub2]
+
+        sub = [sub1, sub2]
         total = zip(Subjects_names, sub)
 
         k = {}
-        for i,j in total:
+        for i, j in total:
             k[i] = j
 
-        
         l = sorted(k.items(), key=lambda x: x[1])
 
         print(l)
 
-        
         subjects_focused = [l[0][0]]
         subjects_good = [l[1][0]]
 
-       
+        mid1 = [m1.s1, m1.s2]
+        mid2 = [m2.s1, m2.s2]
 
-        mid1 = [m1.s1,m1.s2]
-        mid2 = [m2.s1,m2.s2]
-
-        Mid1 = zip(Subjects_names,mid1)
-        Mid2 = zip(Subjects_names,mid2)
+        Mid1 = zip(Subjects_names, mid1)
+        Mid2 = zip(Subjects_names, mid2)
 
         M1 = {}
-        for i,j in Mid1:
+        for i, j in Mid1:
             M1[i] = j
 
         print(M1)
 
         M2 = {}
-        for i,j in Mid2:
+        for i, j in Mid2:
             M2[i] = j
 
         print(M2)
@@ -614,28 +624,26 @@ def report(request):
         subjects_weak = []
         for i in M1:
             if M1[i] > M2[i]:
-                    subjects_weak.append(i)
+                subjects_weak.append(i)
 
         print(subjects_weak)
 
         subjects_strength = []
         for i in M1:
-                if M1[i] < M2[i]:
-                    subjects_strength.append(i)
+            if M1[i] < M2[i]:
+                subjects_strength.append(i)
 
         print(subjects_strength)
 
+        context = {
+            'Subjects_focused': subjects_focused,
+            'Subjects_good': subjects_good,
+            'Subjects_weak': subjects_focused,
+            'Subjects_strength': subjects_strength
 
-        context={
-            'Subjects_focused' : subjects_focused,
-            'Subjects_good' : subjects_good,
-            'Subjects_weak' : subjects_focused,
-            'Subjects_strength' : subjects_strength
-            
         }
 
-        return render(request, 'report.html',context)
-
+        return render(request, 'report.html', context)
 
     else:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
@@ -652,53 +660,51 @@ def report(request):
         sub7 = m1.s7+m2.s7
         sub8 = m1.s8+m2.s8
 
-        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
+        sub = [sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8]
         total = zip(Subjects_names, sub)
 
         k = {}
-        for i,j in total:
+        for i, j in total:
             k[i] = j
 
-        
         l = sorted(k.items(), key=lambda x: x[1])
 
-        subjects_focused = [l[0][0],l[1][0],l[2][0]]
-        subjects_good = [l[3][0],l[4][0],l[5][0],l[6][0],l[7][0]]
+        subjects_focused = [l[0][0], l[1][0], l[2][0]]
+        subjects_good = [l[3][0], l[4][0], l[5][0], l[6][0], l[7][0]]
 
         mid1 = [m1.s1, m1.s2, m1.s3, m1.s4, m1.s5, m1.s6, m1.s7, m1.s8]
         mid2 = [m2.s1, m2.s2, m2.s3, m2.s4, m2.s5, m2.s6, m2.s7, m2.s8]
 
-        Mid1 = zip(Subjects_names,mid1)
-        Mid2 = zip(Subjects_names,mid2)
+        Mid1 = zip(Subjects_names, mid1)
+        Mid2 = zip(Subjects_names, mid2)
 
         M1 = {}
-        for i,j in Mid1:
+        for i, j in Mid1:
             M1[i] = j
 
         M2 = {}
-        for i,j in Mid2:
+        for i, j in Mid2:
             M2[i] = j
 
         subjects_weak = []
         for i in M1:
             if M1[i] > M2[i]:
-                    subjects_weak.append(i)
+                subjects_weak.append(i)
 
         print(subjects_weak)
 
         subjects_strength = []
         for i in M1:
-                if M1[i] < M2[i]:
-                    subjects_strength.append(i)
+            if M1[i] < M2[i]:
+                subjects_strength.append(i)
 
         print(subjects_strength)
 
-
-        context={
-            'Subjects_focused' : subjects_focused,
-            'Subjects_good' : subjects_good,
-            'Subjects_weak' : subjects_weak,
-            'Subjects_strength' : subjects_strength
+        context = {
+            'Subjects_focused': subjects_focused,
+            'Subjects_good': subjects_good,
+            'Subjects_weak': subjects_weak,
+            'Subjects_strength': subjects_strength
         }
 
         return render(request, 'report.html', context)
@@ -714,37 +720,36 @@ def suggestion(request):
     if semNum == 8:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
-        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
+        Subjects_names = [subjectName.s1, subjectName.s2, subjectName.s3,
+                          subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8]
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
-        
-        sub = [sub1,sub2]
+
+        sub = [sub1, sub2]
         total = zip(Subjects_names, sub)
 
         k = {}
-        for i,j in total:
+        for i, j in total:
             k[i] = j
 
-        
         l = sorted(k.items(), key=lambda x: x[1])
 
         print(l)
 
-        
         subjects_focused = [l[0][0]]
-        
-        context={
-            'Subjects_focused' : subjects_focused,
+
+        context = {
+            'Subjects_focused': subjects_focused,
         }
 
-        return render(request, 'suggestions.html',context)
-
+        return render(request, 'suggestions.html', context)
 
     else:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
-        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
-        
+        Subjects_names = [subjectName.s1, subjectName.s2, subjectName.s3,
+                          subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8]
+
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
         sub3 = m1.s3+m2.s3
@@ -754,23 +759,19 @@ def suggestion(request):
         sub7 = m1.s7+m2.s7
         sub8 = m1.s8+m2.s8
 
-        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
+        sub = [sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8]
         total = zip(Subjects_names, sub)
 
         k = {}
-        for i,j in total:
+        for i, j in total:
             k[i] = j
 
-        
         l = sorted(k.items(), key=lambda x: x[1])
 
-        
-        
-        subjects_focused = [l[0][0],l[1][0],l[2][0]]
-        
-        context={
-            'Subjects_focused' : subjects_focused,
+        subjects_focused = [l[0][0], l[1][0], l[2][0]]
+
+        context = {
+            'Subjects_focused': subjects_focused,
         }
 
-        return render(request, 'suggestions.html',context)
-
+        return render(request, 'suggestions.html', context)
