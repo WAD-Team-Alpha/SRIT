@@ -1,3 +1,4 @@
+from .quizz import quiz
 from authpage.views import *
 from authpage.eee import *
 from authpage.mech import *
@@ -342,48 +343,90 @@ def previousmarks(request):
         return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': str(sem_no)})
 
 
-def activities(request):
-    student = Student.objects.all().filter(Username=request.user.username).get()
+def validate(question, answer):
+    for q in quiz:
+        if question == q['question']:
 
+            if answer == q['answer']:
+
+                return True
+    return False
+
+
+def updateQuizMarks(id, score, semNum, rollnum):
+    if id == 1:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s1=score)
+    elif id == 2:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s2=score)
+    elif id == 3:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s3=score)
+    elif id == 4:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s4=score)
+    elif id == 5:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s5=score)
+    elif id == 6:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s6=score)
+    elif id == 7:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s7=score)
+    elif id == 8:
+        Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s8=score)
+
+
+def quizfun(request, subject_id):
+    student = Student.objects.all().filter(usr_nm=request.user.username).get()
     rollnum = student.roll_no
-    semNum = Student.sem_no
+    semNum = student.sem_no
+
+    if request.method == 'POST':
+
+        score = 0
+        # print(validate(request.POST['question1'], request.POST['q1']))
+        if validate(request.POST['question1'], request.POST['q1']):
+            score += 2
+        if validate(request.POST['question2'], request.POST['q2']):
+            score += 2
+        if validate(request.POST['question3'], request.POST['q3']):
+            score += 2
+        if validate(request.POST['question4'], request.POST['q4']):
+            score += 2
+        if validate(request.POST['question5'], request.POST['q5']):
+            score += 2
+        updateQuizMarks(subject_id, score, semNum, rollnum)
+        print(score)
+        return redirect('academics')
+
+    student = Student.objects.all().filter(usr_nm=request.user.username).get()
+
+    selectedQuestions = random.sample(quiz, 5)
+    question0 = selectedQuestions[0]
+
+    question1 = selectedQuestions[1]
+    question2 = selectedQuestions[2]
+    question3 = selectedQuestions[3]
+    question4 = selectedQuestions[4]
+    selectedQuestions = {
+        'question0': question0,
+        'question1': question1,
+        'question2': question2,
+        'question3': question3,
+        'question4': question4,
+    }
+    id = subject_id
+    return render(request, 'quiz.html', {'questions': selectedQuestions, 'student': student, 'id': id})
+
+
+def academics(request):
+    student = Student.objects.all().filter(usr_nm=request.user.username).get()
+    rollnum = student.roll_no
+    semNum = student.sem_no
+    quizMarks = Marks.objects.all().filter(
+        roll_no=rollnum, sem_no=semNum, type=4).get()
+    rollnum = student.roll_no
+    semNum = student.sem_no
     subjectName = Semester.objects.all().filter(
         roll_no=rollnum, sem_no=semNum,).get()
-    quiz = [
-        {
-            'subjectName': subjectName.s1,
-            'id': 1
-        },
-        {
-            'subjectName': subjectName.s2,
-            'id': 2
-        },
-        {
-            'subjectName': subjectName.s3,
-            'id': 3
-        },
-        {
-            'subjectName': subjectName.s4,
-            'id': 4
-        },
-        {
-            'subjectName': subjectName.s5,
-            'id': 5
-        },
-        {
-            'subjectName': subjectName.s6,
-            'id': 6
-        },
-        {
-            'subjectName': subjectName.s7,
-            'id': 7
-        },
-        {
-            'subjectName': subjectName.s8,
-            'id': 8
-        },
-    ]
-    return render(request, 'academics.html', {'quiz': quiz})
+
+    return render(request, 'academics.html', {'subject': subjectName, 'id': 1, 'quizMarks': quizMarks})
 
 
 def savePieChart(m1, m2, quiz, extra_curricular, imgName, subjectName):
@@ -443,6 +486,26 @@ def subjectWise(request):
     return render(request, 'subjectwise.html', {'subjectName': subjectName})
 
 
+def name(s):
+
+    # split the string into a list
+    l = s.split()
+    new = ""
+
+    # traverse in the list
+    for i in range(len(l)):
+        s = l[i]
+
+        # adds the capital first character
+        new += (s[0].upper()+'.')
+
+    # l[-1] gives last item of list l. We
+    # use title to print first character in
+    # capital.
+
+    return new
+
+
 def overall(request):
     student = Student.objects.all().filter(
         usr_nm=request.user.username).get()
@@ -470,8 +533,8 @@ def overall(request):
     if semNum != 8:
         marks = [subject1, subject2, subject3, subject4,
                  subject5, subject6, subject7, subject8]
-        subjectNames = [subjectName.s1, subjectName.s2, subjectName.s2,
-                        subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8, ]
+        subjectNames = [name(subjectName.s1), name(subjectName.s2), name(subjectName.s3),
+                        name(subjectName.s4), name(subjectName.s5), name(subjectName.s6), name(subjectName.s7), name(subjectName.s8), ]
     else:
         marks = [subject1, subject2]
         subjectNames = [subjectName.s1, subjectName.s2]
@@ -482,14 +545,15 @@ def overall(request):
     fig = plt.figure(figsize=(10, 5))
     my_colors = ['red', 'blue', 'green', 'cyan', 'Purple', 'pink']
     # creating the bar plot
-    plt.barh(courses, values, color=my_colors,
-             height=0.2)
+    plt.bar(courses, values, color=my_colors,
+            width=0.2)
 
     plt.xlabel("Subjects")
     plt.ylabel("Score in Each Subject")
     plt.title("Overall Trends")
 
     plt.savefig('media/overall_barchart.png', dpi=100)
+
     plt.close()
     return render(request, 'overall.html')
 

@@ -1,19 +1,21 @@
-# a = [1, 2, 3]
-# b = [4, 5, 6]
+def name(s):
 
-# c = zip(a, b)
+    # split the string into a list
+    l = s.split()
+    new = ""
 
-# for i,j in c:
-#     print(i+j)
+    # traverse in the list
+    for i in range(len(l)):
+        s = l[i]
 
-# a = {
-#     "name": "surya"
-# }
+        # adds the capital first character
+        new += (s[0].upper()+'.')
 
-# print(a['nam{i}'.format(i = 'j')])
+    # l[-1] gives last item of list l. We
+    # use title to print first character in
+    # capital.
 
-def hello(op = 5):
-    print(op)
+    return new
 
-hello()
-hello(10)
+
+print(name("discrete mathematics"))
