@@ -82,31 +82,31 @@
 
             <section class="report-container">
                 <h2 class="h2">Report </h2>
-                <h4 style="color: gray;">
+                <h4 style="color: black;">
                     <ol id="list" class="list-group list-group-flush">
-                        <li>Subjects that you are good at:
-                            <span> {% for sub in Subjects_good %} {{sub}}, {% endfor %} </span>
+                        <li><b>Subjects that you are good at:</b>
+                            <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Subjects that you need to focus more on:
-                            <span> {% for sub in Subjects_focused %} {{sub}}, {% endfor %} </span>
+                        <li><b>Subjects that you need to focus more on:</b>
+                            <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Areas of Strength:
-                            <span class="text">{% for sub in Subjects_strong %} {{sub}}, {% endfor %}</span>
+                        <li><b>Areas of Strength:</b>
+                            <span class="text"><br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %}</span>
                         </li>
-                        <li>Areas of Weakness:
-                            <span> Subject </span>
+                        <li><b>Areas of Weakness:</b>
+                            <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Areas of Interest as observed:
-                            <span> Subject </span>
+                        <li><b>Areas of Interest as observed:</b>
+                            <span> <br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Maximum progress shown in:
-                            <span> Subject </span>
+                        <li><b>Maximum progress shown in:</b>
+                            <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Progress required in:
-                            <span> Subject </span>
+                        <li><b>Progress required in:</b>
+                            <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
                         </li>
-                        <li>Performance deceased in:
-                            <span> Subject </span>
+                        <li><b>Performance deceased in:</b>
+                            <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
                         </li>
                     </ol>
                 </h4>

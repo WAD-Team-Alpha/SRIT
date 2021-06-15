@@ -83,10 +83,10 @@
             </nav>
 
             <div class="suggestions">
-                <h3><b>Subjects you should improve: </b><br><span class="s-text"><b><br>{% for sub in Subjects %} {{sub}}<br> {% endfor %}</b></span> </h3>
+                <h3><b>Subjects you should improve: </b><br><span class="s-text"><b><br>{% for sub in Subjects_focused %} {{sub}}<br> {% endfor %}</b></span> </h3>
                 <h3><b>Here are some of the links : </b></h3>
 
-                {% for sub in Subjects %}
+                {% for sub in Subjects_focused %}
                 <h4><b> {{sub}} : </b></h4>
                 <h5>Youtube Link: <a href="https://www.youtube.com/results?search_query={{sub}}"><span class="txt">Click Here</span></a></h5>
                 <h5>Article Link: <a href="https://www.google.com/search?q=+{{sub}}"><span class="txt">Click Here</span></a></h5><br> 
