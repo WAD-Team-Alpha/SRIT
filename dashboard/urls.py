@@ -9,7 +9,8 @@ urlpatterns = [
     path('subjectwise/', views.subjectWise, name='subjectwise'),
     path('overall/', views.overall, name='overall'),
     path('academics/', views.academics, name='academics'),
-    #
     path('<int:subject_id>', views.quizfun, name='quizfun'),
+    path('suggestions/', views.suggestion, name='suggestions'),
+    path('report/', views.report, name='report'),
     path('previoussemnumber/', views.previoussemNo, name='previoussemnumber'),
 ]

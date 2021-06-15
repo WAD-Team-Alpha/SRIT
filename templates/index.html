@@ -30,6 +30,7 @@
           <h3 class="sidebar-title">SRIT</h3>
         </div>
 
+<<<<<<< HEAD
         <ul class="list-unstyled components">
           <p style="font-size: 1.4em">Welcome {{user.username}}</p>
           <li>
@@ -44,6 +45,31 @@
                 <a href="templates/previous_marks.html">Previous Semesters </a>
               </li>
               <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
+=======
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li><a href="templates/academics.html" />Academics </a></li>
+                        <!-- <li><a href="templates/extracurricular.html">Extra Curricular</a></li> -->
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu1">
+                        <li><a href="templates/subjectwise.html">Subject Wise</a></li>
+                        <li><a href="templates/overall.html">Overall</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{% url 'report' %}">Report</a>
+                </li>
+                <li>
+                    <a href="{%url 'suggestions' %}">Suggestions</a>
+                </li>
+>>>>>>> bc1aa730505a28d90005c342be7cb16373bae0df
             </ul>
           </li>
           <li class="active">
