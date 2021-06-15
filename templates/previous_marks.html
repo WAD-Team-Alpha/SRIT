@@ -72,7 +72,17 @@
                             <i class="glyphicon glyphicon-align-left"></i>
                             <span>DASHBOARD</span>
                         </button>
-                        <h1 class="title">MARKS</h1>
+                        <h1 class="title">
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{message}}
+                                {% endfor %}
+                            {% else %}
+                                MARKS
+                            {% endif %}
+                                
+                        </h1>
                     </div>
                     <div class="power" id="">
                         <a href="#"><i class="pbtn glyphicon glyphicon-off"></i></a>

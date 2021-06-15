@@ -13,6 +13,7 @@ from authpage.mech import *
 from authpage.eee import *
 from authpage.civil import *
 from authpage.views import *
+from django.contrib import messages
 # Create your views here.
 
 selectedPrevSem = ''
@@ -190,6 +191,9 @@ def previoussemNo(request):
 def previousmarks(request):
     global selectedPrevSem
     if request.method == 'POST':
+        if selectedPrevSem == '':
+            messages.success(request, "Please select a sem")
+            return redirect('previoussem')
         print(selectedPrevSem)
         student = Student.objects.all().filter(usr_nm=request.user.username).get()
         rollnum = student.roll_no
@@ -286,19 +290,40 @@ def previousmarks(request):
                 return redirect('home')
             else:
                 Student.objects.all().filter(roll_no=rollnum).update(sem_no = student.sem_no + 1)
-                if branch == 'CSE':
-                    createSemester(cse, student.sem_no + 1, rollnum, 1)
-                elif branch == 'ECE':
-                    createSemester(ece, student.sem_no + 1, rollnum, 1)
-                elif branch == 'MECH':
-                    createSemester(mech, student.sem_no + 1, rollnum, 1)
-                elif branch == 'CIVIL':
-                    createSemester(civil, student.sem_no + 1, rollnum, 1)
+                if student.sem_no + 1 == 8:
+                    if branch == 'CSE':
+                        print("i am being executed")
+                        createSemester8(cse, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'ECE':
+                        createSemester8(ece, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'MECH':
+                        createSemester8(mech, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'CIVIL':
+                        createSemester8(civil, student.sem_no + 1, rollnum, 1)
+                    else:
+                        createSemester8(eee, student.sem_no + 1, rollnum, 1) 
                 else:
-                    createSemester(eee, student.sem_no + 1, rollnum, 1)
+                    if branch == 'CSE':
+                        print("i am being executed")
+                        createSemester(cse, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'ECE':
+                        createSemester(ece, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'MECH':
+                        createSemester(mech, student.sem_no + 1, rollnum, 1)
+                    elif branch == 'CIVIL':
+                        createSemester(civil, student.sem_no + 1, rollnum, 1)
+                    else:
+                        createSemester(eee, student.sem_no + 1, rollnum, 1)
+                print("i am as well")
+                createMarks(student.sem_no + 1, rollnum, 0)
+                createMarks(student.sem_no + 1, rollnum, 1)
+                createMarks(student.sem_no + 1, rollnum, 2)
+                createMarks(student.sem_no + 1, rollnum, 3)
+                createMarks(student.sem_no + 1, rollnum, 4)
             
-
-        return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': selectedPrevSem})
+        currentstatus = selectedPrevSem
+        selectedPrevSem = ''
+        return render(request, 'previous_marks.html', {'sub': sem, 'i': j, 'e': e, 'sems': obj, 'cs': currentstatus})
 
     else:
         student = Student.objects.all().filter(usr_nm=request.user.username).get()
