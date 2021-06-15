@@ -10,6 +10,7 @@ from .ece import *
 from .eee import *
 from .mech import *
 from .forms import *
+from django.contrib import messages
 
 # Create your views here.
 
@@ -27,15 +28,18 @@ def login(request):
         
         if user is not None:
             auth.login(request, user)
+            messages.success(request, "Logged in")
             return redirect('home')
         else:
-            return render(request, 'signin.html', {"error": "wrong credentials"})
+            messages.error(request, 'Wrong credentials')
+            return redirect('login')
     
     print(request.user)
     return render(request, 'signin.html')
 
 def logout(request):
     auth.logout(request)
+    messages.success(request, "Logged out")
     return redirect('login')
 
 def createSemester(lis, sem_no, rollnumber, status, cp=0):
@@ -57,14 +61,14 @@ def createSemester(lis, sem_no, rollnumber, status, cp=0):
         s8=lis[int(sem_no)][7],
     )
 
-def createSemester8(lis, sem_no, rollnumber):
+def createSemester8(lis, sem_no, rollnumber, status, cp=0):
     Semester.objects.create(
         sem_no=sem_no,
         roll_no=rollnumber,
-        status=0,
+        status=status,
         cst=0,
         ot=0,
-        csp=0,
+        csp=cp,
         op=0,
         s1=lis[int(sem_no)][0],
         s2=lis[int(sem_no)][1],
@@ -112,9 +116,9 @@ def updateMarks8(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s
         s2 = int(s2),
     )
 
-def updateSemester(lis, sem_no, rollnumber, status, cp=0):
-    Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, status=0).update(
-        sem_no=sem_no,
+def updateSemester(lis, sem_no, rollnumber, status, cp):
+    Semester.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber).update(
+        sem_no=int(sem_no),
         roll_no=rollnumber,
         status=status,
         cst=0,
@@ -131,8 +135,8 @@ def updateSemester(lis, sem_no, rollnumber, status, cp=0):
         s8=lis[int(sem_no)][7],
     )
 
-def updateSemester8(lis, sem_no, rollnumber, status, cp=0):
-    Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, status=0).update(
+def updateSemester8(lis, sem_no, rollnumber, status, cp):
+    Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, status=status).update(
         sem_no=sem_no,
         roll_no=rollnumber,
         status=status,
@@ -169,15 +173,15 @@ def signup(request):
             if sem_no == '8':
                 print("i am here")
                 if branch == 'CSE':
-                    createSemester8(cse, 8, rollnumber)
+                    createSemester8(cse, 8, rollnumber, 0)
                 elif branch == 'ECE':
-                    createSemester8(ece, 8, rollnumber)
+                    createSemester8(ece, 8, rollnumber, 0)
                 elif branch == 'MECH':
-                    createSemester8(mech, 8, rollnumber)
+                    createSemester8(mech, 8, rollnumber, 0)
                 elif branch == 'CIVIL':
-                    createSemester8(civil, 8, rollnumber)
+                    createSemester8(civil, 8, rollnumber, 0)
                 else:
-                    createSemester8(eee, 8, rollnumber)
+                    createSemester8(eee, 8, rollnumber, 0)
 
                 createMarks8(sem_no, rollnumber, 0)
                 createMarks8(sem_no, rollnumber, 1)
@@ -211,6 +215,7 @@ def signup(request):
         else:
             return render(request, 'signup.html', {'form': userform})
 
+        messages.success(request, "Registered Successfully, you can now login")
         return redirect('login')
     else:
         userform = StudentForm()
