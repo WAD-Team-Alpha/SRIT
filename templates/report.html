@@ -1,3 +1,4 @@
+{%load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/report.css">
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/report.css' %}" />
 
 </head>
 
@@ -85,13 +85,13 @@
                 <h4 style="color: gray;">
                     <ol id="list" class="list-group list-group-flush">
                         <li>Subjects that you are good at:
-                            <span> Subject </span>
+                            <span> {% for sub in Subjects_good %} {{sub}}, {% endfor %} </span>
                         </li>
                         <li>Subjects that you need to focus more on:
-                            <span> Subject </span>
+                            <span> {% for sub in Subjects_focused %} {{sub}}, {% endfor %} </span>
                         </li>
                         <li>Areas of Strength:
-                            <span class="text"> Subject </span>
+                            <span class="text">{% for sub in Subjects_strong %} {{sub}}, {% endfor %}</span>
                         </li>
                         <li>Areas of Weakness:
                             <span> Subject </span>
