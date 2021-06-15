@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -7,16 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>SRIT</title>
-    <link rel="shortcut icon" href="./img/sritlogo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         .container {
             border-radius: 25px;
-            background-color: cadetblue;
-            padding-bottom: 20px;
+           
+            
         }
 
         .rcorners {
@@ -40,20 +41,20 @@
             <ul class="list-unstyled components">
                 <p style="font-size: 1.4em;">Welcome username</p>
                 <li>
-                    <a href="../index.html">Home</a>
+                    <a href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
                         <li><a href="previous_marks.html">Previous Semesters </a></li>
-                        <li><a href="current_marks.html">Current Semester</a></li>
+                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
 
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="academics.html">Academics </a></li>
+                        <li><a href="{% url 'academics' %}">Academics </a></li>
                         <!-- <li><a href="#">Extra Curricular</a></li> -->
 
                     </ul>
@@ -61,8 +62,8 @@
                 <li class="active">
                     <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="subjectwise.html">Subject Wise</a></li>
-                        <li><a href="overall.html">Overall</a></li>
+                        <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
+                        <li><a href="{% url 'overall' %}">Overall</a></li>
 
                     </ul>
                 </li>
@@ -92,16 +93,16 @@
                     </div>
                 </div>
             </nav>
-            <div style="background-color: cyan;padding-top:2em">
+            <div style="padding-top:2em">
                 <div class="container">
-                    <h2 class="h2">Subject Wise Progress</h2>
-                    <img src="../img/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+                    <h2 class="h2">Overall Progress</h2>
+                    <img  src="../../media/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
 
                 </div>
                 <br>
                 <div class="container">
                     <h2 class="h2">Skills Analysis</h2>
-                    <img src="../img/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+                    <img src="../../media/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
 
 
                 </div>
