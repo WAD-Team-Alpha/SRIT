@@ -7,3 +7,4 @@ dashboard/migrations/__pycache__
 SRIT/__pycache__
 static/admin
 media/
+__pycache__/

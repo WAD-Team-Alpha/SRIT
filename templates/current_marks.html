@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/marks.css' %}">
+    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
 
 </head>
 
@@ -34,14 +35,14 @@
                     <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu2">
                         <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
-                        <li><a href="current_marks.html">Current Semester</a></li>
+                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
 
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="academics.html">Academics </a></li>
+                        <li><a href="{% url 'academics' %}">Academics </a></li>
                         <!-- <li><a href="#">Extra Curricular</a></li> -->
 
                     </ul>
@@ -49,18 +50,18 @@
                 <li class="active">
                     <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="subjectwise.html">Subject Wise</a></li>
-                        <li><a href="overall.html">Overall</a></li>
+                        <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
+                        <li><a href="{% url 'overall' %}">Overall</a></li>
 
                     </ul>
                 </li>
                 </li>
 
                 <li>
-                    <a href="report.html">Report</a>
+                    <a href="{% url 'report' %}">Report</a>
                 </li>
                 <li>
-                    <a href="suggestions.html">Suggestions</a>
+                    <a href="{% url 'suggestions' %}">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -88,19 +89,19 @@
                     {% for message in messages %}
                         {{message}}
                     {% endfor %}
+                    <script>
+                        // Get the snackbar DIV
+                        var x = document.getElementById("snackbar");
+                
+                        // Add the "show" class to DIV
+                        x.className = "show";
+                
+                        // After 3 seconds, remove the show class from DIV
+                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                    </script>
                 {% endif %}
                     
             </div>
-            <script>
-                // Get the snackbar DIV
-                var x = document.getElementById("snackbar");
-        
-                // Add the "show" class to DIV
-                x.className = "show";
-        
-                // After 3 seconds, remove the show class from DIV
-                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-            </script>
 
             <section class="marks-container">
 
