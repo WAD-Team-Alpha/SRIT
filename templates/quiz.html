@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -7,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <title>SRIT</title>
-    <link rel="shortcut icon" href="./img/sritlogo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/quiz.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}" />
 
 </head>
 
@@ -40,7 +41,7 @@
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="academics.html" />Academics </a></li>
+                        <li><a href="academics.html" >Academics </a></li>
                         <!-- <li><a href="templates/extracurricular.html">Extra Curricular</a></li> -->
                     </ul>
                 </li>
@@ -79,18 +80,47 @@
             </nav>
 
             <section class="form-container">
-                <form action="#" name="quiz" class="quiz" >
-                    <p><h3>1. Size of Integer(bytes) is(64 bit):</h3></p>
-                    <input type="radio" id="o11" name="q1" value="2">
-                    <label for="o11">2</label><br>
-                    <input type="radio" id="o12" name="q1" value="4">
-                    <label for="o12">4</label><br>
-                    <input type="radio" id="o13" name="q1" value="8">
-                    <label for="o13">8</label><br>
-                    <input type="radio" id="o14" name="q1" value="16">
-                    <label for="o14">16</label><br>
+                <form action="{% url 'quizfun' id %}" method="POST" name="quiz" class="quiz" >
+                {% csrf_token %}
+                    <p><h3>{{questions.question0.question}}</h3></p>
+                    {% for option in questions.question0.options %}
+                        <input type="hidden" name="question1" value="{{questions.question0.question}}" />
+                        <input type="radio" id="o1" name="q1" value= "{{option}}">
+                        <label for="o1">{{option}}</label><br>
+                    {% endfor %}
                     <br>
-                    <p><h3>2. CSS stands for:</h3></p>
+                    <p><h3>{{questions.question1.question}}</h3></p>
+                    {% for option in questions.question1.options %}
+                        <input type="hidden" name="question2" value="{{questions.question1.question}}" />
+                        <input type="radio" id="o2" name="q2" value= "{{option}}">
+                        <label for="o2">{{option}}</label><br>
+                    {% endfor %}
+                    <br>
+                    <p><h3>{{questions.question2.question}}</h3></p>
+                    {% for option in questions.question2.options %}
+                        <input type="hidden" name="question3" value="{{questions.question2.question}}" />
+                        <input type="radio" id="o3" name="q3" value= "{{option}}">
+                        <label for="o3">{{option}}</label><br>
+                    {% endfor %}
+                    <br>
+                    <p><h3>{{questions.question3.question}}</h3></p>
+                    {% for option in questions.question3.options %}
+                        <input type="hidden" name="question4" value="{{questions.question3.question}}" />
+                        <input type="radio" id="o4" name="q4" value= "{{option}}">
+                        <label for="o4">{{option}}</label><br>
+                    {% endfor %}
+                    <br>
+                    <p><h3>{{questions.question4.question}}</h3></p>
+                    {% for option in questions.question0.options %}
+                        <input type="hidden" name="question5" value="{{questions.question4.question}}" />
+                        <input type="radio" id="o5" name="q5" value= "{{option}}">
+                        <label for="o5">{{option}}</label><br>
+                    {% endfor %}
+                    <br>
+                    
+                    
+                    
+                    {% comment %} <p><h3>{{questions[0]}}</h3></p>
                     <input type="radio" id="o21" name="q2" value="Cascading Style Sheets">
                     <label for="o21">Cascading Style Sheets</label><br>
                     <input type="radio" id="o22" name="q2" value="Cascading Sheets and Styles">
@@ -100,7 +130,7 @@
                     <input type="radio" id="o24" name="q2" value="Compound Style Sheets">
                     <label for="o24">Compound Style Sheets</label><br>
                     <br>
-                    <p><h3>3. HTML stands for:</h3></p>
+                    <p><h3>{{questions[0]}}</h3></p>
                     <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
                     <label for="o31">Home Tool Markup Language</label><br>
                     <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
@@ -110,6 +140,56 @@
                     <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
                     <label for="o34">Hyper Text Mobile Language</label><br>
                     <br>
+                     <p><h3>{{questions[0]}}</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br>
+                     <p><h3>{{questions[0]}}</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br>
+                     <p><h3>{{questions[0]}}</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br>
+                     <p><h3>{{questions[0]}}</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br>
+                     <p><h3>{{questions[0]}}</h3></p>
+                    <input type="radio" id="o31" name="q3" value="Home Tool Markup Language">
+                    <label for="o31">Home Tool Markup Language</label><br>
+                    <input type="radio" id="o32" name="q3" value="Hyper Text Markup Language">
+                    <label for="o32">Hyper Text Markup Language</label><br>
+                    <input type="radio" id="o33" name="q3" value="Hyper Text Machine Language">
+                    <label for="o33">Hyper Text Machine Language</label><br>
+                    <input type="radio" id="o34" name="q3" value="Hyper Text Mobile Language">
+                    <label for="o34">Hyper Text Mobile Language</label><br>
+                    <br> {% endcomment %}
 
                     <input type="submit" value="Submit" class="quiz-button">
 

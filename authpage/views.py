@@ -14,6 +14,7 @@ from django.contrib import messages
 
 # Create your views here.
 
+
 def login(request):
     if request.method == 'POST':
         username = request.POST['user']
@@ -21,11 +22,11 @@ def login(request):
 
         print(username)
         print(password)
-        
+
         user = auth.authenticate(request, username=username, password=password)
         print(user)
         print(request.user)
-        
+
         if user is not None:
             auth.login(request, user)
             messages.success(request, "Logged in")
@@ -37,10 +38,12 @@ def login(request):
     print(request.user)
     return render(request, 'signin.html')
 
+
 def logout(request):
     auth.logout(request)
     messages.success(request, "Logged out")
     return redirect('login')
+
 
 def createSemester(lis, sem_no, rollnumber, status, cp=0):
     Semester.objects.create(
@@ -74,46 +77,50 @@ def createSemester8(lis, sem_no, rollnumber, status, cp=0):
         s2=lis[int(sem_no)][1],
     )
 
+
 def createMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
     Marks.objects.create(
-        sem_no=sem_no, 
-        roll_no=rollnumber, 
-        type= type, 
-        s1 = s1,
-        s2 = s2,
-        s3 = s3,
-        s4 = s4,
-        s5 = s5,
-        s6 = s6,
-        s7 = s7,
-        s8 = s8,
+        sem_no=sem_no,
+        roll_no=rollnumber,
+        type=type,
+        s1=s1,
+        s2=s2,
+        s3=s3,
+        s4=s4,
+        s5=s5,
+        s6=s6,
+        s7=s7,
+        s8=s8,
     )
+
 
 def createMarks8(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
     Marks.objects.create(
-        sem_no=sem_no, 
-        roll_no=rollnumber, 
-        type= type, 
-        s1 = s1,
-        s2 = s2,
+        sem_no=sem_no,
+        roll_no=rollnumber,
+        type=type,
+        s1=s1,
+        s2=s2,
     )
+
 
 def updateMarks(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
-    Marks.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber, type= type).update( 
-        s1 = int(s1),
-        s2 = int(s2),
-        s3 = int(s3),
-        s4 = int(s4),
-        s5 = int(s5),
-        s6 = int(s6),
-        s7 = int(s7),
-        s8 = int(s8),
+    Marks.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber, type=type).update(
+        s1=int(s1),
+        s2=int(s2),
+        s3=int(s3),
+        s4=int(s4),
+        s5=int(s5),
+        s6=int(s6),
+        s7=int(s7),
+        s8=int(s8),
     )
 
+
 def updateMarks8(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0, s8=0):
-    Marks.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber, type= type).update( 
-        s1 = int(s1),
-        s2 = int(s2),
+    Marks.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber, type=type).update(
+        s1=int(s1),
+        s2=int(s2),
     )
 
 def updateSemester(lis, sem_no, rollnumber, status, cp):
@@ -161,11 +168,11 @@ def signup(request):
         password = request.POST['pass']
         branch = request.POST['branch']
         sem_no = request.POST['sem_no']
-        
+
         if userform.is_valid():
-            if Student.objects.filter(email = email).exists():
+            if Student.objects.filter(email=email).exists():
                 return redirect('signup')
-            if Student.objects.filter(roll_no = rollnumber).exists():
+            if Student.objects.filter(roll_no=rollnumber).exists():
                 return redirect('signup')
 
             print(roll_no)
@@ -208,7 +215,8 @@ def signup(request):
                 createMarks(sem_no, rollnumber, 3)
                 createMarks(sem_no, rollnumber, 4)
 
-            user = User.objects.create_user(email=email, password=password, username=username)
+            user = User.objects.create_user(
+                email=email, password=password, username=username)
             user.is_active = True
             userform.save()
             user.save()
