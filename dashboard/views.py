@@ -440,28 +440,71 @@ def report(request):
     if semNum == 8:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
+        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
-        marks1 = [sub1,sub2]
-        marks1.sort(reverse = True)
-        # print(marks1)
-        l_s2 = marks1[0]
-        l_s1 = marks1[1]
-        if sub1==l_s1:
-            least_subject1 = subjectName.s1
-        if sub2==l_s1:
-            least_subject1 = subjectName.s2
         
-        if sub1==l_s2:
-            least_subject2 = subjectName.s1
-        if sub2==l_s2:
-            least_subject2 = subjectName.s2
+        sub = [sub1,sub2]
+        total = zip(Subjects_names, sub)
 
-        subjects_focused = [least_subject1,least_subject2]
-        context = {
-            'Subjects_focused' : subjects_focused
+        k = {}
+        for i,j in total:
+            k[i] = j
+
+        
+        l = sorted(k.items(), key=lambda x: x[1])
+
+        print(l)
+
+        
+        subjects_focused = [l[0][0]]
+        subjects_good = [l[1][0]]
+
+       
+
+        mid1 = [m1.s1,m1.s2]
+        mid2 = [m2.s1,m2.s2]
+
+        Mid1 = zip(Subjects_names,mid1)
+        Mid2 = zip(Subjects_names,mid2)
+
+        M1 = {}
+        for i,j in Mid1:
+            M1[i] = j
+
+        print(M1)
+
+        M2 = {}
+        for i,j in Mid2:
+            M2[i] = j
+
+        print(M2)
+
+        subjects_weak = []
+        for i in M1:
+            if M1[i] > M2[i]:
+                    subjects_weak.append(i)
+
+        print(subjects_weak)
+
+        subjects_strength = []
+        for i in M1:
+                if M1[i] < M2[i]:
+                    subjects_strength.append(i)
+
+        print(subjects_strength)
+
+
+        context={
+            'Subjects_focused' : subjects_focused,
+            'Subjects_good' : subjects_good,
+            'Subjects_weak' : subjects_focused,
+            'Subjects_strength' : subjects_strength
+            
         }
+
         return render(request, 'report.html',context)
+
 
     else:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
@@ -478,116 +521,52 @@ def report(request):
         sub8 = m1.s8+m2.s8
 
         sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
+        total = zip(Subjects_names, sub)
 
-        # diff1 = m1.s1-m2.s1
-        # diff2 = m1.s2-m2.s2
-        # diff3 = m1.s3-m2.s3
-        # diff4 = m1.s4-m2.s4
-        # diff5 = m1.s5-m2.s5
-        # diff6 = m1.s6-m2.s6
-        # diff7 = m1.s7-m2.s7
-        # diff8 = m1.s8-m2.s8
+        k = {}
+        for i,j in total:
+            k[i] = j
+
+        
+        l = sorted(k.items(), key=lambda x: x[1])
+
+        subjects_focused = [l[0][0],l[1][0],l[2][0]]
+        subjects_good = [l[3][0],l[4][0],l[5][0],l[6][0],l[7][0]]
 
         mid1 = [m1.s1,m1.s2,m1.s3,m1.s4,m1.s5,m1.s6,m1.s7,m1.s8]
         mid2 = [m2.s1,m2.s2,m2.s3,m2.s4,m2.s5,m2.s6,m2.s7,m2.s8]
 
-        # diff = [diff1,diff2,diff3,diff4,diff5,diff6,diff7,diff8]
+        Mid1 = zip(Subjects_names,mid1)
+        Mid2 = zip(Subjects_names,mid2)
+
+        M1 = {}
+        for i,j in Mid1:
+            M1[i] = j
+
+        M2 = {}
+        for i,j in Mid2:
+            M2[i] = j
 
         subjects_weak = []
-        for num in range(8):
-            if mid1[num]>mid2[num]:
-                subjects_weak.append(mid1[num])
+        for i in M1:
+            if M1[i] > M2[i]:
+                    subjects_weak.append(i)
 
-        # print(subjects_weak)
+        print(subjects_weak)
 
-        subjects_strong = []
-        for num in range(8):
-            if mid1[num]<mid2[num]:
-                subjects_strong.append(mid2[num])
+        subjects_strength = []
+        for i in M1:
+                if M1[i] < M2[i]:
+                    subjects_strength.append(i)
 
-        # print(subjects_strong)
-
-       
-            
-
-            
-        marks1 = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
-        marks1.sort(reverse = True)
-        print(marks1)
-        l_s3 = marks1[5]
-        l_s2 = marks1[6]
-        l_s1 = marks1[7]
+        print(subjects_strength)
 
 
-         
-        # for i in list(range(8)):
-        #     if sub[i] == l_s3:
-        #         least_subject3 = Subjects_names[i]
-        #         sub = sub.remove(sub[i])
-        # print(least_subject3)
-
-        if sub1==l_s1:
-            least_subject1 = subjectName.s1
-        elif sub2==l_s1 :
-            least_subject1 = subjectName.s2
-        elif sub3==l_s1:
-            least_subject1 = subjectName.s3
-        elif sub4==l_s1:
-            least_subject1 = subjectName.s4
-        elif sub5==l_s1:
-            least_subject1 = subjectName.s5
-        elif sub6==l_s1:
-            least_subject1 = subjectName.s6
-        elif sub7==l_s1:
-            least_subject1 = subjectName.s7
-        else:
-            least_subject1 = subjectName.s8
-        # print(least_subject1)
-
-        if sub1==l_s2 & sub1!=l_s1:
-            least_subject2 = subjectName.s1
-        elif sub2==l_s2:
-            least_subject2 = subjectName.s2
-        elif sub3==l_s2:
-            least_subject2 = subjectName.s3
-        elif sub4==l_s2:
-            least_subject2 = subjectName.s4
-        elif sub5==l_s2:
-            least_subject2 = subjectName.s5
-        elif sub6==l_s2:
-            least_subject2 = subjectName.s6
-        elif sub7==l_s2:
-            least_subject2 = subjectName.s7
-        else:
-            least_subject2 = subjectName.s8
-        # print(least_subject2)
-
-        if sub1==l_s3 & sub1!=l_s2 & sub1!=l_s1:
-            least_subject3 = subjectName.s1
-        elif sub2==l_s3:
-            least_subject3 = subjectName.s2
-        elif sub3==l_s3:
-            least_subject3 = subjectName.s3
-        elif sub4==l_s3:
-            least_subject3 = subjectName.s4
-        elif sub5==l_s3:
-            least_subject3 = subjectName.s5
-        elif sub6==l_s3:
-            least_subject3 = subjectName.s6
-        elif sub7==l_s3:
-            least_subject3 = subjectName.s7
-        else:
-            least_subject3 = subjectName.s8
-        
-        
-
-        subjects_focused = [least_subject1,least_subject2,least_subject3]
-        
-        subjects_good = list(set(Subjects_names) - set(subjects_focused)) 
         context={
             'Subjects_focused' : subjects_focused,
             'Subjects_good' : subjects_good,
-            'Subjects_strong':subjects_strong
+            'Subjects_weak' : subjects_weak,
+            'Subjects_strength' : subjects_strength
         }
 
         return render(request, 'report.html',context)
@@ -602,32 +581,37 @@ def suggestion(request):
     if semNum == 8:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
+        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
-        marks1 = [sub1,sub2]
-        marks1.sort(reverse = True)
-        print(marks1)
-        l_s2 = marks1[0]
-        l_s1 = marks1[1]
-        if sub1==l_s1:
-            least_subject1 = subjectName.s1
-        if sub2==l_s1:
-            least_subject1 = subjectName.s2
         
-        if sub1==l_s2:
-            least_subject2 = subjectName.s1
-        if sub2==l_s2:
-            least_subject2 = subjectName.s2
+        sub = [sub1,sub2]
+        total = zip(Subjects_names, sub)
 
-        subjects = [least_subject1,least_subject2]
-        context = {
-            'Subjects' : subjects
+        k = {}
+        for i,j in total:
+            k[i] = j
+
+        
+        l = sorted(k.items(), key=lambda x: x[1])
+
+        print(l)
+
+        
+        subjects_focused = [l[0][0]]
+        
+        context={
+            'Subjects_focused' : subjects_focused,
         }
+
         return render(request, 'suggestions.html',context)
+
 
     else:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
+        Subjects_names = [subjectName.s1,subjectName.s2,subjectName.s3,subjectName.s4,subjectName.s5,subjectName.s6,subjectName.s7,subjectName.s8]
+        
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
         sub3 = m1.s3+m2.s3
@@ -636,70 +620,24 @@ def suggestion(request):
         sub6 = m1.s6+m2.s6
         sub7 = m1.s7+m2.s7
         sub8 = m1.s8+m2.s8
-        marks1 = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
-        marks1.sort(reverse = True)
-        print(marks1)
-        l_s3 = marks1[5]
-        l_s2 = marks1[6]
-        l_s1 = marks1[7]
 
-        if sub1==l_s1:
-            least_subject1 = subjectName.s1
-        if sub2==l_s1:
-            least_subject1 = subjectName.s2
-        if sub3==l_s1:
-            least_subject1 = subjectName.s3
-        if sub4==l_s1:
-            least_subject1 = subjectName.s4
-        if sub5==l_s1:
-            least_subject1 = subjectName.s5
-        if sub6==l_s1:
-            least_subject1 = subjectName.s6
-        if sub7==l_s1:
-            least_subject1 = subjectName.s7
-        if sub8==l_s1:
-            least_subject1 = subjectName.s8
-        print(least_subject1)
+        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
+        total = zip(Subjects_names, sub)
 
-        if sub1==l_s2:
-            least_subject2 = subjectName.s1
-        if sub2==l_s2:
-            least_subject2 = subjectName.s2
-        if sub3==l_s2:
-            least_subject2 = subjectName.s3
-        if sub4==l_s2:
-            least_subject2 = subjectName.s4
-        if sub5==l_s2:
-            least_subject2 = subjectName.s5
-        if sub6==l_s2:
-            least_subject2 = subjectName.s6
-        if sub7==l_s2:
-            least_subject2 = subjectName.s7
-        if sub8==l_s2:
-            least_subject2 = subjectName.s8
-        print(least_subject2)
+        k = {}
+        for i,j in total:
+            k[i] = j
 
-        if sub1==l_s3:
-                least_subject3 = subjectName.s1
-        if sub2==l_s3:
-            least_subject3 = subjectName.s2
-        if sub3==l_s3:
-            least_subject3 = subjectName.s3
-        if sub4==l_s3:
-            least_subject3 = subjectName.s4
-        if sub5==l_s3:
-            least_subject3 = subjectName.s5
-        if sub6==l_s3:
-            least_subject3 = subjectName.s6
-        if sub7==l_s3:
-            least_subject3 = subjectName.s7
-        if sub8==l_s3:
-            least_subject3 = subjectName.s8
-        print(least_subject3)
-
-        subjects = [least_subject1,least_subject2,least_subject3]
-        context={
-            'Subjects' : subjects
-        }
         
+        l = sorted(k.items(), key=lambda x: x[1])
+
+        
+        
+        subjects_focused = [l[0][0],l[1][0],l[2][0]]
+        
+        context={
+            'Subjects_focused' : subjects_focused,
+        }
+
         return render(request, 'suggestions.html',context)
+
