@@ -5,5 +5,7 @@ urlpatterns = [
     path('home/', views.dashboard, name='home'),
     path('currentsem/', views.marks, name='currentsem'),
     path('previoussem/', views.previousmarks, name='previoussem'),
+    path('suggestions/',views.suggestion,name='suggestions'),
+    path('report/',views.report,name='report'),
     path('previoussemnumber/', views.previoussemNo, name='previoussemnumber'),
 ]

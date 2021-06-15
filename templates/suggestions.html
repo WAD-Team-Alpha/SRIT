@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -7,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>SRIT</title>
-    <link rel="shortcut icon" href="./img/sritlogo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/suggestions.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/suggestions.css' %}" />
 </head>
 
 <body>
@@ -59,7 +60,7 @@
                     <a href="report.html">Report</a>
                 </li>
                 <li>
-                    <a href="suggestions.html">Suggestions</a>
+                    <a href="{% url 'suggestions' %}">Suggestions</a>
                 </li>
             </ul>
         </nav>
@@ -82,17 +83,15 @@
             </nav>
 
             <div class="suggestions">
-                <h3><b>Subjects you need to improve at: </b><span class="s-text">Subject1, Subject2, Subject3</span> </h3>
+                <h3><b>Subjects you should improve: </b><br><span class="s-text"><b><br>{% for sub in Subjects %} {{sub}}<br> {% endfor %}</b></span> </h3>
                 <h3><b>Here are some of the links : </b></h3>
-                <h4><b>Subject1: </b></h4>
-                <h5>Youtube Link: <a href="#"><span class="txt">Click Here</span></a></h5>
-                <h5>Article Link:  <a href="#"><span class="txt">Click Here</span></a></h5><br>
-                <h4><b>Subject2: </b></h4>
-                <h5>Youtube Link: <a href="#"><span class="txt">Click Here</span></a></h5>
-                <h5>Article Link:  <a href="#"><span class="txt">Click Here</span></a></h5><br>
-                <h4><b>Subject3: </b></h4>
-                <h5>Youtube Link: <a href="#"><span class="txt">Click Here</span></a></h5>
-                <h5>Article Link:  <a href="#"><span class="txt">Click Here</span></a></h5><br>
+
+                {% for sub in Subjects %}
+                <h4><b> {{sub}} : </b></h4>
+                <h5>Youtube Link: <a href="https://www.youtube.com/results?search_query={{sub}}"><span class="txt">Click Here</span></a></h5>
+                <h5>Article Link: <a href="https://www.google.com/search?q=+{{sub}}"><span class="txt">Click Here</span></a></h5><br> 
+                {% endfor %}
+                
 
             </div>
         </div>
