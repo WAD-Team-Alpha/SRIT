@@ -187,11 +187,10 @@ def marks(request):
         mid1 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=0).get()
         mid2 = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=1).get()
         ext = Marks.objects.all().filter(sem_no=sem_no, roll_no=rollnum, type=3).get()
-        sub = Semester.objects.all().filter(
-            sem_no=sem_no, roll_no=rollnum, status=0).get()
-
-        return render(request, 'current_marks.html', {'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
-
+        sub = Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnum).get()
+            
+        
+        return render(request, 'current_marks.html',{'m1': mid1, 'm2': mid2, 'e': ext, 's': sub})
 
 def previoussemNo(request):
     global selectedPrevSem
@@ -455,7 +454,7 @@ def savePieChart(m1, m2, quiz, imgName, subjectName):
     else:
         labels = 'mid-1', 'mid-2', 'quiz'
 
-    sizes = [m1, m2,  quiz, ]
+    sizes = [m1, m2,  quiz]
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.1, 0.1, 0.1)
     fig1, ax1 = plt.subplots()
@@ -482,27 +481,36 @@ def subjectWise(request):
     m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
     quiz = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).get()
 
+    m1t = m1.s1 + m1.s2 + m1.s3 + m1.s4 + m1.s5 + m1.s6 + m1.s7 + m1.s8
+    m2t = m2.s1 + m2.s2 + m2.s3 + m2.s4 + m2.s5 + m2.s6 + m2.s7 + m2.s8
+    qt = quiz.s1 + quiz.s2 + quiz.s3 + quiz.s4 + quiz.s5 + quiz.s6 + quiz.s7 + quiz.s8
+
+    flag = m1t + m2t + qt
+
+    if flag == 0:
+        return render(request, 'subjectwise.html', {'flag': flag})
+
     savePieChart(m1.s1, m2.s1, quiz.s1,
                  'image1', subjectName.s1)
     savePieChart(m1.s2, m2.s2, quiz.s2,
                  'image2', subjectName.s2)
     if semNum != 8:
         savePieChart(m1.s3, m2.s3, quiz.s3,
-                     'image3', subjectName.s3)
+                      'image3', subjectName.s3)
         savePieChart(m1.s4, m2.s4, quiz.s4,
-                     'image4', subjectName.s4)
+                      'image4', subjectName.s4)
         savePieChart(m1.s5, m2.s5, quiz.s5,
-                     'image5', subjectName.s5)
+                      'image5', subjectName.s5)
         savePieChart(m1.s6, m2.s6, quiz.s6,
-                     'image6', subjectName.s6)
+                      'image6', subjectName.s6)
         savePieChart(m1.s7, m2.s7, quiz.s7,
-                     'image7', subjectName.s7)
+                      'image7', subjectName.s7)
         savePieChart(m1.s8, m2.s8, quiz.s8,
-                     'image8', subjectName.s8)
+                      'image8', subjectName.s8)
     else:
         pass
 
-    return render(request, 'subjectwise.html', {'subjectName': subjectName})
+    return render(request, 'subjectwise.html', {'subjectName': subjectName, 'flag': flag})
 
 
 def name(s):
@@ -684,7 +692,10 @@ def report(request):
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
 
-        sub = [sub1, sub2]
+        if sub1 + sub2 == 0:
+            return render(request, 'report.html', {'flag': 0})
+        
+        sub = [sub1,sub2]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -734,8 +745,8 @@ def report(request):
             'Subjects_focused': subjects_focused,
             'Subjects_good': subjects_good,
             'Subjects_weak': subjects_focused,
-            'Subjects_strength': subjects_strength
-
+            'Subjects_strength': subjects_strength,
+            'flag': 1
         }
 
         return render(request, 'report.html', context)
@@ -755,7 +766,12 @@ def report(request):
         sub7 = m1.s7+m2.s7
         sub8 = m1.s8+m2.s8
 
-        sub = [sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8]
+        myTotal = sub1 + sub2 + sub3 + sub4 + sub5 + sub6 + sub7 + sub8
+
+        if myTotal == 0:
+            return render(request, 'report.html', {'flag': 0}) 
+
+        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -795,11 +811,13 @@ def report(request):
 
         print(subjects_strength)
 
-        context = {
-            'Subjects_focused': subjects_focused,
-            'Subjects_good': subjects_good,
-            'Subjects_weak': subjects_weak,
-            'Subjects_strength': subjects_strength
+
+        context={
+            'Subjects_focused' : subjects_focused,
+            'Subjects_good' : subjects_good,
+            'Subjects_weak' : subjects_weak,
+            'Subjects_strength' : subjects_strength,
+            'flag': 1
         }
 
         return render(request, 'report.html', context)
@@ -820,7 +838,10 @@ def suggestion(request):
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
 
-        sub = [sub1, sub2]
+        if sub1 + sub2 == 0:
+            return render(request, 'suggestions.html', {'flag': 0})
+        
+        sub = [sub1,sub2]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -835,6 +856,7 @@ def suggestion(request):
 
         context = {
             'Subjects_focused': subjects_focused,
+            'flag': 1
         }
 
         return render(request, 'suggestions.html', context)
@@ -854,7 +876,12 @@ def suggestion(request):
         sub7 = m1.s7+m2.s7
         sub8 = m1.s8+m2.s8
 
-        sub = [sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8]
+        myTotal = sub1 + sub2 + sub3 + sub4 + sub5 + sub6 + sub7 + sub8
+
+        if myTotal == 0:
+            return render(request, 'suggestions.html', {'flag': 0}) 
+
+        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -863,10 +890,13 @@ def suggestion(request):
 
         l = sorted(k.items(), key=lambda x: x[1])
 
-        subjects_focused = [l[0][0], l[1][0], l[2][0]]
-
-        context = {
-            'Subjects_focused': subjects_focused,
+        
+        
+        subjects_focused = [l[0][0],l[1][0],l[2][0]]
+        
+        context={
+            'Subjects_focused' : subjects_focused,
+            'flag': 1
         }
 
         return render(request, 'suggestions.html', context)

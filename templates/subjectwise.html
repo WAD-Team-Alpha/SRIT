@@ -82,51 +82,57 @@
                         <h1 class="title">DASHBOARD</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i>
+                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>
-            <div class="container">
-                <section class="tail">
-                    <h2 class="head">Subject Wise Analysis of Perfomance: </h2>
-                    <button class="collapsible"><b>{{subjectName.s1}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image1.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s2}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image2.png" alt="ScoreChart" />
-                    </div>
-                    {% if subjectName.sem_no != 8 %}
-                         <button class="collapsible"><b>{{subjectName.s3}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image3.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s4}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image4.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s5}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image5.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s6}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image6.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s7}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image7.png" alt="ScoreChart" />
-                    </div>
-                    <button class="collapsible"><b>{{subjectName.s8}}</b></button>
-                    <div class="content">
-                        <img src="../../media/image8.png" alt="ScoreChart" />
-                    </div>
-                    {% endif %}
-                        
-                   
-                </section>
-            </div>
+            {% if not flag %}
+                <div class="page-container">
+                    <p> No Data Available </p>
+                </div>
+            {% else %}
+                <div class="container">
+                    <section class="tail">
+                        <h2 class="head">Subject Wise Analysis of Perfomance: </h2>
+                        <button class="collapsible"><b>{{subjectName.s1}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image1.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s2}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image2.png" alt="ScoreChart" />
+                        </div>
+                        {% if subjectName.sem_no != 8 %}
+                            <button class="collapsible"><b>{{subjectName.s3}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image3.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s4}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image4.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s5}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image5.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s6}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image6.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s7}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image7.png" alt="ScoreChart" />
+                        </div>
+                        <button class="collapsible"><b>{{subjectName.s8}}</b></button>
+                        <div class="content">
+                            <img src="../../media/image8.png" alt="ScoreChart" />
+                        </div>
+                        {% endif %}
+                            
+                    
+                    </section>
+                </div>
+            {% endif %}
 
         </div>
     </div>

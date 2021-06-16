@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+    
+
     <title>SRIT</title>
     <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
     <!-- Bootstrap CSS CDN -->
@@ -78,7 +80,7 @@
                         <h1 class="title">DASHBOARD</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i></a>
+                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>

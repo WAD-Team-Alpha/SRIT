@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRIT</title>
 
+    <link
+      rel="shortcut icon"
+      href="{% static 'img/sritlogo.png' %}"
+      type="image/x-icon"
+    />
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
@@ -78,7 +84,7 @@
                         <h1 class="title">MARKS</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i></a>
+                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>

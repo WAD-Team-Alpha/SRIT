@@ -143,7 +143,7 @@ def updateSemester(lis, sem_no, rollnumber, status, cp):
     )
 
 def updateSemester8(lis, sem_no, rollnumber, status, cp):
-    Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber, status=status).update(
+    Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber).update(
         sem_no=sem_no,
         roll_no=rollnumber,
         status=status,

@@ -81,23 +81,30 @@
                         <h1 class="title">SUGGESTIONS</h1>
                     </div>
                     <div class="power" id="">
-                        <a href="#"><i class="pbtn glyphicon glyphicon-off"></i>
+                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
                     </div>
                 </div>
             </nav>
 
-            <div class="suggestions">
-                <h3><b>Subjects you should improve: </b><br><span class="s-text"><b><br>{% for sub in Subjects_focused %} {{sub}}<br> {% endfor %}</b></span> </h3>
-                <h3><b>Here are some of the links : </b></h3>
+            {% if not flag %}
+                <div class="page-container">
+                    <p> No Data Available </p>
+                </div>
+            {% else %}
 
-                {% for sub in Subjects_focused %}
-                <h4><b> {{sub}} : </b></h4>
-                <h5>Youtube Link: <a href="https://www.youtube.com/results?search_query={{sub}}"><span class="txt">Click Here</span></a></h5>
-                <h5>Article Link: <a href="https://www.google.com/search?q=+{{sub}}"><span class="txt">Click Here</span></a></h5><br> 
-                {% endfor %}
-                
+                <div class="suggestions">
+                    <h3><b>Subjects you should improve: </b><br><span class="s-text"><b><br>{% for sub in Subjects_focused %} {{sub}}<br> {% endfor %}</b></span> </h3>
+                    <h3><b>Here are some of the links : </b></h3>
 
-            </div>
+                    {% for sub in Subjects_focused %}
+                    <h4><b> {{sub}} : </b></h4>
+                    <h5>Youtube Link: <a href="https://www.youtube.com/results?search_query={{sub}}"><span class="txt">Click Here</span></a></h5>
+                    <h5>Article Link: <a href="https://www.google.com/search?q=+{{sub}}"><span class="txt">Click Here</span></a></h5><br> 
+                    {% endfor %}
+                    
+
+                </div>
+            {% endif %}
         </div>
     </div>
 
