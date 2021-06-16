@@ -260,30 +260,31 @@ def previousmarks(request):
         cur_per = calculateCsp(marks, student.sem_no)
 
         print(cur_per)
+        targets = Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).get()
 
         if selectedPrevSem == '8':
             if branch == 'CSE':
-                updateSemester8(cse, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester8(cse, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'ECE':
-                updateSemester8(ece, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester8(ece, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'MECH':
-                updateSemester8(mech, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester8(mech, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'CIVIL':
-                updateSemester8(civil, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester8(civil, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             else:
-                updateSemester8(eee, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester8(eee, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
         else:
             if branch == 'CSE':
-                updateSemester(cse, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester(cse, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'ECE':
-                updateSemester(ece, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester(ece, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'MECH':
-                updateSemester(mech, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester(mech, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             elif branch == 'CIVIL':
                 print("I am here")
-                updateSemester(civil, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester(civil, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
             else:
-                updateSemester(eee, selectedPrevSem, rollnum, 1, cur_per)
+                updateSemester(eee, selectedPrevSem, rollnum, 1, cur_per, targets.ot)
 
         sem = Semester.objects.all().filter(sem_no=selectedPrevSem, roll_no=rollnum).get()
         j = Marks.objects.all().filter(sem_no=selectedPrevSem,
@@ -297,34 +298,35 @@ def previousmarks(request):
 
         if str(student.sem_no) == str(selectedPrevSem):
             if selectedPrevSem == '8':
-                # messages
+                messages.success(request, 'You have completed your graduation!!')
                 return redirect('home')
             else:
+                otSem = Semester.objects.all().filter(roll_no=rollnum, sem_no=student.sem_no).get()
                 Student.objects.all().filter(roll_no=rollnum).update(sem_no=student.sem_no + 1)
                 if student.sem_no + 1 == 8:
                     if branch == 'CSE':
                         print("i am being executed")
-                        createSemester8(cse, student.sem_no + 1, rollnum, 0)
+                        createSemester8(cse, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'ECE':
-                        createSemester8(ece, student.sem_no + 1, rollnum, 0)
+                        createSemester8(ece, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'MECH':
-                        createSemester8(mech, student.sem_no + 1, rollnum, 0)
+                        createSemester8(mech, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'CIVIL':
-                        createSemester8(civil, student.sem_no + 1, rollnum, 0)
+                        createSemester8(civil, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     else:
-                        createSemester8(eee, student.sem_no + 1, rollnum, 0)
+                        createSemester8(eee, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                 else:
                     if branch == 'CSE':
                         print("i am being executed")
-                        createSemester(cse, student.sem_no + 1, rollnum, 0)
+                        createSemester(cse, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'ECE':
-                        createSemester(ece, student.sem_no + 1, rollnum, 0)
+                        createSemester(ece, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'MECH':
-                        createSemester(mech, student.sem_no + 1, rollnum, 0)
+                        createSemester(mech, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     elif branch == 'CIVIL':
-                        createSemester(civil, student.sem_no + 1, rollnum, 0)
+                        createSemester(civil, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                     else:
-                        createSemester(eee, student.sem_no + 1, rollnum, 0)
+                        createSemester(eee, student.sem_no + 1, rollnum, 0, 0, otSem.ot)
                 print("i am as well")
                 createMarks(student.sem_no + 1, rollnum, 0)
                 createMarks(student.sem_no + 1, rollnum, 1)

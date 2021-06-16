@@ -45,13 +45,13 @@ def logout(request):
     return redirect('login')
 
 
-def createSemester(lis, sem_no, rollnumber, status, cp=0):
+def createSemester(lis, sem_no, rollnumber, status, cp=0, ot=0):
     Semester.objects.create(
         sem_no=sem_no,
         roll_no=rollnumber,
         status=status,
         cst=0,
-        ot=0,
+        ot=ot,
         csp=cp,
         op=0,
         s1=lis[int(sem_no)][0],
@@ -64,13 +64,13 @@ def createSemester(lis, sem_no, rollnumber, status, cp=0):
         s8=lis[int(sem_no)][7],
     )
 
-def createSemester8(lis, sem_no, rollnumber, status, cp=0):
+def createSemester8(lis, sem_no, rollnumber, status, cp=0, ot=0):
     Semester.objects.create(
         sem_no=sem_no,
         roll_no=rollnumber,
         status=status,
         cst=0,
-        ot=0,
+        ot=ot,
         csp=cp,
         op=0,
         s1=lis[int(sem_no)][0],
@@ -123,13 +123,13 @@ def updateMarks8(sem_no, rollnumber, type, s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s
         s2=int(s2),
     )
 
-def updateSemester(lis, sem_no, rollnumber, status, cp):
+def updateSemester(lis, sem_no, rollnumber, status, cp, ot):
     Semester.objects.all().filter(sem_no=int(sem_no), roll_no=rollnumber).update(
         sem_no=int(sem_no),
         roll_no=rollnumber,
         status=status,
         cst=0,
-        ot=0,
+        ot=ot,
         csp=cp,
         op=0,
         s1=lis[int(sem_no)][0],
@@ -142,13 +142,13 @@ def updateSemester(lis, sem_no, rollnumber, status, cp):
         s8=lis[int(sem_no)][7],
     )
 
-def updateSemester8(lis, sem_no, rollnumber, status, cp):
+def updateSemester8(lis, sem_no, rollnumber, status, cp, ot):
     Semester.objects.all().filter(sem_no=sem_no, roll_no=rollnumber).update(
         sem_no=sem_no,
         roll_no=rollnumber,
         status=status,
         cst=0,
-        ot=0,
+        ot=ot,
         csp=cp,
         op=0,
         s1=lis[int(sem_no)][0],
@@ -221,6 +221,7 @@ def signup(request):
             userform.save()
             user.save()
         else:
+            messages.error(request, "Please enter valid info")
             return render(request, 'signup.html', {'form': userform})
 
         messages.success(request, "Registered Successfully, you can now login")
