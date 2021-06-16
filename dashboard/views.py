@@ -642,11 +642,14 @@ def overall(request):
     # skill wise analysis
     group = CSE
     if student.branch == 'CSE':
-        group == CSE
+        group = CSE
     elif student.branch == 'EEE':
-        group == EEE
-    elif student.branch == 'MECH':
-        group == MECH
+        group = EEE
+    elif student.branch == 'MECH' or student.branch == 'CVIL':
+        group = MECH
+    elif student.branch == 'ECE':
+        group = ECE
+
     divisions = list(group.keys())
 
     newdivisions = [name(x) for x in divisions]
