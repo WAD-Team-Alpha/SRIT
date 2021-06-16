@@ -1,188 +1,171 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>SRIT</title>
-    <link
-      rel="shortcut icon"
-      href="{% static 'img/sritlogo.png' %}"
-      type="image/x-icon"
-    />
-    <!-- Bootstrap CSS CDN -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <body>
-    <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3 class="sidebar-title">SRIT</h3>
-            </div>
+  <title>SRIT</title>
+  <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
 
-            <ul class="list-unstyled components">
-                <p style="font-size: 1.4em">Welcome {{user.username}}</p>
-                <li>
-                    <a href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu2">
-                        <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
-                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
+  <style>
+    #sidebar ul p {
+      color: black;
+      padding: 10px;
+    }
+  </style>
 
-                    </ul>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="{% url 'academics' %}">Academics </a></li>
-                        <!-- <li><a href="templates/extracurricular.html">Extra Curricular</a></li> -->
-                    </ul>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
-                        <li><a href="{% url 'overall' %}">Overall</a></li>
-                    </ul>
-                </li>
+<body>
+  <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">SRIT</h3>
+      </div>
 
-                <li>
-                    <a href="{% url 'report' %}">Report</a>
-                </li>
-                <li>
-                    <a href="{%url 'suggestions' %}">Suggestions</a>
-                </li>
-            </ul>
-        </nav>
+      <ul class="list-unstyled components">
+        <p style="font-size: 1.4em"> <b> Welcome {{user.username}}</b></p>
+        <li>
+          <a href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="active">
+          <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu2">
+            <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
+            <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
 
-        <!-- Page Content Holder -->
-        <section id="content">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>DASHBOARD</span>
-                        </button>
-                        <h1 class="title">DASHBOARD</h1>
-                    </div>
-                    <div class="power" id="">
-                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
-                    </div>
-                </div>
-            </nav>
-            <div id="snackbar">
-        
-                {% if messages %}
-                    {% for message in messages %}
-                        {{message}}
-                    {% endfor %}
-                    <script>
-                      // Get the snackbar DIV
-                      var x = document.getElementById("snackbar");
-              
-                      // Add the "show" class to DIV
-                      x.className = "show";
-              
-                      // After 3 seconds, remove the show class from DIV
-                      setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-                  </script>
-                {% endif %}
-                    
-            </div>
-      </nav>
+          </ul>
+        </li>
+        <li class="active">
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li><a href="{% url 'academics' %}">Academics </a></li>
+            <!-- <li><a href="templates/extracurricular.html">Extra Curricular</a></li> -->
+          </ul>
+        </li>
+        <li class="active">
+          <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu1">
+            <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
+            <li><a href="{% url 'overall' %}">Overall</a></li>
+          </ul>
+        </li>
 
-        <div class="home">
-          <div class="container">
-            <form action="{% url 'home' %}" method="post">
-              {% csrf_token %}
-              <table>
-                <tr>
-                  <td>
-                    <b style="font-size: 1.5em; color: #a7a4a4"
-                      >Semester Target:</b
-                    >
-                    <br />
-                    <input
-                      type="text"
-                      style="
-                        border: 0px;
-                        font-size: 4em;
-                        width: 1.7em;
-                        background-color: #f7f7f7;
-                      "
-                      name="sti"
-                      value="{{sti}}"
-                    /><span style="font-size: 4em">%</span>
-                  </td>
-                  <td>
-                    <b style="font-size: 1.5em; color: #a7a4a4"
-                      >Your Percentage</b
-                    >
-                    <span style="color: #a7a4a4">(predicted):</span> <br />
-                    <span style="font-size: 4em">{{stp}}%</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b style="font-size: 1.5em; color: #a7a4a4"
-                      >Overall Target:</b
-                    >
-                    <br />
-                    <input
-                      type="text"
-                      style="
-                        border: 0px;
-                        font-size: 4em;
-                        width: 1.7em;
-                        background-color: #f7f7f7;
-                      "
-                      name="oti"
-                      value="{{oti}}"
-                      maxlength="3"
-                    />
-                    <span style="font-size: 4em">%</span>
-                  </td>
-                  <td>
-                    <b style="font-size: 1.5em; color: #a7a4a4"
-                      >Overall Percentage</b
-                    >
-                    <span style="color: #a7a4a4">(predicted):</span> <br />
-                    <span style="font-size: 4em">{{otp}}%</span>
-                  </td>
-                </tr>
-              </table>
-              <input type="submit" value="Save" class="button" />
-            </form>
+        <li>
+          <a href="{% url 'report' %}">Report</a>
+        </li>
+        <li>
+          <a href="{%url 'suggestions' %}">Suggestions</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <section id="content">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+              <i class="glyphicon glyphicon-align-left"></i>
+              <span>DASHBOARD</span>
+            </button>
+            <h1 class="title">DASHBOARD</h1>
+          </div>
+          <div class="power" id="">
+            <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
           </div>
         </div>
-      </section>
-    </div>
+      </nav>
+      <div id="snackbar">
 
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap Js CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {% if messages %}
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+        <script>
+          // Get the snackbar DIV
+          var x = document.getElementById("snackbar");
 
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $("#sidebarCollapse").on("click", function () {
-          $("#sidebar").toggleClass("active");
-        });
+          // Add the "show" class to DIV
+          x.className = "show";
+
+          // After 3 seconds, remove the show class from DIV
+          setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        </script>
+        {% endif %}
+
+      </div>
+      </nav>
+
+      <div class="home">
+        <div class="container">
+          <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <table>
+              <tr>
+                <td>
+                  <b style="font-size: 1.5em; color: #a7a4a4">Semester Target:</b>
+                  <br />
+                  <input type="text" style="
+                        border: 0px;
+                        font-size: 4em;
+                        width: 1.7em;
+                        background-color: #f7f7f7;
+                      " name="sti" value="{{sti}}" /><span style="font-size: 4em">%</span>
+                </td>
+                <td>
+                  <b style="font-size: 1.5em; color: #a7a4a4">Your Percentage</b>
+                  <span style="color: #a7a4a4">(predicted):</span> <br />
+                  <span style="font-size: 4em">{{stp}}%</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b style="font-size: 1.5em; color: #a7a4a4">Overall Target:</b>
+                  <br />
+                  <input type="text" style="
+                        border: 0px;
+                        font-size: 4em;
+                        width: 1.7em;
+                        background-color: #f7f7f7;
+                      " name="oti" value="{{oti}}" maxlength="3" />
+                  <span style="font-size: 4em">%</span>
+                </td>
+                <td>
+                  <b style="font-size: 1.5em; color: #a7a4a4">Overall Percentage</b>
+                  <span style="color: #a7a4a4">(predicted):</span> <br />
+                  <span style="font-size: 4em">{{otp}}%</span>
+                </td>
+              </tr>
+            </table>
+            <input type="submit" value="Save" class="button" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <!-- Bootstrap Js CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#sidebarCollapse").on("click", function () {
+        $("#sidebar").toggleClass("active");
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>

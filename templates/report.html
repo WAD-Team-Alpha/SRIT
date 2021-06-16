@@ -8,11 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRIT</title>
 
-    <link
-      rel="shortcut icon"
-      href="{% static 'img/sritlogo.png' %}"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -23,11 +19,16 @@
 
 
     <style>
-        .page-container{
+        .page-container {
             font-size: 50px;
             text-align: center;
             margin-top: 4em;
-            
+
+        }
+
+        #sidebar ul p {
+            color: black;
+            padding: 10px;
         }
     </style>
 </head>
@@ -41,7 +42,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p style="font-size: 1.4em;">Welcome username</p>
+                <p style="font-size: 1.4em;"><b>Welcome {{user.username}}</b></p>
                 <li>
                     <a href="{% url 'home' %}">Home</a>
                 </li>
@@ -98,43 +99,43 @@
                 </div>
             </nav>
 
-            
+
             {% if not flag %}
-                <div class="page-container">
-                    <p> No Data Available </p>
-                </div>
+            <div class="page-container">
+                <p> No Data Available </p>
+            </div>
             {% else %}
-                <section class="report-container">
-                    <h2 class="h2">Report </h2>
-                    <h4 style="color: black;">
-                        <ol id="list" class="list-group list-group-flush">
-                            <li><b>Subjects that you are good at:</b>
-                                <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Subjects that you need to focus more on:</b>
-                                <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Areas of Strength:</b>
-                                <span class="text"><br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %}</span>
-                            </li>
-                            <li><b>Areas of Weakness:</b>
-                                <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Areas of Interest as observed:</b>
-                                <span> <br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Maximum progress shown in:</b>
-                                <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Progress required in:</b>
-                                <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                            <li><b>Performance deceased in:</b>
-                                <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
-                            </li>
-                        </ol>
-                    </h4>
-                </section>
+            <section class="report-container">
+                <h2 class="h2">Report </h2>
+                <h4 style="color: black;">
+                    <ol id="list" class="list-group list-group-flush">
+                        <li><b>Subjects that you are good at:</b>
+                            <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Subjects that you need to focus more on:</b>
+                            <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Areas of Strength:</b>
+                            <span class="text"><br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %}</span>
+                        </li>
+                        <li><b>Areas of Weakness:</b>
+                            <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Areas of Interest as observed:</b>
+                            <span> <br>{% for sub in Subjects_strength %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Maximum progress shown in:</b>
+                            <span> <br>{% for sub in Subjects_good %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Progress required in:</b>
+                            <span> <br>{% for sub in Subjects_focused %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                        <li><b>Performance deceased in:</b>
+                            <span> <br>{% for sub in Subjects_weak %} <br>{{sub}} {% endfor %} </span>
+                        </li>
+                    </ol>
+                </h4>
+            </section>
             {% endif %}
         </div>
 

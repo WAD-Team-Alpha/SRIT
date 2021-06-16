@@ -7,17 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRIT</title>
-    <link
-      rel="shortcut icon"
-      href="{% static 'img/sritlogo.png' %}"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/marks.css' %}">
     <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+
+    <style>
+        input.select-button {
+            margin-top: 1em;
+            border: 0px;
+            background-color: #5937a8;
+            color: white;
+            width: 4em;
+            height: 2em;
+        }
+
+        input.select-button:hover {
+            background-color: #7b43ff;
+        }
+
+        #sidebar ul p {
+            color: black;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,7 +45,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p style="font-size: 1.4em;">Welcome username</p>
+                <p style="font-size: 1.4em;"><b>Welcome {{user.username}}</b></p>
                 <li>
                     <a href="{% url 'home' %}">Home</a>
                 </li>
@@ -79,7 +95,7 @@
                             <span>DASHBOARD</span>
                         </button>
                         <h1 class="title">
-                                Marks
+                            Marks
                         </h1>
                     </div>
                     <div class="power" id="">
@@ -89,25 +105,25 @@
             </nav>
 
             <div id="snackbar">
-        
+
                 {% if messages %}
-                    {% for message in messages %}
-                        {{message}}
-                    {% endfor %}
-                    <script>
-                        // Get the snackbar DIV
-                        var x = document.getElementById("snackbar");
-                
-                        // Add the "show" class to DIV
-                        x.className = "show";
-                
-                        // After 3 seconds, remove the show class from DIV
-                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-                    </script>
+                {% for message in messages %}
+                {{message}}
+                {% endfor %}
+                <script>
+                    // Get the snackbar DIV
+                    var x = document.getElementById("snackbar");
+
+                    // Add the "show" class to DIV
+                    x.className = "show";
+
+                    // After 3 seconds, remove the show class from DIV
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                </script>
                 {% endif %}
-                    
+
             </div>
-            
+
 
             <form action="{% url 'previoussemnumber' %}" method="post">
                 {% csrf_token %}
@@ -115,16 +131,16 @@
                 <div class="marks-dropdown">
                     <select name="mdd" id="mdd">
                         {% for i in sems %}
-                            
-                            {% if i == cs %}
-                                <option value="{{i}}" selected>Semester {{i}}</option>
-                            {% else %}
-                                <option value="{{i}}">Semester {{i}}</option>
-                            {% endif %}
-                                
+
+                        {% if i == cs %}
+                        <option value="{{i}}" selected>Semester {{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">Semester {{i}}</option>
+                        {% endif %}
+
                         {% endfor %}
-                    </select> 
-                    <input type="submit" value="Select" class="pm-button">
+                    </select>
+                    <input type="submit" value="Select" class="select-button">
                 </div>
                 <br>
             </form>

@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/subjectwise.css' %}">
     <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+    <style>
+        #sidebar ul p {
+            color: black;
+            padding: 10px;
+          }
+    </style>
 </head>
 
 <body>
@@ -30,7 +36,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p style="font-size: 1.4em;">Welcome username</p>
+                <p style="font-size: 1.4em;"><b>Welcome {{user.username}}</b></p>
                 <li>
                     <a href="{% url 'home' %}">Home</a>
                 </li>
