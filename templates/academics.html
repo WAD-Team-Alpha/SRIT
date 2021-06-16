@@ -95,54 +95,54 @@
                     {% if subject.sem_no != 8 %}
                         <tr>
                         <td>{{subject.s1}}</td>
-                        <td><a href="{% url 'quizfun' id %}">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
                         <td>{{quizMarks.s1}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s2}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
                         <td>{{quizMarks.s2}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s3}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id3 %}">Click Here</a></td>
                         <td>{{quizMarks.s3}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s4}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id4 %}">Click Here</a></td>
                         <td>{{quizMarks.s4}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s5}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id5 %}">Click Here</a></td>
                         <td>{{quizMarks.s5}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s6}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id6 %}">Click Here</a></td>
                         <td>{{quizMarks.s6}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s7}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id7 %}">Click Here</a></td>
                         <td>{{quizMarks.s7}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s8}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id8 %}">Click Here</a></td>
                         <td>{{quizMarks.s8}}</td>
                     </tr>
                     
                     {% else %}
                          <tr>
                         <td>{{subject.s1}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
                         <td>{{quizMarks.s1}}</td>
                     </tr>
                     <tr>
                         <td>{{subject.s2}}</td>
-                        <td><a href="quiz.html">Click Here</a></td>
+                        <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
                         <td>{{quizMarks.s2}}</td>
                     </tr>
                     {% endif %}
