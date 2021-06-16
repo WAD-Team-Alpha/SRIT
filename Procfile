@@ -1,0 +1,1 @@
+web: gunicorn SRIT.wsgi:application --log-file -

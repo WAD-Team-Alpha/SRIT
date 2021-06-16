@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+import django_heroku
+import dj_database_url
+from pathlib import Path
 from SRIT.password import DB_PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +29,7 @@ SECRET_KEY = 'u*6$mpk&pb3xgmb9as!xo7mw#ssz#$c39#@kxeqmwoui%wmilx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,14 +79,21 @@ WSGI_APPLICATION = 'SRIT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SRIT',
-        'USER': 'postgres',
-        'PASSWORD': DB_PASSWORD,
-        'HOST': 'localhost',
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'SRIT',
+#         'USER': 'postgres',
+#         'PASSWORD': DB_PASSWORD,
+#         'HOST': 'localhost',
+#     }
+# }
+
+# new
+DATABASES={
+    'default': dj_database_url.config(
+        
+    )
 }
 
 
@@ -132,3 +141,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'SRIT/static'),
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+django_heroku.settings(
+    locals(
+        
+    )
+)
