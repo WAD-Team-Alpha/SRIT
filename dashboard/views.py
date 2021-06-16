@@ -1,3 +1,4 @@
+from .skills import *
 from .quizz import quiz
 from authpage.views import *
 from authpage.eee import *
@@ -450,7 +451,7 @@ def academics(request):
 
 def savePieChart(m1, m2, quiz, imgName, subjectName):
     if m1 == 0 and m2 == 0 and quiz == 0:
-        labels = '', '', '', ''
+        labels = '', '', ''
     else:
         labels = 'mid-1', 'mid-2', 'quiz'
 
@@ -524,6 +525,58 @@ def name(s):
     return new
 
 
+def findsubjectscore(student, subject):
+
+    semNum = student.sem_no
+    rollnum = student.roll_no
+    for i in range(semNum+1):
+        if Semester.objects.all().filter(roll_no=rollnum, sem_no=i).exists():
+            subjects = Semester.objects.all().filter(roll_no=rollnum, sem_no=i).get()
+            if subjects.s1 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s1 + external.s1
+            if subjects.s2 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s2 + external.s2
+            if subjects.s3 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s3 + external.s3
+            if subjects.s4 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s4 + external.s4
+            if subjects.s5 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s5 + external.s5
+            if subjects.s6 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s6 + external.s6
+            if subjects.s7 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s7 + external.s7
+            if subjects.s8 == subject:
+                internal = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=2).get()
+                external = Marks.objects.all().filter(roll_no=rollnum, sem_no=i, type=3).get()
+                return internal.s8 + external.s8
+    return 0
+
+
+def calculateTotal(student, subjects):
+
+    totalScore = 0
+    for subject in subjects:
+
+        totalScore += findsubjectscore(student, subject)
+
+    return totalScore
+
+
 def overall(request):
     student = Student.objects.all().filter(
         usr_nm=request.user.username).get()
@@ -549,15 +602,21 @@ def overall(request):
     if semNum != 8:
         marks = [subject1, subject2, subject3, subject4,
                  subject5, subject6, subject7, subject8]
-        subjectNames = [name(subjectName.s1), name(subjectName.s2), name(subjectName.s3),
-                        name(subjectName.s4), name(subjectName.s5), name(subjectName.s6), name(subjectName.s7), name(subjectName.s8), ]
+        subjectNames = [subjectName.s1, subjectName.s2, subjectName.s3,
+                        subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8]
     else:
         marks = [subject1, subject2]
         subjectNames = [subjectName.s1, subjectName.s2]
 
     courses = subjectNames
     values = marks
-
+    subjectsDict = []
+    for x in courses:
+        dict = {}
+        dict['fn'] = x
+        dict['sn'] = name(x)
+        subjectsDict.append(dict)
+    courses = [name(x) for x in courses]
     fig = plt.figure(figsize=(10, 5))
     my_colors = ['red', 'blue', 'green', 'cyan', 'Purple', 'pink']
     # creating the bar plot
@@ -571,7 +630,40 @@ def overall(request):
     plt.savefig('media/overall_barchart.png', dpi=100)
 
     plt.close()
-    return render(request, 'overall.html')
+
+    # skill wise analysis
+    group = CSE
+    if student.branch == 'CSE':
+        group == CSE
+    elif student.branch == 'EEE':
+        group == EEE
+    elif student.branch == 'MECH':
+        group == MECH
+    divisions = list(group.keys())
+
+    newdivisions = [name(x) for x in divisions]
+    divisionsDict = []
+    for x in divisions:
+        dict = {}
+        dict['fn'] = x
+        dict['sn'] = name(x)
+        divisionsDict.append(dict)
+
+    scores = []
+    for x in group:
+        scores.append(calculateTotal(student, group[x]))
+    fig = plt.figure(figsize=(10, 5))
+    plt.bar(newdivisions, scores, color=my_colors,
+            width=0.2)
+
+    plt.xlabel("Skills")
+    plt.ylabel("Score in Each Skill")
+    plt.title("Skill Wise Analysis")
+
+    plt.savefig('media/skillwise_barchart.png', dpi=100)
+
+    plt.close()
+    return render(request, 'overall.html', {'shortcuts': divisionsDict, 'subjectsDict': subjectsDict})
 
 
 def report(request):

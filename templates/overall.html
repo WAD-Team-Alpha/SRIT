@@ -17,8 +17,8 @@
     <style>
         .container {
             border-radius: 25px;
-           
-            
+
+
         }
 
         .rcorners {
@@ -98,16 +98,72 @@
             <div style="padding-top:2em">
                 <div class="container">
                     <h2 class="h2">Overall Progress</h2>
-                    <img  src="../../media/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+                    <img src="../../media/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
 
                 </div>
                 <br>
                 <div class="container">
                     <h2 class="h2">Skills Analysis</h2>
-                    <img src="../../media/overall_barchart.png" class="responsive rcorners" alt="Responsive image">
+                    <img src="../../media/skillwise_barchart.png" class="responsive rcorners" alt="Responsive image">
 
 
                 </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 style="padding-left: 1.5em;" class="h3">Full Forms for Subjects</h1>
+                            <table style="padding: 3em;margin-left:3em" class="table table-dark">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col">Short Form</th>
+                                        <th scope="col">Full Form</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for x in subjectsDict %}
+                                    <tr>
+
+                                        <td>{{x.sn}}</td>
+                                        <td>{{x.fn}}</td>
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h1 style="padding-left: 1.5em;" class="h3">Full Forms for Skills</h1>
+                            <table style="padding: 3em;margin-left:3em" class="table table-dark">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col">Short Form</th>
+                                        <th scope="col">Full Form</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for x in shortcuts %}
+                                    <tr>
+
+                                        <td>{{x.sn}}</td>
+                                        <td>{{x.fn}}</td>
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
