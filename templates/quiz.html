@@ -98,35 +98,35 @@
                     <p><h3>{{questions.question0.question}}</h3></p>
                     {% for option in questions.question0.options %}
                         <input type="hidden" name="question1" value="{{questions.question0.question}}" />
-                        <input type="radio" id="o1" name="q1" value= "{{option}}">
+                        <input type="radio" id="o1" name="q1" value= "{{option}}" required>
                         <label for="o1">{{option}}</label><br>
                     {% endfor %}
                     <br>
                     <p><h3>{{questions.question1.question}}</h3></p>
                     {% for option in questions.question1.options %}
                         <input type="hidden" name="question2" value="{{questions.question1.question}}" />
-                        <input type="radio" id="o2" name="q2" value= "{{option}}">
+                        <input type="radio" id="o2" name="q2" value= "{{option}}" required>
                         <label for="o2">{{option}}</label><br>
                     {% endfor %}
                     <br>
                     <p><h3>{{questions.question2.question}}</h3></p>
                     {% for option in questions.question2.options %}
                         <input type="hidden" name="question3" value="{{questions.question2.question}}" />
-                        <input type="radio" id="o3" name="q3" value= "{{option}}">
+                        <input type="radio" id="o3" name="q3" value= "{{option}}" required>
                         <label for="o3">{{option}}</label><br>
                     {% endfor %}
                     <br>
                     <p><h3>{{questions.question3.question}}</h3></p>
                     {% for option in questions.question3.options %}
                         <input type="hidden" name="question4" value="{{questions.question3.question}}" />
-                        <input type="radio" id="o4" name="q4" value= "{{option}}">
+                        <input type="radio" id="o4" name="q4" value= "{{option}}" required>
                         <label for="o4">{{option}}</label><br>
                     {% endfor %}
                     <br>
                     <p><h3>{{questions.question4.question}}</h3></p>
                     {% for option in questions.question0.options %}
                         <input type="hidden" name="question5" value="{{questions.question4.question}}" />
-                        <input type="radio" id="o5" name="q5" value= "{{option}}">
+                        <input type="radio" id="o5" name="q5" value= "{{option}}" required>
                         <label for="o5">{{option}}</label><br>
                     {% endfor %}
                     <br>
