@@ -6,7 +6,7 @@ class StudentForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = {"fn", "ln", "email", "usr_nm", "roll_no", "sem_no", "branch"}
+        fields = {"fn", "ln", "email", "usr_nm", "roll_no", "sem_no", "branch", "phn_no", "security_code"}
         widgets = {
             "fn": forms.TextInput(
                 attrs={
@@ -76,5 +76,25 @@ class StudentForm(forms.ModelForm):
                     'name': 'branch',
                     'required': True
                 }
-            )
+            ),
+            "phn_no": forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                    'id': 'pn',
+                    'name': 'pn',
+                    'placeholder': 'Phone number',
+                    'required': True
+                }
+            ),
+            "security_code": forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                    'id': 'sc',
+                    'name': 'sc',
+                    'placeholder': 'Security Code',
+                    'required': True
+                }
+            ),
         }

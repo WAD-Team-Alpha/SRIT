@@ -11,6 +11,8 @@ class Student(models.Model):
     roll_no = models.CharField(max_length=10)
     sem_no = models.IntegerField(default=1)
     branch = models.CharField(choices=Department, default='CSE',max_length=100)
+    phn_no = models.CharField(max_length=10)
+    security_code = models.CharField(max_length=25)
 
     def __str__(self):
         return self.roll_no
