@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+      rel="shortcut icon"
+      href="{% static 'img/sritlogo.png' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+
+    <style>
+        .logosrit {
+            height: 3em;
+        }
+    </style>
+
+    <title>Security Code</title>
+</head>
+
+<body style="background-color: rgb(231, 205, 157);">
+    <nav class="navbar navbar-expand-lg navbar- bg-" style="background-color: purple;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img class="logosrit" src="{% static 'img/sritlogo.png' %}" alt="Logo"></a>
+            <h3 class="text-primary">SRIT</h3>
+        </div>
+    </nav>
+    
+    <h1 class="text-center my-3">Enter Security Code</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <form action="{% url 'security_code' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="uname" class="form-label">Enter Username</label>
+                        <input type="text" required class="form-control" id="uname" name="uname" placeholder="Enter Username"
+                            aria-describedby="emailHelp" style="margin-bottom: 1em;">
+                        <label for="scode" class="form-label">Enter Security Code</label>
+                        <input type="text" required class="form-control" id="scode" name="scode" placeholder="Enter Security code"
+                            aria-describedby="emailHelp">
+                        <span style="color: red; margin-top: 1em;">{{error}}</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Check</button>
+                </form>
+                
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+    
+</body>
+
+</html>
