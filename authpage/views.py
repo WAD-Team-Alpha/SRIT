@@ -12,8 +12,11 @@ from .mech import *
 from .forms import *
 from django.contrib import messages
 from .functions import *
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
+
+student = None
 
 
 def login(request):
@@ -45,6 +48,28 @@ def logout(request):
     messages.success(request, "Logged out")
     return redirect('login')
 
+def securityCheck(request): 
+    global student
+    if request.method == 'POST':
+        usr_nm = request.POST['uname']
+        scode = request.POST['scode']
+        student = Student.objects.all().filter(usr_nm=usr_nm).get()
+        if (str(scode) == str(student.security_code)):
+            messages.success(request, "Security code accessed")
+            return redirect('forgot_password')
+        else:
+            return render(request, 'security_code.html', {"error": "Invalid Security Code"})
+    return render(request, 'security_code.html')
+
+def forgotPassword(request): 
+    if request.method == 'POST': 
+        password = request.POST['npsw']
+        user = User.objects.all().filter(username=student.usr_nm).get()
+        user.password = make_password(password)
+        user.save()
+        messages.success(request, 'Password changed sucessfully')
+        return redirect('login')
+    return render(request, 'forgot_password.html')
 
 def signup(request):
     if request.method == 'POST':
