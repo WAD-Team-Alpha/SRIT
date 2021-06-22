@@ -1,5 +1,6 @@
 from .helpers import *
 
+
 def overallApp(request):
     student = Student.objects.all().filter(
         usr_nm=request.user.username).get()
@@ -43,17 +44,39 @@ def overallApp(request):
     fig = plt.figure(figsize=(10, 5))
     my_colors = ['red', 'blue', 'green', 'cyan', 'Purple', 'pink']
     # creating the bar plot
-    plt.bar(courses, values, color=my_colors,
-            width=0.2)
+
+    graph = plt.bar(courses, values, color=my_colors,
+                    width=0.2)
 
     plt.xlabel("Subjects")
     plt.ylabel("Score in Each Subject")
     plt.title("Overall Trends")
 
+    Percentage = []
+    if sum(values) != 0:
+        for i in range(len(values)):
+            pct = (values[i] / sum(values)) * 100
+            Percentage.append(round(pct, 2))
+    else:
+        for i in range(len(values)):
+
+            Percentage.append(0.00)
+
+    i = 0
+    for p in graph:
+        width = p.get_width()
+        height = p.get_height()
+        x, y = p.get_xy()
+        plt.text(x+width/2,
+                 y+height*1.01,
+                 str(Percentage[i])+'%',
+                 ha='center',
+                 weight='bold')
+        i += 1
     plt.savefig('media/overall_barchart.png', dpi=100)
 
     plt.close()
-
+    flag1 = sum(values)
     # skill wise analysis
     group = CSE
     if student.branch == 'CSE':
@@ -79,14 +102,35 @@ def overallApp(request):
     for x in group:
         scores.append(calculateTotal(student, group[x]))
     fig = plt.figure(figsize=(10, 5))
-    plt.bar(newdivisions, scores, color=my_colors,
-            width=0.2)
+    graph = plt.bar(newdivisions, scores, color=my_colors,
+                    width=0.2)
 
     plt.xlabel("Skills")
     plt.ylabel("Score in Each Skill")
     plt.title("Skill Wise Analysis")
+    Percentage = []
+    if sum(scores) != 0:
+        for i in range(len(scores)):
+            pct = (scores[i] / sum(scores)) * 100
+            Percentage.append(round(pct, 2))
+    else:
+        for i in range(len(scores)):
 
+            Percentage.append(0.00)
+
+    i = 0
+    for p in graph:
+        width = p.get_width()
+        height = p.get_height()
+        x, y = p.get_xy()
+        plt.text(x+width/2,
+                 y+height*1.01,
+                 str(Percentage[i])+'%',
+                 ha='center',
+                 weight='bold')
+        i += 1
     plt.savefig('media/skillwise_barchart.png', dpi=100)
 
     plt.close()
-    return render(request, 'overall.html', {'shortcuts': divisionsDict, 'subjectsDict': subjectsDict})
+    flag2 = sum(scores)
+    return render(request, 'overall.html', {'shortcuts': divisionsDict, 'subjectsDict': subjectsDict, 'flag1': flag1, 'flag2': flag2})

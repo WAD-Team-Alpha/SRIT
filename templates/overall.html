@@ -32,6 +32,12 @@
             color: black;
             padding: 10px;
         }
+        .page-container {
+            font-size: 50px;
+            text-align: center;
+            margin-top: 4em;
+
+        }
     </style>
 </head>
 
@@ -102,6 +108,11 @@
                     </div>
                 </div>
             </nav>
+            {% if flag2 == 0 %}
+            <div class="page-container">
+                <p> No Data Available </p>
+            </div>
+            {% else %}
             <div style="padding-top:2em">
                 <div class="container">
                     <h2 class="h2">Overall Progress</h2>
@@ -172,6 +183,9 @@
                 </div>
 
             </div>
+            {% endif %}
+
+
 
         </div>
     </div>

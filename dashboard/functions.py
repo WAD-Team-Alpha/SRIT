@@ -8,6 +8,7 @@ import random
 import matplotlib
 matplotlib.use('Agg')
 
+
 def calculateInternal(mid1, mid2, sem_no):
     internal = []
     if sem_no == 8:
@@ -28,6 +29,7 @@ def calculateInternal(mid1, mid2, sem_no):
             x = i*0.2 + j*0.8
         internal.append(x)
     return internal
+
 
 def predictExternal(internal):
     external = []
@@ -73,6 +75,7 @@ def calculateCspCurrentSem(internal, external, sem_no):
 
     return c
 
+
 def validate(question, answer):
     for q in quiz:
         if question == q['question']:
@@ -81,6 +84,7 @@ def validate(question, answer):
 
                 return True
     return False
+
 
 def updateQuizMarks(id, score, semNum, rollnum):
     if id == 1:
@@ -100,7 +104,13 @@ def updateQuizMarks(id, score, semNum, rollnum):
     elif id == 8:
         Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=4).update(s8=score)
 
+
 def savePieChart(m1, m2, quiz, imgName, subjectName):
+    def func(pct, allvalues):
+
+        absolute = int(pct / 100.*np.sum(allvalues))
+        return "{:.1f}%".format(pct)
+
     if m1 == 0 and m2 == 0 and quiz == 0:
         labels = '', '', ''
     else:
@@ -109,8 +119,9 @@ def savePieChart(m1, m2, quiz, imgName, subjectName):
     sizes = [m1, m2,  quiz]
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.1, 0.1, 0.1)
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels,
+
+    fig1, ax1 = plt.subplots(figsize=(10, 5))
+    ax1.pie(sizes, explode=explode, labels=labels, autopct=lambda pct: func(pct, sizes),
             shadow=True, startangle=90)
     # Equal aspect ratio ensures that pie is drawn as a circle.
     ax1.axis('equal')
@@ -119,8 +130,9 @@ def savePieChart(m1, m2, quiz, imgName, subjectName):
     plt.savefig('media/'+imgName+'.png', dpi=100)
     plt.close()
 
+
 def name(s):
-    
+
     # split the string into a list
     l = s.split()
     new = ""
@@ -143,7 +155,7 @@ def findsubjectscore(student, subject):
 
     semNum = student.sem_no
     rollnum = student.roll_no
-    for i in range(semNum+1):
+    for i in range(semNum):
         if Semester.objects.all().filter(roll_no=rollnum, sem_no=i).exists():
             subjects = Semester.objects.all().filter(roll_no=rollnum, sem_no=i).get()
             if subjects.s1 == subject:
