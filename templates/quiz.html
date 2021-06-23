@@ -124,7 +124,7 @@
                     {% endfor %}
                     <br>
                     <p><h3>{{questions.question4.question}}</h3></p>
-                    {% for option in questions.question0.options %}
+                    {% for option in questions.question4.options %}
                         <input type="hidden" name="question5" value="{{questions.question4.question}}" />
                         <input type="radio" id="o5" name="q5" value= "{{option}}" required>
                         <label for="o5">{{option}}</label><br>

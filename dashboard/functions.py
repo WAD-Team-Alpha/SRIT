@@ -76,7 +76,7 @@ def calculateCspCurrentSem(internal, external, sem_no):
     return c
 
 
-def validate(question, answer):
+def validate(question, answer, quiz):
     for q in quiz:
         if question == q['question']:
 
