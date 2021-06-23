@@ -19,6 +19,12 @@
             color: black;
             padding: 10px;
           }
+        .page-container {
+            font-size: 50px;
+            text-align: center;
+            margin-top: 4em;
+
+        }
     </style>
 </head>
 
@@ -88,8 +94,9 @@
                     </div>
                 </div>
             </nav>
-            <button type="button" class="btn btn-danger" id="btnadd">Add a row</button>
-            <table class="table" id="tablecon">
+            
+            {% if student.branch == "CSE" %}
+                <table class="table" id="tablecon">
                 <thead>
                     <tr>
                         <th scope="col">Subject</th>
@@ -166,6 +173,13 @@
                     
                 </tbody>
             </table>
+            {% else %}
+                <div class="page-container">
+                <p> No QUIZZES AVAILBLE FOR YOUR GROUP </p>
+            </div>
+            {% endif %}
+                
+            
         </div>
     </div>
 

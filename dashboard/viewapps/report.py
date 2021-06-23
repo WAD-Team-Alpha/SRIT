@@ -1,5 +1,6 @@
 from .helpers import *
 
+
 def reportApp(request):
     student = Student.objects.all().filter(usr_nm=request.user.username).get()
     rollnum = student.roll_no
@@ -10,15 +11,14 @@ def reportApp(request):
     if semNum == 8:
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
-        Subjects_names = [subjectName.s1, subjectName.s2, subjectName.s3,
-                          subjectName.s4, subjectName.s5, subjectName.s6, subjectName.s7, subjectName.s8]
+        Subjects_names = [subjectName.s1, subjectName.s2]
         sub1 = m1.s1+m2.s1
         sub2 = m1.s2+m2.s2
-
+        flag = 1
         if sub1 + sub2 == 0:
-            return render(request, 'report.html', {'flag': 0})
-        
-        sub = [sub1,sub2]
+            flag = 0
+
+        sub = [sub1, sub2]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -63,18 +63,37 @@ def reportApp(request):
                 subjects_strength.append(i)
 
         print(subjects_strength)
+        # area
+        # skill wise analysis
+        group = CSE
+        if student.branch == 'CSE':
+            group = CSE
+        elif student.branch == 'EEE':
+            group = EEE
+        elif student.branch == 'MECH' or student.branch == 'CVIL':
+            group = MECH
+        elif student.branch == 'ECE':
+            group = ECE
 
+        divisions = list(group.keys())
+
+        scores = []
+        for x in group:
+            scores.append(calculateTotal(student, group[x]))
+
+        print(divisions, scores)
         context = {
             'Subjects_focused': subjects_focused,
             'Subjects_good': subjects_good,
             'Subjects_weak': subjects_focused,
             'Subjects_strength': subjects_strength,
-            'flag': 1
+            'flag': flag
         }
 
         return render(request, 'report.html', context)
 
     else:
+
         m1 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=0).get()
         m2 = Marks.objects.all().filter(roll_no=rollnum, sem_no=semNum, type=1).get()
         Subjects_names = [subjectName.s1, subjectName.s2, subjectName.s3,
@@ -90,11 +109,11 @@ def reportApp(request):
         sub8 = m1.s8+m2.s8
 
         myTotal = sub1 + sub2 + sub3 + sub4 + sub5 + sub6 + sub7 + sub8
-
+        flag = 1
         if myTotal == 0:
-            return render(request, 'report.html', {'flag': 0}) 
+            flag = 0
 
-        sub = [sub1,sub2,sub3,sub4,sub5,sub6,sub7,sub8]
+        sub = [sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8]
         total = zip(Subjects_names, sub)
 
         k = {}
@@ -133,14 +152,31 @@ def reportApp(request):
                 subjects_strength.append(i)
 
         print(subjects_strength)
+        # area
+        # skill wise analysis
+        group = CSE
+        if student.branch == 'CSE':
+            group = CSE
+        elif student.branch == 'EEE':
+            group = EEE
+        elif student.branch == 'MECH' or student.branch == 'CVIL':
+            group = MECH
+        elif student.branch == 'ECE':
+            group = ECE
 
+        divisions = list(group.keys())
 
-        context={
-            'Subjects_focused' : subjects_focused,
-            'Subjects_good' : subjects_good,
-            'Subjects_weak' : subjects_weak,
-            'Subjects_strength' : subjects_strength,
-            'flag': 1
+        scores = []
+        for x in group:
+            scores.append(calculateTotal(student, group[x]))
+
+        print(divisions, scores)
+        context = {
+            'Subjects_focused': subjects_focused,
+            'Subjects_good': subjects_good,
+            'Subjects_weak': subjects_weak,
+            'Subjects_strength': subjects_strength,
+            'flag': flag
         }
 
         return render(request, 'report.html', context)

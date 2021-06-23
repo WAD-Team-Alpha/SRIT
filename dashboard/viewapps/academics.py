@@ -1,11 +1,13 @@
 from .helpers import *
 
+
 def calculateRank(sem_no, branch, rollnum):
     students = Student.objects.all().filter(sem_no=sem_no, branch=branch)
     quizResults = []
     for i in students:
-        quizResults.append(Marks.objects.all().filter(sem_no=sem_no, roll_no=i.roll_no, type=4).get())
-    
+        quizResults.append(Marks.objects.all().filter(
+            sem_no=sem_no, roll_no=i.roll_no, type=4).get())
+
     marks = [[], [], [], [], [], [], [], []]
     rank = {}
 
@@ -13,10 +15,12 @@ def calculateRank(sem_no, branch, rollnum):
         for i in range(2):
             for j in quizResults:
                 js = {'j.s1': j.s1, 'j.s2': j.s2}
-                marks[i].append({'roll_no': j.roll_no, 's{n}'.format(n=i+1): js['j.s{n}'.format(n=i+1)]})
+                marks[i].append({'roll_no': j.roll_no, 's{n}'.format(
+                    n=i+1): js['j.s{n}'.format(n=i+1)]})
 
         for i in range(2):
-            marks[i] = sorted(marks[i], key = lambda m: m['s{n}'.format(n=i+1)], reverse=True)
+            marks[i] = sorted(
+                marks[i], key=lambda m: m['s{n}'.format(n=i+1)], reverse=True)
 
         for i in range(2):
             for j in range(len(marks[i])):
@@ -26,12 +30,14 @@ def calculateRank(sem_no, branch, rollnum):
     else:
         for i in range(8):
             for j in quizResults:
-                js = {'j.s1': j.s1, 'j.s2': j.s2, 'j.s3': j.s3, 'j.s4': j.s4, 'j.s5': j.s5, 
-                'j.s6': j.s6, 'j.s7': j.s7, 'j.s8': j.s8}
-                marks[i].append({'roll_no': j.roll_no, 's{n}'.format(n=i+1): js['j.s{n}'.format(n=i+1)]})
+                js = {'j.s1': j.s1, 'j.s2': j.s2, 'j.s3': j.s3, 'j.s4': j.s4, 'j.s5': j.s5,
+                      'j.s6': j.s6, 'j.s7': j.s7, 'j.s8': j.s8}
+                marks[i].append({'roll_no': j.roll_no, 's{n}'.format(
+                    n=i+1): js['j.s{n}'.format(n=i+1)]})
 
         for i in range(8):
-            marks[i] = sorted(marks[i], key = lambda m: m['s{n}'.format(n=i+1)], reverse=True)
+            marks[i] = sorted(
+                marks[i], key=lambda m: m['s{n}'.format(n=i+1)], reverse=True)
 
         for i in range(8):
             for j in range(len(marks[i])):
@@ -40,6 +46,7 @@ def calculateRank(sem_no, branch, rollnum):
                     break
 
     return rank
+
 
 def academicsApp(request):
     student = Student.objects.all().filter(usr_nm=request.user.username).get()
@@ -64,4 +71,4 @@ def academicsApp(request):
         'id8': 8,
     }
     rank = calculateRank(semNum, branch, rollnum)
-    return render(request, 'academics.html', {'subject': subjectName, 'id': id, 'quizMarks': quizMarks, 'rank': rank})
+    return render(request, 'academics.html', {'student': student, 'subject': subjectName, 'id': id, 'quizMarks': quizMarks, 'rank': rank})
