@@ -1,3 +1,5 @@
+from dashboard.functions import *
+from dashboard.skills import *
 from authpage.views import *
 from authpage.eee import *
 from authpage.mech import *
@@ -13,6 +15,3 @@ from django.shortcuts import render, redirect
 import random
 import matplotlib
 matplotlib.use('Agg')
-from dashboard.skills import *
-from dashboard.quizz import quiz
-from dashboard.functions import *
