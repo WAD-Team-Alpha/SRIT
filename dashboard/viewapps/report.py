@@ -50,19 +50,7 @@ def reportApp(request):
 
         print(M2)
 
-        subjects_weak = []
-        for i in M1:
-            if M1[i] > M2[i]:
-                subjects_weak.append(i)
-
-        print(subjects_weak)
-
-        subjects_strength = []
-        for i in M1:
-            if M1[i] < M2[i]:
-                subjects_strength.append(i)
-
-        print(subjects_strength)
+        
         # area
         # skill wise analysis
         group = CSE
@@ -81,12 +69,28 @@ def reportApp(request):
         for x in group:
             scores.append(calculateTotal(student, group[x]))
 
-        print(divisions, scores)
+        
+        mar = zip(divisions,scores)
+
+        div1 = {}
+        for i,j in mar:
+                div1[i] = j 
+
+        sort_div1 = sorted(div1.items(), key=lambda x: x[1], reverse=True)
+
+        print(sort_div1) 
+
+       
+        subjects_strength = [sort_div1[0][0]] 
+        subjects_weak = [sort_div1[7][0]] 
+        subjects_intrest = [sort_div1[0][0],sort_div1[1][0]]
+        
         context = {
             'Subjects_focused': subjects_focused,
             'Subjects_good': subjects_good,
-            'Subjects_weak': subjects_focused,
+            'Subjects_weak': subjects_weak,
             'Subjects_strength': subjects_strength,
+            'Subjects_intrest': subjects_intrest,
             'flag': flag
         }
 
@@ -138,20 +142,7 @@ def reportApp(request):
         M2 = {}
         for i, j in Mid2:
             M2[i] = j
-
-        subjects_weak = []
-        for i in M1:
-            if M1[i] > M2[i]:
-                subjects_weak.append(i)
-
-        print(subjects_weak)
-
-        subjects_strength = []
-        for i in M1:
-            if M1[i] < M2[i]:
-                subjects_strength.append(i)
-
-        print(subjects_strength)
+        
         # area
         # skill wise analysis
         group = CSE
@@ -170,12 +161,28 @@ def reportApp(request):
         for x in group:
             scores.append(calculateTotal(student, group[x]))
 
-        print(divisions, scores)
+        mar = zip(divisions,scores)
+
+        div1 = {}
+
+        for i,j in mar:
+            div1[i] = j 
+
+        sort_div1 = sorted(div1.items(), key=lambda x: x[1], reverse=True)
+
+        print(sort_div1) 
+
+       
+        subjects_strength = [sort_div1[0][0]] 
+        subjects_weak = [sort_div1[7][0]]
+        subjects_intrest = [sort_div1[0][0],sort_div1[1][0]] 
+        
         context = {
             'Subjects_focused': subjects_focused,
             'Subjects_good': subjects_good,
             'Subjects_weak': subjects_weak,
             'Subjects_strength': subjects_strength,
+            'Subjects_intrest':subjects_intrest,
             'flag': flag
         }
 
