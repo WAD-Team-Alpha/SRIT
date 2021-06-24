@@ -118,10 +118,10 @@ def savePieChart(m1, m2, quiz, imgName, subjectName):
 
     sizes = [m1, m2,  quiz]
     # only "explode" the 2nd slice (i.e. 'Hogs')
-    explode = (0.1, 0.1, 0.1)
+    # explode = (0.1, 0.1, 0.1)
 
     fig1, ax1 = plt.subplots(figsize=(10, 5))
-    ax1.pie(sizes, explode=explode, labels=labels, autopct=lambda pct: func(pct, sizes),
+    ax1.pie(sizes, labels=labels, autopct=lambda pct: func(pct, sizes),
             shadow=True, startangle=90)
     # Equal aspect ratio ensures that pie is drawn as a circle.
     ax1.axis('equal')
