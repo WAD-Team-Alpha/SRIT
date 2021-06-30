@@ -1,189 +1,195 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <title>SRIT</title>
-    <link rel="shortcut icon" href="{% static 'img/sritlogo.png' %}" type="image/x-icon" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'img/sritlogo.png' %}"
+      type="image/x-icon"
+    />
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/snackbar.css' %}" />
     <style>
-        #sidebar ul p {
-            color: black;
-            padding: 10px;
-          }
-        .page-container {
-            font-size: 50px;
-            text-align: center;
-            margin-top: 4em;
-
-        }
+      #sidebar ul p {
+        color: black;
+        padding: 10px;
+      }
+      .page-container {
+        font-size: 50px;
+        text-align: center;
+        margin-top: 4em;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
-
-
+  <body>
     <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3 class="sidebar-title">SRIT</h3>
-            </div>
+      <!-- Sidebar Holder -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3 class="sidebar-title">SRIT</h3>
+        </div>
 
-            <ul class="list-unstyled components">
-                <p style="font-size: 1.4em;"><b>Welcome {{user.username}}</b></p>
-                <li>
-                    <a href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false">Marks</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu2">
-                        <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
-                        <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
-
-                    </ul>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Activities</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="{% url 'academics' %}">Academics </a></li>
-                        <!-- <li><a href="/extracurricular.html">Extra Curricular</a></li> -->
-
-                    </ul>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false">Progress</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu1">
-                        <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
-                        <li><a href="{% url 'overall' %}">Overall</a></li>
-
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="{% url 'report' %}">Report</a>
-                </li>
-                <li>
-                    <a href="{% url 'suggestions' %}">Suggestions</a>
-                </li>
+        <ul class="list-unstyled components">
+          <p style="font-size: 1.4em"><b>Welcome {{user.username}}</b></p>
+          <li>
+            <a href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="active">
+            <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false"
+              >Marks</a
+            >
+            <ul class="collapse list-unstyled" id="homeSubmenu2">
+              <li><a href="{% url 'previoussem' %}">Previous Semesters </a></li>
+              <li><a href="{% url 'currentsem' %}">Current Semester</a></li>
             </ul>
+          </li>
+          <li class="active">
+            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+              >Activities</a
+            >
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+              <li><a href="{% url 'academics' %}">Academics </a></li>
+              <!-- <li><a href="/extracurricular.html">Extra Curricular</a></li> -->
+            </ul>
+          </li>
+          <li class="active">
+            <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false"
+              >Progress</a
+            >
+            <ul class="collapse list-unstyled" id="homeSubmenu1">
+              <li><a href="{% url 'subjectwise' %}">Subject Wise</a></li>
+              <li><a href="{% url 'overall' %}">Overall</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="{% url 'report' %}">Report</a>
+          </li>
+          <li>
+            <a href="{% url 'suggestions' %}">Suggestions</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Page Content Holder -->
+      <div id="content">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button
+                type="button"
+                id="sidebarCollapse"
+                class="btn btn-info navbar-btn"
+              >
+                <i class="glyphicon glyphicon-align-left"></i>
+                <span>DASHBOARD</span>
+              </button>
+              <h1 class="title">DASHBOARD</h1>
+            </div>
+            <div class="power" id="">
+              <a href="{% url 'logout' %}"
+                ><i class="pbtn glyphicon glyphicon-off"></i
+              ></a>
+            </div>
+          </div>
         </nav>
 
-        <!-- Page Content Holder -->
-        <div id="content">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>DASHBOARD</span>
-                        </button>
-                        <h1 class="title">DASHBOARD</h1>
-                    </div>
-                    <div class="power" id="">
-                        <a href="{% url 'logout' %}"><i class="pbtn glyphicon glyphicon-off"></i></a>
-                    </div>
-                </div>
-            </nav>
-            
-            {% if student.branch == "CSE" %}
-                <table class="table" id="tablecon">
-                <thead>
-                    <tr>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Link for test</th>
-                        <th scope="col">Score (10)</th>
-                        <th scope="col">Rank</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyCon">
-                    {% if subject.sem_no != 8 %}
-                        <tr>
-                        <td>{{subject.s1}}</td>
-                        <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
-                        <td>{{quizMarks.s1}}</td>
-                        <td>{{rank.s1}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s2}}</td>
-                        <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
-                        <td>{{quizMarks.s2}}</td>
-                        <td>{{rank.s2}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s3}}</td>
-                        <td><a href="{% url 'quizfun' id.id3 %}">Click Here</a></td>
-                        <td>{{quizMarks.s3}}</td>
-                        <td>{{rank.s3}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s4}}</td>
-                        <td><a href="{% url 'quizfun' id.id4 %}">Click Here</a></td>
-                        <td>{{quizMarks.s4}}</td>
-                        <td>{{rank.s4}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s5}}</td>
-                        <td><a href="{% url 'quizfun' id.id5 %}">Click Here</a></td>
-                        <td>{{quizMarks.s5}}</td>
-                        <td>{{rank.s5}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s6}}</td>
-                        <td><a href="{% url 'quizfun' id.id6 %}">Click Here</a></td>
-                        <td>{{quizMarks.s6}}</td>
-                        <td>{{rank.s6}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s7}}</td>
-                        <td><a href="{% url 'quizfun' id.id7 %}">Click Here</a></td>
-                        <td>{{quizMarks.s7}}</td>
-                        <td>{{rank.s7}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s8}}</td>
-                        <td><a href="{% url 'quizfun' id.id8 %}">Click Here</a></td>
-                        <td>{{quizMarks.s8}}</td>
-                        <td>{{rank.s8}}</td>
-                    </tr>
-                    
-                    {% else %}
-                         <tr>
-                        <td>{{subject.s1}}</td>
-                        <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
-                        <td>{{quizMarks.s1}}</td>
-                        <td>{{rank.s1}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{subject.s2}}</td>
-                        <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
-                        <td>{{rank.s2}}</td>
-                        <td>1</td>
-                    </tr>
-                    {% endif %}
-                    
-                </tbody>
-            </table>
+        {% if student.branch == "CSE" %}
+        <table class="table" id="tablecon">
+          <thead>
+            <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Link for test</th>
+              <th scope="col">Score (10)</th>
+              <th scope="col">Rank</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyCon">
+            {% if subject.sem_no != 8 %}
+            <tr>
+              <td>{{subject.s1}}</td>
+              <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
+              <td>{{quizMarks.s1}}</td>
+              <td>{{rank.s1}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s2}}</td>
+              <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
+              <td>{{quizMarks.s2}}</td>
+              <td>{{rank.s2}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s3}}</td>
+              <td><a href="{% url 'quizfun' id.id3 %}">Click Here</a></td>
+              <td>{{quizMarks.s3}}</td>
+              <td>{{rank.s3}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s4}}</td>
+              <td><a href="{% url 'quizfun' id.id4 %}">Click Here</a></td>
+              <td>{{quizMarks.s4}}</td>
+              <td>{{rank.s4}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s5}}</td>
+              <td><a href="{% url 'quizfun' id.id5 %}">Click Here</a></td>
+              <td>{{quizMarks.s5}}</td>
+              <td>{{rank.s5}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s6}}</td>
+              <td><a href="{% url 'quizfun' id.id6 %}">Click Here</a></td>
+              <td>{{quizMarks.s6}}</td>
+              <td>{{rank.s6}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s7}}</td>
+              <td><a href="{% url 'quizfun' id.id7 %}">Click Here</a></td>
+              <td>{{quizMarks.s7}}</td>
+              <td>{{rank.s7}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s8}}</td>
+              <td><a href="{% url 'quizfun' id.id8 %}">Click Here</a></td>
+              <td>{{quizMarks.s8}}</td>
+              <td>{{rank.s8}}</td>
+            </tr>
+
             {% else %}
-                <div class="page-container">
-                <p> No QUIZZES AVAILBLE FOR YOUR GROUP </p>
-            </div>
+            <tr>
+              <td>{{subject.s1}}</td>
+              <td><a href="{% url 'quizfun' id.id1 %}">Click Here</a></td>
+              <td>{{quizMarks.s1}}</td>
+              <td>{{rank.s1}}</td>
+            </tr>
+            <tr>
+              <td>{{subject.s2}}</td>
+              <td><a href="{% url 'quizfun' id.id2 %}">Click Here</a></td>
+              <td>{{quizMarks.s2}}</td>
+              <td>{{rank.s2}}</td>
+            </tr>
             {% endif %}
-                
-            
+          </tbody>
+        </table>
+        {% else %}
+        <div class="page-container">
+          <p>No QUIZZES AVAILBLE FOR YOUR GROUP</p>
         </div>
+        {% endif %}
+      </div>
     </div>
-
-
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -191,14 +197,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
+      $(document).ready(function () {
+        $("#sidebarCollapse").on("click", function () {
+          $("#sidebar").toggleClass("active");
         });
-        $("#btnadd").click(function () {
-            // console.log("hello");
-            $("#tbodyCon").append(`
+      });
+      $("#btnadd").click(function () {
+        // console.log("hello");
+        $("#tbodyCon").append(`
                     <tr>
                         <td>
                             <select class="form-control forminp">
@@ -211,9 +217,8 @@
                         <td><a href="/">Click Here</a></td>
                         <td>NotGraded</td>
                     </tr >
-                `)
-        })
+                `);
+      });
     </script>
-</body>
-
+  </body>
 </html>
